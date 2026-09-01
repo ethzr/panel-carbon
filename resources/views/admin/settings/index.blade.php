@@ -6,11 +6,12 @@
 @endsection
 
 @section('content-header')
-    <h1>Panel Settings<small>Configure Pterodactyl to your liking.</small></h1>
-    <ol class="breadcrumb">
-        <li><a href="{{ route('admin.index') }}">Admin</a></li>
-        <li class="active">Settings</li>
-    </ol>
+    <nav class="cds--breadcrumb cds--breadcrumb--no-trailing-slash" aria-label="breadcrumb">
+        <div class="cds--breadcrumb-item"><a href="{{ route('admin.index') }}" class="cds--link">Admin</a></div>
+        <div class="cds--breadcrumb-item"><span class="cds--link">Settings</span></div>
+    </nav>
+    <h1 class="cds--type-productive-heading-04">Panel Settings</h1>
+    <p class="cds--type-body-compact-01">Configure Pterodactyl to your liking.</p>
 @endsection
 
 @section('content')
@@ -18,43 +19,43 @@
     <div class="row">
         <div class="col-xs-12">
             <div class="box">
-                <div class="box-header with-border">
-                    <h3 class="box-title">Panel Settings</h3>
+                <div class="ptero-tile__header">
+                    <h3 class="cds--type-productive-heading-02">Panel Settings</h3>
                 </div>
                 <form action="{{ route('admin.settings') }}" method="POST">
-                    <div class="box-body">
+                    <div class="ptero-tile__body">
                         <div class="row">
-                            <div class="form-group col-md-4">
-                                <label class="control-label">Company Name</label>
+                            <div class="cds--form-item col-md-4">
+                                <label class="cds--label">Company Name</label>
                                 <div>
-                                    <input type="text" class="form-control" name="app:name" value="{{ old('app:name', config('app.name')) }}" />
+                                    <input type="text" class="cds--text-input" name="app:name" value="{{ old('app:name', config('app.name')) }}" />
                                     <p class="text-muted"><small>This is the name that is used throughout the panel and in emails sent to clients.</small></p>
                                 </div>
                             </div>
-                            <div class="form-group col-md-4">
-                                <label class="control-label">Require 2-Factor Authentication</label>
+                            <div class="cds--form-item col-md-4">
+                                <label class="cds--label">Require 2-Factor Authentication</label>
                                 <div>
-                                    <div class="btn-group" data-toggle="buttons">
+                                    <div class="cds--btn-set" data-toggle="buttons">
                                         @php
                                             $level = old('pterodactyl:auth:2fa_required', config('pterodactyl.auth.2fa_required'));
                                         @endphp
-                                        <label class="btn btn-primary @if ($level == 0) active @endif">
+                                        <label class="cds--btn cds--btn--primary @if ($level == 0) active @endif">
                                             <input type="radio" name="pterodactyl:auth:2fa_required" autocomplete="off" value="0" @if ($level == 0) checked @endif> Not Required
                                         </label>
-                                        <label class="btn btn-primary @if ($level == 1) active @endif">
+                                        <label class="cds--btn cds--btn--primary @if ($level == 1) active @endif">
                                             <input type="radio" name="pterodactyl:auth:2fa_required" autocomplete="off" value="1" @if ($level == 1) checked @endif> Admin Only
                                         </label>
-                                        <label class="btn btn-primary @if ($level == 2) active @endif">
+                                        <label class="cds--btn cds--btn--primary @if ($level == 2) active @endif">
                                             <input type="radio" name="pterodactyl:auth:2fa_required" autocomplete="off" value="2" @if ($level == 2) checked @endif> All Users
                                         </label>
                                     </div>
                                     <p class="text-muted"><small>If enabled, any account falling into the selected grouping will be required to have 2-Factor authentication enabled to use the Panel.</small></p>
                                 </div>
                             </div>
-                            <div class="form-group col-md-4">
-                                <label class="control-label">Default Language</label>
+                            <div class="cds--form-item col-md-4">
+                                <label class="cds--label">Default Language</label>
                                 <div>
-                                    <select name="app:locale" class="form-control">
+                                    <select name="app:locale" class="cds--text-input cds--select-input">
                                         @foreach($languages as $key => $value)
                                             <option value="{{ $key }}" @if(config('app.locale') === $key) selected @endif>{{ $value }}</option>
                                         @endforeach
@@ -64,9 +65,9 @@
                             </div>
                         </div>
                     </div>
-                    <div class="box-footer">
+                    <div class="ptero-tile__footer">
                         {!! csrf_field() !!}
-                        <button type="submit" name="_method" value="PATCH" class="btn btn-sm btn-primary pull-right">Save</button>
+                        <button type="submit" name="_method" value="PATCH" class="cds--btn cds--btn--sm cds--btn--primary pull-right">Save</button>
                     </div>
                 </form>
             </div>

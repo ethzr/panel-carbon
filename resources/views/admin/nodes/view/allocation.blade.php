@@ -5,20 +5,21 @@
 @endsection
 
 @section('content-header')
-    <h1>{{ $node->name }}<small>Control allocations available for servers on this node.</small></h1>
-    <ol class="breadcrumb">
-        <li><a href="{{ route('admin.index') }}">Admin</a></li>
-        <li><a href="{{ route('admin.nodes') }}">Nodes</a></li>
-        <li><a href="{{ route('admin.nodes.view', $node->id) }}">{{ $node->name }}</a></li>
-        <li class="active">Allocations</li>
-    </ol>
+    <nav class="cds--breadcrumb cds--breadcrumb--no-trailing-slash" aria-label="breadcrumb">
+        <div class="cds--breadcrumb-item"><a href="{{ route('admin.index') }}" class="cds--link">Admin</a></div>
+        <div class="cds--breadcrumb-item"><a href="{{ route('admin.nodes') }}" class="cds--link">Nodes</a></div>
+        <div class="cds--breadcrumb-item"><a href="{{ route('admin.nodes.view', $node->id) }}" class="cds--link">{{ $node->name }}</a></div>
+        <div class="cds--breadcrumb-item"><span class="cds--link">Allocations</span></div>
+    </nav>
+    <h1 class="cds--type-productive-heading-04">{{ $node->name }}</h1>
+    <p class="cds--type-body-compact-01">Control allocations available for servers on this node.</p>
 @endsection
 
 @section('content')
 <div class="row">
     <div class="col-xs-12">
-        <div class="nav-tabs-custom nav-tabs-floating">
-            <ul class="nav nav-tabs">
+        <div class="cds--tabs">
+            <ul class="cds--tab--list">
                 <li><a href="{{ route('admin.nodes.view', $node->id) }}">About</a></li>
                 <li><a href="{{ route('admin.nodes.view.settings', $node->id) }}">Settings</a></li>
                 <li><a href="{{ route('admin.nodes.view.configuration', $node->id) }}">Configuration</a></li>
@@ -30,12 +31,12 @@
 </div>
 <div class="row">
     <div class="col-sm-8">
-        <div class="box box-primary">
-            <div class="box-header with-border">
-                <h3 class="box-title">Existing Allocations</h3>
+        <div class="cds--tile ptero-tile">
+            <div class="ptero-tile__header">
+                <h3 class="cds--type-productive-heading-02">Existing Allocations</h3>
             </div>
-            <div class="box-body table-responsive no-padding" style="overflow-x: visible">
-                <table class="table table-hover" style="margin-bottom:0;">
+            <div class="cds--data-table-container" style="overflow-x: visible">
+                <table class="cds--data-table cds--data-table--lg cds--data-table--zebra" style="margin-bottom:0;">
                     <tr>
                         <th>
                             <input type="checkbox" class="select-all-files hidden-xs" data-action="selectAll">
@@ -45,8 +46,8 @@
                         <th>Port</th>
                         <th>Assigned To</th>
                         <th>
-                            <div class="btn-group hidden-xs">
-                                <button type="button" id="mass_actions" class="btn btn-sm btn-default dropdown-toggle disabled"
+                            <div class="cds--btn-set hidden-xs">
+                                <button type="button" id="mass_actions" class="cds--btn cds--btn--sm cds--btn--secondary dropdown-toggle disabled"
                                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Mass Actions <span class="caret"></span>
                                 </button>
                                 <ul class="dropdown-menu dropdown-massactions">
@@ -66,7 +67,7 @@
                             </td>
                             <td class="col-sm-3 middle" data-identifier="ip">{{ $allocation->ip }}</td>
                             <td class="col-sm-3 middle">
-                                <input class="form-control input-sm" type="text" value="{{ $allocation->ip_alias }}" data-action="set-alias" data-id="{{ $allocation->id }}" placeholder="none" />
+                                <input class="cds--text-input input-sm" type="text" value="{{ $allocation->ip_alias }}" data-action="set-alias" data-id="{{ $allocation->id }}" placeholder="none" />
                                 <span class="input-loader"><i class="fa fa-refresh fa-spin fa-fw"></i></span>
                             </td>
                             <td class="col-sm-2 middle" data-identifier="port">{{ $allocation->port }}</td>
@@ -77,7 +78,7 @@
                             </td>
                             <td class="col-sm-1 middle">
                                 @if(is_null($allocation->server_id))
-                                    <button data-action="deallocate" data-id="{{ $allocation->id }}" class="btn btn-sm btn-danger"><i class="fa fa-trash-o"></i></button>
+                                    <button data-action="deallocate" data-id="{{ $allocation->id }}" class="cds--btn cds--btn--sm cds--btn--danger"><i class="fa fa-trash-o"></i></button>
                                 @endif
                             </td>
                         </tr>
@@ -85,7 +86,7 @@
                 </table>
             </div>
             @if($node->allocations->hasPages())
-                <div class="box-footer text-center">
+                <div class="ptero-tile__footer text-center">
                     {{ $node->allocations->render() }}
                 </div>
             @endif
@@ -93,40 +94,40 @@
     </div>
     <div class="col-sm-4">
         <form action="{{ route('admin.nodes.view.allocation', $node->id) }}" method="POST">
-            <div class="box box-success">
-                <div class="box-header with-border">
-                    <h3 class="box-title">Assign New Allocations</h3>
+            <div class="cds--tile ptero-tile ptero-tile--success">
+                <div class="ptero-tile__header">
+                    <h3 class="cds--type-productive-heading-02">Assign New Allocations</h3>
                 </div>
-                <div class="box-body">
-                    <div class="form-group">
-                        <label for="pAllocationIP" class="control-label">IP Address</label>
+                <div class="ptero-tile__body">
+                    <div class="cds--form-item">
+                        <label for="pAllocationIP" class="cds--label">IP Address</label>
                         <div>
-                            <select class="form-control" name="allocation_ip" id="pAllocationIP" multiple>
+                            <select class="cds--text-input cds--select-input" name="allocation_ip" id="pAllocationIP" multiple>
                                 @foreach($allocations as $allocation)
                                     <option value="{{ $allocation->ip }}">{{ $allocation->ip }}</option>
                                 @endforeach
                             </select>
-                            <p class="text-muted small">Enter an IP address to assign ports to here.</p>
+                            <p class="cds--form__helper-text">Enter an IP address to assign ports to here.</p>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="pAllocationIP" class="control-label">IP Alias</label>
+                    <div class="cds--form-item">
+                        <label for="pAllocationIP" class="cds--label">IP Alias</label>
                         <div>
-                            <input type="text" id="pAllocationAlias" class="form-control" name="allocation_alias" placeholder="alias" />
-                            <p class="text-muted small">If you would like to assign a default alias to these allocations enter it here.</p>
+                            <input type="text" id="pAllocationAlias" class="cds--text-input" name="allocation_alias" placeholder="alias" />
+                            <p class="cds--form__helper-text">If you would like to assign a default alias to these allocations enter it here.</p>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="pAllocationPorts" class="control-label">Ports</label>
+                    <div class="cds--form-item">
+                        <label for="pAllocationPorts" class="cds--label">Ports</label>
                         <div>
-                            <select class="form-control" name="allocation_ports[]" id="pAllocationPorts" multiple></select>
-                            <p class="text-muted small">Enter individual ports or port ranges here separated by commas or spaces.</p>
+                            <select class="cds--text-input cds--select-input" name="allocation_ports[]" id="pAllocationPorts" multiple></select>
+                            <p class="cds--form__helper-text">Enter individual ports or port ranges here separated by commas or spaces.</p>
                         </div>
                     </div>
                 </div>
-                <div class="box-footer">
+                <div class="ptero-tile__footer">
                     {!! csrf_field() !!}
-                    <button type="submit" class="btn btn-success btn-sm pull-right">Submit</button>
+                    <button type="submit" class="cds--btn cds--btn--primary cds--btn--sm pull-right">Submit</button>
                 </div>
             </div>
         </form>
@@ -143,7 +144,7 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-12">
-                            <select class="form-control" name="ip">
+                            <select class="cds--text-input cds--select-input" name="ip">
                                 @foreach($allocations as $allocation)
                                     <option value="{{ $allocation->ip }}">{{ $allocation->ip }}</option>
                                 @endforeach
@@ -153,8 +154,8 @@
                 </div>
                 <div class="modal-footer">
                     {{{ csrf_field() }}}
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-danger">Delete Allocations</button>
+                    <button type="button" class="cds--btn cds--btn--secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="cds--btn cds--btn--danger">Delete Allocations</button>
                 </div>
             </form>
         </div>

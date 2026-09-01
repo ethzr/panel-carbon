@@ -5,20 +5,21 @@
 @endsection
 
 @section('content-header')
-    <h1>{{ $node->name }}<small>Your daemon configuration file.</small></h1>
-    <ol class="breadcrumb">
-        <li><a href="{{ route('admin.index') }}">Admin</a></li>
-        <li><a href="{{ route('admin.nodes') }}">Nodes</a></li>
-        <li><a href="{{ route('admin.nodes.view', $node->id) }}">{{ $node->name }}</a></li>
-        <li class="active">Configuration</li>
-    </ol>
+    <nav class="cds--breadcrumb cds--breadcrumb--no-trailing-slash" aria-label="breadcrumb">
+        <div class="cds--breadcrumb-item"><a href="{{ route('admin.index') }}" class="cds--link">Admin</a></div>
+        <div class="cds--breadcrumb-item"><a href="{{ route('admin.nodes') }}" class="cds--link">Nodes</a></div>
+        <div class="cds--breadcrumb-item"><a href="{{ route('admin.nodes.view', $node->id) }}" class="cds--link">{{ $node->name }}</a></div>
+        <div class="cds--breadcrumb-item"><span class="cds--link">Configuration</span></div>
+    </nav>
+    <h1 class="cds--type-productive-heading-04">{{ $node->name }}</h1>
+    <p class="cds--type-body-compact-01">Your daemon configuration file.</p>
 @endsection
 
 @section('content')
 <div class="row">
     <div class="col-xs-12">
-        <div class="nav-tabs-custom nav-tabs-floating">
-            <ul class="nav nav-tabs">
+        <div class="cds--tabs">
+            <ul class="cds--tab--list">
                 <li><a href="{{ route('admin.nodes.view', $node->id) }}">About</a></li>
                 <li><a href="{{ route('admin.nodes.view.settings', $node->id) }}">Settings</a></li>
                 <li class="active"><a href="{{ route('admin.nodes.view.configuration', $node->id) }}">Configuration</a></li>
@@ -30,31 +31,31 @@
 </div>
 <div class="row">
     <div class="col-sm-8">
-        <div class="box box-primary">
-            <div class="box-header with-border">
-                <h3 class="box-title">Configuration File</h3>
+        <div class="cds--tile ptero-tile">
+            <div class="ptero-tile__header">
+                <h3 class="cds--type-productive-heading-02">Configuration File</h3>
             </div>
-            <div class="box-body">
+            <div class="ptero-tile__body">
                 <pre class="no-margin">{{ $node->getYamlConfiguration() }}</pre>
             </div>
-            <div class="box-footer">
+            <div class="ptero-tile__footer">
                 <p class="no-margin">This file should be placed in your daemon's root directory (usually <code>/etc/pterodactyl</code>) in a file called <code>config.yml</code>.</p>
             </div>
         </div>
     </div>
     <div class="col-sm-4">
-        <div class="box box-success">
-            <div class="box-header with-border">
-                <h3 class="box-title">Auto-Deploy</h3>
+        <div class="cds--tile ptero-tile ptero-tile--success">
+            <div class="ptero-tile__header">
+                <h3 class="cds--type-productive-heading-02">Auto-Deploy</h3>
             </div>
-            <div class="box-body">
-                <p class="text-muted small">
+            <div class="ptero-tile__body">
+                <p class="cds--form__helper-text">
                     Use the button below to generate a custom deployment command that can be used to configure
                     wings on the target server with a single command.
                 </p>
             </div>
-            <div class="box-footer">
-                <button type="button" id="configTokenBtn" class="btn btn-sm btn-default" style="width:100%;">Generate Token</button>
+            <div class="ptero-tile__footer">
+                <button type="button" id="configTokenBtn" class="cds--btn cds--btn--sm cds--btn--secondary" style="width:100%;">Generate Token</button>
             </div>
         </div>
     </div>

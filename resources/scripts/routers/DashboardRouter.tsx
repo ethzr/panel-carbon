@@ -17,15 +17,19 @@ export default () => {
             <NavigationBar />
             {location.pathname.startsWith('/account') && (
                 <SubNavigation>
-                    <div>
-                        {routes.account
-                            .filter((route) => !!route.name)
-                            .map(({ path, name, exact = false }) => (
-                                <NavLink key={path} to={`/account/${path}`.replace('//', '/')} exact={exact}>
-                                    {name}
-                                </NavLink>
-                            ))}
-                    </div>
+                    {routes.account
+                        .filter((route) => !!route.name)
+                        .map(({ path, name, exact = false }) => (
+                            <NavLink
+                                key={path}
+                                to={`/account/${path}`.replace('//', '/')}
+                                exact={exact}
+                                className={'cds--tabs__nav-link'}
+                                activeClassName={'cds--tabs__nav-item--selected'}
+                            >
+                                {name}
+                            </NavLink>
+                        ))}
                 </SubNavigation>
             )}
             <TransitionRouter>

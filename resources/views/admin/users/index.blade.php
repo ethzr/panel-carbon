@@ -5,33 +5,34 @@
 @endsection
 
 @section('content-header')
-    <h1>Users<small>All registered users on the system.</small></h1>
-    <ol class="breadcrumb">
-        <li><a href="{{ route('admin.index') }}">Admin</a></li>
-        <li class="active">Users</li>
-    </ol>
+    <nav class="cds--breadcrumb cds--breadcrumb--no-trailing-slash" aria-label="breadcrumb">
+        <div class="cds--breadcrumb-item"><a href="{{ route('admin.index') }}" class="cds--link">Admin</a></div>
+        <div class="cds--breadcrumb-item"><span class="cds--link">Users</span></div>
+    </nav>
+    <h1 class="cds--type-productive-heading-04">Users</h1>
+    <p class="cds--type-body-compact-01">All registered users on the system.</p>
 @endsection
 
 @section('content')
 <div class="row">
     <div class="col-xs-12">
-        <div class="box box-primary">
-            <div class="box-header with-border">
-                <h3 class="box-title">User List</h3>
-                <div class="box-tools search01">
+        <div class="cds--tile ptero-tile">
+            <div class="ptero-tile__header">
+                <h3 class="cds--type-productive-heading-02">User List</h3>
+                <div class="ptero-tile__tools search01">
                     <form action="{{ route('admin.users') }}" method="GET">
-                        <div class="input-group input-group-sm">
-                            <input type="text" name="filter[email]" class="form-control pull-right" value="{{ request()->input('filter.email') }}" placeholder="Search">
-                            <div class="input-group-btn">
-                                <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-                                <a href="{{ route('admin.users.new') }}"><button type="button" class="btn btn-sm btn-primary" style="border-radius: 0 3px 3px 0;margin-left:-1px;">Create New</button></a>
+                        <div class="cds--search cds--search--lg">
+                            <input type="text" name="filter[email]" class="cds--text-input pull-right" value="{{ request()->input('filter.email') }}" placeholder="Search">
+                            <div class="cds--search-close">
+                                <button type="submit" class="cds--btn cds--btn--secondary"><i class="fa fa-search"></i></button>
+                                <a href="{{ route('admin.users.new') }}"><button type="button" class="cds--btn cds--btn--sm cds--btn--primary" style="border-radius: 0 3px 3px 0;margin-left:-1px;">Create New</button></a>
                             </div>
                         </div>
                     </form>
                 </div>
             </div>
-            <div class="box-body table-responsive no-padding">
-                <table class="table table-hover">
+            <div class="cds--data-table-container">
+                <table class="cds--data-table cds--data-table--lg cds--data-table--zebra">
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -69,7 +70,7 @@
                 </table>
             </div>
             @if($users->hasPages())
-                <div class="box-footer with-border">
+                <div class="ptero-tile__footer">
                     <div class="col-md-12 text-center">{!! $users->appends(['query' => Request::input('query')])->render() !!}</div>
                 </div>
             @endif

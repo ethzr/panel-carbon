@@ -5,21 +5,22 @@
 @endsection
 
 @section('content-header')
-    <h1>{{ $egg->name }}<small>Manage the install script for this Egg.</small></h1>
-    <ol class="breadcrumb">
-        <li><a href="{{ route('admin.index') }}">Admin</a></li>
-        <li><a href="{{ route('admin.nests') }}">Nests</a></li>
-        <li><a href="{{ route('admin.nests.view', $egg->nest->id) }}">{{ $egg->nest->name }}</a></li>
-        <li><a href="{{ route('admin.nests.egg.view', $egg->id) }}">{{ $egg->name }}</a></li>
-        <li class="active">{{ $egg->name }}</li>
-    </ol>
+    <nav class="cds--breadcrumb cds--breadcrumb--no-trailing-slash" aria-label="breadcrumb">
+        <div class="cds--breadcrumb-item"><a href="{{ route('admin.index') }}" class="cds--link">Admin</a></div>
+        <div class="cds--breadcrumb-item"><a href="{{ route('admin.nests') }}" class="cds--link">Nests</a></div>
+        <div class="cds--breadcrumb-item"><a href="{{ route('admin.nests.view', $egg->nest->id) }}" class="cds--link">{{ $egg->nest->name }}</a></div>
+        <div class="cds--breadcrumb-item"><a href="{{ route('admin.nests.egg.view', $egg->id) }}" class="cds--link">{{ $egg->name }}</a></div>
+        <div class="cds--breadcrumb-item"><span class="cds--link">{{ $egg->name }}</span></div>
+    </nav>
+    <h1 class="cds--type-productive-heading-04">{{ $egg->name }}</h1>
+    <p class="cds--type-body-compact-01">Manage the install script for this Egg.</p>
 @endsection
 
 @section('content')
 <div class="row">
     <div class="col-xs-12">
-        <div class="nav-tabs-custom nav-tabs-floating">
-            <ul class="nav nav-tabs">
+        <div class="cds--tabs">
+            <ul class="cds--tab--list">
                 <li><a href="{{ route('admin.nests.egg.view', $egg->id) }}">Configuration</a></li>
                 <li><a href="{{ route('admin.nests.egg.variables', $egg->id) }}">Variables</a></li>
                 <li class="active"><a href="{{ route('admin.nests.egg.scripts', $egg->id) }}">Install Script</a></li>
@@ -31,40 +32,40 @@
     <div class="row">
         <div class="col-xs-12">
             <div class="box">
-                <div class="box-header with-border">
-                    <h3 class="box-title">Install Script</h3>
+                <div class="ptero-tile__header">
+                    <h3 class="cds--type-productive-heading-02">Install Script</h3>
                 </div>
                 @if(! is_null($egg->copyFrom))
-                    <div class="box-body">
-                        <div class="callout callout-warning no-margin">
+                    <div class="ptero-tile__body">
+                        <div class="cds--inline-notification cds--inline-notification--warning no-margin">
                             This service option is copying installation scripts and container options from <a href="{{ route('admin.nests.egg.view', $egg->copyFrom->id) }}">{{ $egg->copyFrom->name }}</a>. Any changes you make to this script will not apply unless you select "None" from the dropdown box below.
                         </div>
                     </div>
                 @endif
-                <div class="box-body no-padding">
+                <div class="ptero-tile__body no-padding">
                     <div id="editor_install"style="height:300px">{{ $egg->script_install }}</div>
                 </div>
-                <div class="box-body">
+                <div class="ptero-tile__body">
                     <div class="row">
-                        <div class="form-group col-sm-4">
-                            <label class="control-label">Copy Script From</label>
-                            <select id="pCopyScriptFrom" name="copy_script_from">
+                        <div class="cds--form-item col-sm-4">
+                            <label class="cds--label">Copy Script From</label>
+                            <select class="cds--select-input" id="pCopyScriptFrom" name="copy_script_from">
                                 <option value="">None</option>
                                 @foreach($copyFromOptions as $opt)
                                     <option value="{{ $opt->id }}" {{ $egg->copy_script_from !== $opt->id ?: 'selected' }}>{{ $opt->name }}</option>
                                 @endforeach
                             </select>
-                            <p class="text-muted small">If selected, script above will be ignored and script from selected option will be used in place.</p>
+                            <p class="cds--form__helper-text">If selected, script above will be ignored and script from selected option will be used in place.</p>
                         </div>
-                        <div class="form-group col-sm-4">
-                            <label class="control-label">Script Container</label>
-                            <input type="text" name="script_container" class="form-control" value="{{ $egg->script_container }}" />
-                            <p class="text-muted small">Docker container to use when running this script for the server.</p>
+                        <div class="cds--form-item col-sm-4">
+                            <label class="cds--label">Script Container</label>
+                            <input type="text" name="script_container" class="cds--text-input" value="{{ $egg->script_container }}" />
+                            <p class="cds--form__helper-text">Docker container to use when running this script for the server.</p>
                         </div>
-                        <div class="form-group col-sm-4">
-                            <label class="control-label">Script Entrypoint Command</label>
-                            <input type="text" name="script_entry" class="form-control" value="{{ $egg->script_entry }}" />
-                            <p class="text-muted small">The entrypoint command to use for this script.</p>
+                        <div class="cds--form-item col-sm-4">
+                            <label class="cds--label">Script Entrypoint Command</label>
+                            <input type="text" name="script_entry" class="cds--text-input" value="{{ $egg->script_entry }}" />
+                            <p class="cds--form__helper-text">The entrypoint command to use for this script.</p>
                         </div>
                     </div>
                     <div class="row">
@@ -82,10 +83,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="box-footer">
+                <div class="ptero-tile__footer">
                     {!! csrf_field() !!}
                     <textarea name="script_install" class="hidden"></textarea>
-                    <button type="submit" name="_method" value="PATCH" class="btn btn-primary btn-sm pull-right">Save</button>
+                    <button type="submit" name="_method" value="PATCH" class="cds--btn cds--btn--primary cds--btn--sm pull-right">Save</button>
                 </div>
             </div>
         </div>

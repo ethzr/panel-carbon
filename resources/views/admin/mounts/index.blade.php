@@ -6,27 +6,28 @@
 @endsection
 
 @section('content-header')
-    <h1>Mounts<small>Configure and manage additional mount points for servers.</small></h1>
-    <ol class="breadcrumb">
-        <li><a href="{{ route('admin.index') }}">Admin</a></li>
-        <li class="active">Mounts</li>
-    </ol>
+    <nav class="cds--breadcrumb cds--breadcrumb--no-trailing-slash" aria-label="breadcrumb">
+        <div class="cds--breadcrumb-item"><a href="{{ route('admin.index') }}" class="cds--link">Admin</a></div>
+        <div class="cds--breadcrumb-item"><span class="cds--link">Mounts</span></div>
+    </nav>
+    <h1 class="cds--type-productive-heading-04">Mounts</h1>
+    <p class="cds--type-body-compact-01">Configure and manage additional mount points for servers.</p>
 @endsection
 
 @section('content')
     <div class="row">
         <div class="col-xs-12">
-            <div class="box box-primary">
-                <div class="box-header with-border">
-                    <h3 class="box-title">Mount List</h3>
+            <div class="cds--tile ptero-tile">
+                <div class="ptero-tile__header">
+                    <h3 class="cds--type-productive-heading-02">Mount List</h3>
 
-                    <div class="box-tools">
-                        <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#newMountModal">Create New</button>
+                    <div class="ptero-tile__tools">
+                        <button class="cds--btn cds--btn--sm cds--btn--primary" data-toggle="modal" data-target="#newMountModal">Create New</button>
                     </div>
                 </div>
 
-                <div class="box-body table-responsive no-padding">
-                    <table class="table table-hover">
+                <div class="cds--data-table-container">
+                    <table class="cds--data-table cds--data-table--lg cds--data-table--zebra">
                         <tbody>
                             <tr>
                                 <th>ID</th>
@@ -71,31 +72,31 @@
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-md-12">
-                                <label for="pName" class="form-label">Name</label>
-                                <input type="text" id="pName" name="name" class="form-control" />
-                                <p class="text-muted small">Unique name used to separate this mount from another.</p>
+                                <label for="pName" class="cds--label">Name</label>
+                                <input type="text" id="pName" name="name" class="cds--text-input" />
+                                <p class="cds--form__helper-text">Unique name used to separate this mount from another.</p>
                             </div>
 
                             <div class="col-md-12">
-                                <label for="pDescription" class="form-label">Description</label>
-                                <textarea id="pDescription" name="description" class="form-control" rows="4"></textarea>
-                                <p class="text-muted small">A longer description for this mount, must be less than 191 characters.</p>
+                                <label for="pDescription" class="cds--label">Description</label>
+                                <textarea id="pDescription" name="description" class="cds--text-input" rows="4"></textarea>
+                                <p class="cds--form__helper-text">A longer description for this mount, must be less than 191 characters.</p>
                             </div>
 
                             <div class="col-md-6">
-                                <label for="pSource" class="form-label">Source</label>
-                                <input type="text" id="pSource" name="source" class="form-control" />
-                                <p class="text-muted small">File path on the host system to mount to a container.</p>
+                                <label for="pSource" class="cds--label">Source</label>
+                                <input type="text" id="pSource" name="source" class="cds--text-input" />
+                                <p class="cds--form__helper-text">File path on the host system to mount to a container.</p>
                             </div>
 
                             <div class="col-md-6">
-                                <label for="pTarget" class="form-label">Target</label>
-                                <input type="text" id="pTarget" name="target" class="form-control" />
-                                <p class="text-muted small">Where the mount will be accessible inside a container.</p>
+                                <label for="pTarget" class="cds--label">Target</label>
+                                <input type="text" id="pTarget" name="target" class="cds--text-input" />
+                                <p class="cds--form__helper-text">Where the mount will be accessible inside a container.</p>
                             </div>
 
                             <div class="col-md-6">
-                                <label class="form-label">Read Only</label>
+                                <label class="cds--label">Read Only</label>
 
                                 <div>
                                     <div class="radio radio-success radio-inline">
@@ -109,11 +110,11 @@
                                     </div>
                                 </div>
 
-                                <p class="text-muted small">Is the mount read only inside the container?</p>
+                                <p class="cds--form__helper-text">Is the mount read only inside the container?</p>
                             </div>
 
                             <div class="col-md-6">
-                                <label class="form-label">User Mountable</label>
+                                <label class="cds--label">User Mountable</label>
 
                                 <div>
                                     <div class="radio radio-success radio-inline">
@@ -127,15 +128,15 @@
                                     </div>
                                 </div>
 
-                                <p class="text-muted small">Should users be able to mount this themselves?</p>
+                                <p class="cds--form__helper-text">Should users be able to mount this themselves?</p>
                             </div>
                         </div>
                     </div>
 
                     <div class="modal-footer">
                         {!! csrf_field() !!}
-                        <button type="button" class="btn btn-default btn-sm pull-left" data-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-success btn-sm">Create</button>
+                        <button type="button" class="cds--btn cds--btn--secondary cds--btn--sm pull-left" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="cds--btn cds--btn--primary cds--btn--sm">Create</button>
                     </div>
                 </form>
             </div>
