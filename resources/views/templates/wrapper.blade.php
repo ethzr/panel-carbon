@@ -36,7 +36,7 @@
 
         @include('layouts.scripts')
     </head>
-    <body class="{{ $css['body'] ?? 'bg-neutral-50' }}">
+    <body class="cds--g100 {{ $css['body'] ?? '' }}">
         @section('content')
             @yield('above-container')
             @yield('container')

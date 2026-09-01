@@ -4,27 +4,9 @@ import UpdatePasswordForm from '@/components/dashboard/forms/UpdatePasswordForm'
 import UpdateEmailAddressForm from '@/components/dashboard/forms/UpdateEmailAddressForm';
 import ConfigureTwoFactorForm from '@/components/dashboard/forms/ConfigureTwoFactorForm';
 import PageContentBlock from '@/components/elements/PageContentBlock';
-import tw from 'twin.macro';
-import { breakpoint } from '@/theme';
-import styled from 'styled-components/macro';
 import MessageBox from '@/components/MessageBox';
 import { useLocation } from 'react-router-dom';
-
-const Container = styled.div`
-    ${tw`flex flex-wrap`};
-
-    & > div {
-        ${tw`w-full`};
-
-        ${breakpoint('sm')`
-      width: calc(50% - 1rem);
-    `}
-
-        ${breakpoint('md')`
-      ${tw`w-auto flex-1`};
-    `}
-    }
-`;
+import { Column, Grid } from '@carbon/react';
 
 export default () => {
     const { state } = useLocation<undefined | { twoFactorRedirect?: boolean }>();
@@ -37,17 +19,23 @@ export default () => {
                 </MessageBox>
             )}
 
-            <Container css={[tw`lg:grid lg:grid-cols-3 mb-10`, state?.twoFactorRedirect ? tw`mt-4` : tw`mt-10`]}>
-                <ContentBox title={'Update Password'} showFlashes={'account:password'}>
-                    <UpdatePasswordForm />
-                </ContentBox>
-                <ContentBox css={tw`mt-8 sm:mt-0 sm:ml-8`} title={'Update Email Address'} showFlashes={'account:email'}>
-                    <UpdateEmailAddressForm />
-                </ContentBox>
-                <ContentBox css={tw`md:ml-8 mt-8 md:mt-0`} title={'Two-Step Verification'}>
-                    <ConfigureTwoFactorForm />
-                </ContentBox>
-            </Container>
+            <Grid fullWidth style={{ marginTop: state?.twoFactorRedirect ? '1rem' : '1.5rem', padding: 0 }}>
+                <Column sm={4} md={4} lg={5} style={{ marginBottom: '1rem' }}>
+                    <ContentBox title={'Update Password'} showFlashes={'account:password'}>
+                        <UpdatePasswordForm />
+                    </ContentBox>
+                </Column>
+                <Column sm={4} md={4} lg={5} style={{ marginBottom: '1rem' }}>
+                    <ContentBox title={'Update Email Address'} showFlashes={'account:email'}>
+                        <UpdateEmailAddressForm />
+                    </ContentBox>
+                </Column>
+                <Column sm={4} md={8} lg={6} style={{ marginBottom: '1rem' }}>
+                    <ContentBox title={'Two-Step Verification'}>
+                        <ConfigureTwoFactorForm />
+                    </ContentBox>
+                </Column>
+            </Grid>
         </PageContentBlock>
     );
 };

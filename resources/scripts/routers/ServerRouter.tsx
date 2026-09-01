@@ -63,7 +63,7 @@ export default () => {
     }, [match.params.id]);
 
     return (
-        <React.Fragment key={'server-router'}>
+        <div className={'ptero-shell'} key={'server-router'}>
             <NavigationBar />
             {!uuid || !id ? (
                 error ? (
@@ -123,6 +123,6 @@ export default () => {
                     )}
                 </>
             )}
-        </React.Fragment>
+        </div>
     );
 };

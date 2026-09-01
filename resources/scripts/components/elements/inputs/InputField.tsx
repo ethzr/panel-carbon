@@ -1,6 +1,5 @@
 import React, { forwardRef } from 'react';
 import classNames from 'classnames';
-import styles from './styles.module.css';
 
 enum Variant {
     Normal,
@@ -12,12 +11,7 @@ const Component = forwardRef<HTMLInputElement, React.ComponentProps<'input'> & {
     ({ className, variant, ...props }, ref) => (
         <input
             ref={ref}
-            className={classNames(
-                'form-input',
-                styles.text_input,
-                { [styles.loose]: variant === Variant.Loose },
-                className
-            )}
+            className={classNames('cds--text-input', variant === Variant.Loose && 'cds--text-input--lg', className)}
             {...props}
         />
     )

@@ -6,9 +6,7 @@ export default ({ children }: { children: React.ReactNode }) => {
     const { setFooter } = useContext(DialogContext);
 
     useDeepCompareEffect(() => {
-        setFooter(
-            <div className={'px-6 py-3 bg-gray-700 flex items-center justify-end space-x-3 rounded-b'}>{children}</div>
-        );
+        setFooter(<div className={'cds--modal-footer'} style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.5rem', marginTop: '1rem' }}>{children}</div>);
     }, [children]);
 
     return null;

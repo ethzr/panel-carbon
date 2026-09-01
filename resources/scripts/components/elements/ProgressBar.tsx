@@ -1,15 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
-import styled from 'styled-components/macro';
 import { useStoreActions, useStoreState } from 'easy-peasy';
 import { randomInt } from '@/helpers';
-import { CSSTransition } from 'react-transition-group';
-import tw from 'twin.macro';
-
-const BarFill = styled.div`
-    ${tw`h-full bg-cyan-400`};
-    transition: 250ms ease-in-out;
-    box-shadow: 0 -2px 10px 2px hsl(178, 78%, 57%);
-`;
+import { ProgressBar as CarbonProgressBar } from '@carbon/react';
 
 type Timer = ReturnType<typeof setTimeout>;
 
@@ -58,11 +50,18 @@ export default () => {
         }
     }, [progress, continuous]);
 
+    if (!visible) {
+        return null;
+    }
+
     return (
-        <div css={tw`w-full fixed`} style={{ height: '2px' }}>
-            <CSSTransition timeout={150} appear in={visible} unmountOnExit classNames={'fade'}>
-                <BarFill style={{ width: progress === undefined ? '100%' : `${progress}%` }} />
-            </CSSTransition>
+        <div style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 9000 }}>
+            <CarbonProgressBar
+                label={'Loading'}
+                hideLabel
+                value={progress === undefined ? 100 : progress}
+                size={'small'}
+            />
         </div>
     );
 };

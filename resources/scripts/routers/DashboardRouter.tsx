@@ -13,7 +13,7 @@ export default () => {
     const location = useLocation();
 
     return (
-        <>
+        <div className={'ptero-shell'}>
             <NavigationBar />
             {location.pathname.startsWith('/account') && (
                 <SubNavigation>
@@ -45,6 +45,6 @@ export default () => {
                     </Switch>
                 </React.Suspense>
             </TransitionRouter>
-        </>
+        </div>
     );
 };

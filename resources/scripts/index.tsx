@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from '@/components/App';
 import { setConfig } from 'react-hot-loader';
+import '@carbon/styles/css/styles.css';
+import '@/assets/carbon-app.css';
 
 // Enable language support.
 import './i18n';

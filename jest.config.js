@@ -25,4 +25,5 @@ module.exports = {
         '.*\\.ts$': 'ts-jest',
     },
     testPathIgnorePatterns: ['/node_modules/'],
+    transformIgnorePatterns: ['node_modules/(?!(@carbon)/)'],
 };

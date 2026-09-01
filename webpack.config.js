@@ -35,6 +35,12 @@ module.exports = {
             },
             {
                 test: /\.css$/,
+                include: /node_modules[\\/]@carbon/,
+                use: ['style-loader', { loader: 'css-loader', options: { sourceMap: !isProduction } }],
+            },
+            {
+                test: /\.css$/,
+                exclude: /node_modules[\\/]@carbon/,
                 use: [
                     { loader: 'style-loader' },
                     {

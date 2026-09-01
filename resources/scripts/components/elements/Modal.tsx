@@ -1,10 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import Spinner from '@/components/elements/Spinner';
-import tw from 'twin.macro';
-import styled, { css } from 'styled-components/macro';
-import { breakpoint } from '@/theme';
+import { ComposedModal, Loading, ModalBody, ModalHeader } from '@carbon/react';
 import Fade from '@/components/elements/Fade';
-import { createPortal } from 'react-dom';
 
 export interface RequiredModalProps {
     visible: boolean;
@@ -20,53 +16,19 @@ export interface ModalProps extends RequiredModalProps {
     showSpinnerOverlay?: boolean;
 }
 
-export const ModalMask = styled.div`
-    ${tw`fixed z-50 overflow-auto flex w-full inset-0`};
-    background: rgba(0, 0, 0, 0.7);
-`;
-
-const ModalContainer = styled.div<{ alignTop?: boolean }>`
-    max-width: 95%;
-    max-height: calc(100vh - 8rem);
-    ${breakpoint('md')`max-width: 75%`};
-    ${breakpoint('lg')`max-width: 50%`};
-
-    ${tw`relative flex flex-col w-full m-auto`};
-    ${(props) =>
-        props.alignTop &&
-        css`
-            margin-top: 20%;
-            ${breakpoint('md')`margin-top: 10%`};
-        `};
-
-    margin-bottom: auto;
-
-    & > .close-icon {
-        ${tw`absolute right-0 p-2 text-white cursor-pointer opacity-50 transition-all duration-150 ease-linear hover:opacity-100`};
-        top: -2.5rem;
-
-        &:hover {
-            ${tw`transform rotate-90`}
-        }
-
-        & > svg {
-            ${tw`w-6 h-6`};
-        }
-    }
-`;
+export const ModalMask = ({ children, ...props }: React.HTMLAttributes<HTMLDivElement>) => <div {...props}>{children}</div>;
 
 const Modal: React.FC<ModalProps> = ({
     visible,
-    appear,
     dismissable,
     showSpinnerOverlay,
-    top = true,
     closeOnBackground = true,
     closeOnEscape = true,
     onDismissed,
     children,
 }) => {
     const [render, setRender] = useState(visible);
+    const pendingClose = useRef(false);
 
     const isDismissable = useMemo(() => {
         return (dismissable || true) && !(showSpinnerOverlay || false);
@@ -76,7 +38,10 @@ const Modal: React.FC<ModalProps> = ({
         if (!isDismissable || !closeOnEscape) return;
 
         const handler = (e: KeyboardEvent) => {
-            if (e.key === 'Escape') setRender(false);
+            if (e.key === 'Escape') {
+                pendingClose.current = true;
+                setRender(false);
+            }
         };
 
         window.addEventListener('keydown', handler);
@@ -87,63 +52,43 @@ const Modal: React.FC<ModalProps> = ({
 
     useEffect(() => setRender(visible), [visible]);
 
+    const handleClose = () => {
+        if (!isDismissable) {
+            return;
+        }
+        pendingClose.current = true;
+        setRender(false);
+        onDismissed();
+    };
+
     return (
-        <Fade in={render} timeout={150} appear={appear || true} unmountOnExit onExited={() => onDismissed()}>
-            <ModalMask
-                onClick={(e) => e.stopPropagation()}
-                onContextMenu={(e) => e.stopPropagation()}
-                onMouseDown={(e) => {
-                    if (isDismissable && closeOnBackground) {
-                        e.stopPropagation();
-                        if (e.target === e.currentTarget) {
-                            setRender(false);
-                        }
-                    }
-                }}
-            >
-                <ModalContainer alignTop={top}>
-                    {isDismissable && (
-                        <div className={'close-icon'} onClick={() => setRender(false)}>
-                            <svg
-                                xmlns={'http://www.w3.org/2000/svg'}
-                                fill={'none'}
-                                viewBox={'0 0 24 24'}
-                                stroke={'currentColor'}
-                            >
-                                <path
-                                    strokeLinecap={'round'}
-                                    strokeLinejoin={'round'}
-                                    strokeWidth={'2'}
-                                    d={'M6 18L18 6M6 6l12 12'}
-                                />
-                            </svg>
-                        </div>
-                    )}
-                    {showSpinnerOverlay && (
-                        <Fade timeout={150} appear in>
-                            <div
-                                css={tw`absolute w-full h-full rounded flex items-center justify-center`}
-                                style={{ background: 'hsla(211, 10%, 53%, 0.35)', zIndex: 9999 }}
-                            >
-                                <Spinner />
-                            </div>
-                        </Fade>
-                    )}
-                    <div
-                        css={tw`bg-neutral-800 p-3 sm:p-4 md:p-6 rounded shadow-md overflow-y-scroll transition-all duration-150`}
-                    >
-                        {children}
+        <ComposedModal
+            open={render}
+            onClose={() => {
+                if (pendingClose.current) {
+                    pendingClose.current = false;
+                    onDismissed();
+                    return true;
+                }
+                handleClose();
+                return true;
+            }}
+            preventCloseOnClickOutside={!closeOnBackground || !isDismissable}
+            size={'md'}
+        >
+            {isDismissable && <ModalHeader buttonOnClick={handleClose} title={''} />}
+            <ModalBody>
+                {showSpinnerOverlay && (
+                    <div className={'absolute inset-0 flex items-center justify-center'} style={{ zIndex: 2 }}>
+                        <Loading withOverlay description={'Loading'} />
                     </div>
-                </ModalContainer>
-            </ModalMask>
-        </Fade>
+                )}
+                {children}
+            </ModalBody>
+        </ComposedModal>
     );
 };
 
-const PortaledModal: React.FC<ModalProps> = ({ children, ...props }) => {
-    const element = useRef(document.getElementById('modal-portal'));
-
-    return createPortal(<Modal {...props}>{children}</Modal>, element.current!);
-};
+const PortaledModal: React.FC<ModalProps> = ({ children, ...props }) => <Modal {...props}>{children}</Modal>;
 
 export default PortaledModal;
