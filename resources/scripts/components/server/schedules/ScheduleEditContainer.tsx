@@ -23,7 +23,7 @@ interface Params {
 }
 
 const CronBox = ({ title, value }: { title: string; value: string }) => (
-    <div css={tw`bg-neutral-700 rounded p-3`}>
+    <div className={'ptero-inset'}>
         <p css={tw`text-neutral-300 text-sm`}>{title}</p>
         <p css={tw`text-xl font-medium text-neutral-100`}>{value}</p>
     </div>
@@ -84,17 +84,16 @@ export default () => {
                 <Spinner size={'large'} centered />
             ) : (
                 <>
-                    <ScheduleCronRow cron={schedule.cron} css={tw`sm:hidden bg-neutral-700 rounded mb-4 p-3`} />
-                    <div css={tw`rounded shadow`}>
-                        <div
-                            css={tw`sm:flex items-center bg-neutral-900 p-3 sm:p-6 border-b-4 border-neutral-600 rounded-t`}
-                        >
+                    <ScheduleCronRow cron={schedule.cron} className={'ptero-inset sm:hidden mb-4'} />
+                    <div className={'ptero-tile'}>
+                        <div className={'ptero-tile__header sm:flex items-center'}>
                             <div css={tw`flex-1`}>
                                 <h3 css={tw`flex items-center text-neutral-100 text-2xl`}>
                                     {schedule.name}
                                     {schedule.isProcessing ? (
                                         <span
-                                            css={tw`flex items-center rounded-full px-2 py-px text-xs ml-4 uppercase bg-neutral-600 text-white`}
+                                            className={'cds--tag cds--tag--gray cds--tag--sm'}
+                                            style={{ marginLeft: '1rem' }}
                                         >
                                             <Spinner css={tw`w-3! h-3! mr-2`} />
                                             Processing
@@ -136,7 +135,7 @@ export default () => {
                             <CronBox title={'Month'} value={schedule.cron.month} />
                             <CronBox title={'Day (Week)'} value={schedule.cron.dayOfWeek} />
                         </div>
-                        <div css={tw`bg-neutral-700 rounded-b`}>
+                        <div className={'ptero-tile__body'}>
                             {schedule.tasks.length > 0
                                 ? schedule.tasks
                                       .sort((a, b) =>

@@ -123,7 +123,15 @@
     margin-top: 0;
 }
 
-body.cds--g100,
-html.cds--g100 {
-    background: #161616;
+.ptero-inset {
+    background: var(--cds-field);
+    border: 1px solid var(--cds-border-subtle-01);
+    padding: 1rem;
+}
+
+.ptero-code {
+    font-family: ibm-plex-mono, Menlo, Monaco, monospace;
+    background: var(--cds-layer-accent);
+    color: var(--cds-text-primary);
+    padding: 0.25rem 0.5rem;
 }
