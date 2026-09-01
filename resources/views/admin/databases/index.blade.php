@@ -25,7 +25,7 @@
             </div>
             <div class="cds--data-table-container">
                 <table class="cds--data-table cds--data-table--lg cds--data-table--zebra">
-                    <tbody>
+                    <thead>
                         <tr>
                             <th>ID</th>
                             <th>Name</th>
@@ -35,6 +35,8 @@
                             <th class="text-center">Databases</th>
                             <th class="text-center">Node</th>
                         </tr>
+                    </thead>
+                    <tbody>
                         @foreach ($hosts as $host)
                             <tr>
                                 <td><code>{{ $host->id }}</code></td>

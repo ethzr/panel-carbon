@@ -18,7 +18,7 @@
     @yield('settings::nav')
     <div class="row">
         <div class="col-xs-12">
-            <div class="box">
+            <div class="cds--tile ptero-tile">
                 <div class="ptero-tile__header">
                     <h3 class="cds--type-productive-heading-02">Panel Settings</h3>
                 </div>
@@ -35,18 +35,21 @@
                             <div class="cds--form-item col-md-4">
                                 <label class="cds--label">Require 2-Factor Authentication</label>
                                 <div>
-                                    <div class="cds--btn-set" data-toggle="buttons">
+                                    <div class="ptero-radio-set">
                                         @php
                                             $level = old('pterodactyl:auth:2fa_required', config('pterodactyl.auth.2fa_required'));
                                         @endphp
-                                        <label class="cds--btn cds--btn--primary @if ($level == 0) active @endif">
-                                            <input type="radio" name="pterodactyl:auth:2fa_required" autocomplete="off" value="0" @if ($level == 0) checked @endif> Not Required
+                                        <label>
+                                            <input type="radio" name="pterodactyl:auth:2fa_required" value="0" @if ($level == 0) checked @endif>
+                                            Not Required
                                         </label>
-                                        <label class="cds--btn cds--btn--primary @if ($level == 1) active @endif">
-                                            <input type="radio" name="pterodactyl:auth:2fa_required" autocomplete="off" value="1" @if ($level == 1) checked @endif> Admin Only
+                                        <label>
+                                            <input type="radio" name="pterodactyl:auth:2fa_required" value="1" @if ($level == 1) checked @endif>
+                                            Admin Only
                                         </label>
-                                        <label class="cds--btn cds--btn--primary @if ($level == 2) active @endif">
-                                            <input type="radio" name="pterodactyl:auth:2fa_required" autocomplete="off" value="2" @if ($level == 2) checked @endif> All Users
+                                        <label>
+                                            <input type="radio" name="pterodactyl:auth:2fa_required" value="2" @if ($level == 2) checked @endif>
+                                            All Users
                                         </label>
                                     </div>
                                     <p class="text-muted"><small>If enabled, any account falling into the selected grouping will be required to have 2-Factor authentication enabled to use the Panel.</small></p>

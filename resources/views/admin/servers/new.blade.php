@@ -18,7 +18,7 @@
 <form action="{{ route('admin.servers.new') }}" method="POST">
     <div class="row">
         <div class="col-xs-12">
-            <div class="box">
+            <div class="cds--tile ptero-tile">
                 <div class="ptero-tile__header">
                     <h3 class="cds--type-productive-heading-02">Core Details</h3>
                 </div>
@@ -59,7 +59,7 @@
 
     <div class="row">
         <div class="col-xs-12">
-            <div class="box">
+            <div class="cds--tile ptero-tile">
                 <div class="overlay" id="allocationLoader" style="display:none;"><i class="fa fa-refresh fa-spin"></i></div>
                 <div class="ptero-tile__header">
                     <h3 class="cds--type-productive-heading-02">Allocation Management</h3>
@@ -103,7 +103,7 @@
 
     <div class="row">
         <div class="col-xs-12">
-            <div class="box">
+            <div class="cds--tile ptero-tile">
                 <div class="overlay" id="allocationLoader" style="display:none;"><i class="fa fa-refresh fa-spin"></i></div>
                 <div class="ptero-tile__header">
                     <h3 class="cds--type-productive-heading-02">Application Feature Limits</h3>
@@ -137,7 +137,7 @@
     </div>
     <div class="row">
         <div class="col-xs-12">
-            <div class="box">
+            <div class="cds--tile ptero-tile">
                 <div class="ptero-tile__header">
                     <h3 class="cds--type-productive-heading-02">Resource Management</h3>
                 </div>
@@ -225,7 +225,7 @@
 
     <div class="row">
         <div class="col-md-6">
-            <div class="box">
+            <div class="cds--tile ptero-tile">
                 <div class="ptero-tile__header">
                     <h3 class="cds--type-productive-heading-02">Nest Configuration</h3>
                 </div>
@@ -265,7 +265,7 @@
         </div>
 
         <div class="col-md-6">
-            <div class="box">
+            <div class="cds--tile ptero-tile">
                 <div class="ptero-tile__header">
                     <h3 class="cds--type-productive-heading-02">Docker Configuration</h3>
                 </div>
@@ -284,7 +284,7 @@
 
     <div class="row">
         <div class="col-md-12">
-            <div class="box">
+            <div class="cds--tile ptero-tile">
                 <div class="ptero-tile__header">
                     <h3 class="cds--type-productive-heading-02">Startup Configuration</h3>
                 </div>

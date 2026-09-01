@@ -42,7 +42,7 @@
     </div>
     <div class="row">
         <div class="col-md-6">
-            <div class="box">
+            <div class="cds--tile ptero-tile">
                 <div class="ptero-tile__header">
                     <h3 class="cds--type-productive-heading-02">Service Configuration</h3>
                 </div>
@@ -83,7 +83,7 @@
                     </div>
                 </div>
             </div>
-            <div class="box">
+            <div class="cds--tile ptero-tile">
                 <div class="ptero-tile__header">
                     <h3 class="cds--type-productive-heading-02">Docker Image Configuration</h3>
                 </div>
@@ -154,7 +154,7 @@
                 var isRequired = (item.required === 1) ? '<span class="cds--tag cds--tag--red">Required</span> ' : '';
                 var dataAppend = ' \
                     <div class="col-xs-12"> \
-                        <div class="box"> \
+                        <div class="cds--tile ptero-tile"> \
                             <div class="ptero-tile__header"> \
                                 <h3 class="cds--type-productive-heading-02">' + isRequired + escapeHtml(item.name) + '</h3> \
                             </div> \

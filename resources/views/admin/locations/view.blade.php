@@ -42,7 +42,7 @@
         </div>
     </div>
     <div class="col-sm-6">
-        <div class="box">
+        <div class="cds--tile ptero-tile">
             <div class="ptero-tile__header">
                 <h3 class="cds--type-productive-heading-02">Nodes</h3>
             </div>

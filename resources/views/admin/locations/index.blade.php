@@ -25,7 +25,7 @@
             </div>
             <div class="cds--data-table-container">
                 <table class="cds--data-table cds--data-table--lg cds--data-table--zebra">
-                    <tbody>
+                    <thead>
                         <tr>
                             <th>ID</th>
                             <th>Short Code</th>
@@ -33,6 +33,8 @@
                             <th class="text-center">Nodes</th>
                             <th class="text-center">Servers</th>
                         </tr>
+                    </thead>
+                    <tbody>
                         @foreach ($locations as $location)
                             <tr>
                                 <td><code>{{ $location->id }}</code></td>
@@ -72,7 +74,7 @@
                 </div>
                 <div class="modal-footer">
                     {!! csrf_field() !!}
-                    <button type="button" class="cds--btn cds--btn--secondary cds--btn--sm pull-left" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="cds--btn cds--btn--secondary cds--btn--sm" data-dismiss="modal">Cancel</button>
                     <button type="submit" class="cds--btn cds--btn--primary cds--btn--sm">Create</button>
                 </div>
             </form>

@@ -1,7 +1,54 @@
+html,
+body,
+#app {
+    margin: 0;
+    min-height: 100vh;
+}
+
 .ptero-app {
     min-height: 100vh;
     background: var(--cds-background);
     color: var(--cds-text-primary);
+}
+
+.ptero-auth {
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+    box-sizing: border-box;
+}
+
+.ptero-auth__card {
+    width: 100%;
+    max-width: 28rem;
+}
+
+.ptero-auth__title {
+    text-align: center;
+    margin: 0 0 1.5rem;
+}
+
+.ptero-auth__flash {
+    margin-bottom: 1rem;
+}
+
+.ptero-auth__tile.cds--tile,
+.ptero-auth__tile {
+    min-height: 24rem;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    box-sizing: border-box;
+}
+
+.ptero-auth__copy {
+    display: block;
+    text-align: center;
+    margin-top: 1rem;
 }
 
 .ptero-shell {

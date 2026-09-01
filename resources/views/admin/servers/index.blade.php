@@ -33,7 +33,7 @@
             </div>
             <div class="cds--data-table-container">
                 <table class="cds--data-table cds--data-table--lg cds--data-table--zebra">
-                    <tbody>
+                    <thead>
                         <tr>
                             <th>Server Name</th>
                             <th>UUID</th>
@@ -43,6 +43,8 @@
                             <th></th>
                             <th></th>
                         </tr>
+                    </thead>
+                    <tbody>
                         @foreach ($servers as $server)
                             <tr data-server="{{ $server->uuidShort }}">
                                 <td><a href="{{ route('admin.servers.view', $server->id) }}">{{ $server->name }}</a></td>

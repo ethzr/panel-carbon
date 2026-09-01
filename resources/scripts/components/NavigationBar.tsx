@@ -27,7 +27,7 @@ export default () => {
         <Header aria-label={name}>
             <SpinnerOverlay visible={isLoggingOut} fixed />
             <SkipToContent />
-            <HeaderName element={Link} to={'/'} prefix={''}>
+            <HeaderName element={Link} to={'/'} prefix="">
                 {name}
             </HeaderName>
             <HeaderGlobalBar>

@@ -23,7 +23,6 @@
             {!! Theme::css('vendor/sweetalert/sweetalert.min.css?t={cache-version}') !!}
             {!! Theme::css('vendor/carbon/styles.min.css?t={cache-version}') !!}
             {!! Theme::css('css/carbon-admin.css?t={cache-version}') !!}
-            {!! Theme::css('css/pterodactyl.css?t={cache-version}') !!}
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         @show
     </head>
@@ -33,10 +32,7 @@
             <button class="cds--header__menu-trigger cds--header__action" type="button" id="ptero-side-nav-toggle" aria-label="Open menu">
                 <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" fill="currentColor" width="20" height="20" viewBox="0 0 32 32" aria-hidden="true"><path d="M4 6H28V8H4zM4 24H28V26H4zM4 15H28V17H4z"></path></svg>
             </button>
-            <a class="cds--header__name" href="{{ route('index') }}">
-                <span class="cds--header__name--prefix">Pterodactyl</span>
-                &nbsp;{{ config('app.name', 'Pterodactyl') }}
-            </a>
+            <a class="cds--header__name" href="{{ route('index') }}">{{ config('app.name', 'Pterodactyl') }}</a>
             <div class="cds--header__global">
                 <a class="cds--header__action" href="{{ route('account') }}" title="{{ Auth::user()->name_first }} {{ Auth::user()->name_last }}">
                     <img src="https://www.gravatar.com/avatar/{{ md5(strtolower(Auth::user()->email)) }}?s=64" alt="" width="20" height="20" style="border-radius: 50%;">

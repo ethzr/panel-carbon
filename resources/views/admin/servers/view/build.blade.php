@@ -20,7 +20,7 @@
 <div class="row">
     <form action="{{ route('admin.servers.view.build', $server->id) }}" method="POST">
         <div class="col-sm-5">
-            <div class="box">
+            <div class="cds--tile ptero-tile">
                 <div class="ptero-tile__header">
                     <h3 class="cds--type-productive-heading-02">Resource Management</h3>
                 </div>
@@ -93,7 +93,7 @@
         <div class="col-sm-7">
             <div class="row">
                 <div class="col-xs-12">
-                    <div class="box">
+                    <div class="cds--tile ptero-tile">
                         <div class="ptero-tile__header">
                             <h3 class="cds--type-productive-heading-02">Application Feature Limits</h3>
                         </div>
@@ -125,7 +125,7 @@
                     </div>
                 </div>
                 <div class="col-xs-12">
-                    <div class="box">
+                    <div class="cds--tile ptero-tile">
                         <div class="ptero-tile__header">
                             <h3 class="cds--type-productive-heading-02">Allocation Management</h3>
                         </div>

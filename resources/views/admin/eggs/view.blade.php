@@ -55,7 +55,7 @@
 <form action="{{ route('admin.nests.egg.view', $egg->id) }}" method="POST">
     <div class="row">
         <div class="col-xs-12">
-            <div class="box">
+            <div class="cds--tile ptero-tile">
                 <div class="ptero-tile__header">
                     <h3 class="cds--type-productive-heading-02">Configuration</h3>
                 </div>
@@ -132,7 +132,7 @@
             </div>
         </div>
         <div class="col-xs-12">
-            <div class="box">
+            <div class="cds--tile ptero-tile">
                 <div class="ptero-tile__header">
                     <h3 class="cds--type-productive-heading-02">Process Management</h3>
                 </div>

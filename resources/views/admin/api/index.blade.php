@@ -25,6 +25,7 @@
                 </div>
                 <div class="cds--data-table-container">
                     <table class="cds--data-table cds--data-table--lg cds--data-table--zebra">
+                        <thead>
                         <tr>
                             <th>Key</th>
                             <th>Memo</th>
@@ -33,6 +34,8 @@
                             <th>Created by</th>
                             <th></th>
                         </tr>
+                        </thead>
+                        <tbody>
                         @foreach($keys as $key)
                             <tr>
                                 <td><code>
@@ -61,6 +64,7 @@
                                 </td>
                             </tr>
                         @endforeach
+                        </tbody>
                     </table>
                 </div>
             </div>

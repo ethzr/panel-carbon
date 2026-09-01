@@ -18,7 +18,7 @@
 <div class="row">
     <form action="{{ route('admin.nests.view', $nest->id) }}" method="POST">
         <div class="col-md-6">
-            <div class="box">
+            <div class="cds--tile ptero-tile">
                 <div class="ptero-tile__body">
                     <div class="cds--form-item">
                         <label class="cds--label">Name <span class="field-required"></span></label>
@@ -43,7 +43,7 @@
         </div>
     </form>
     <div class="col-md-6">
-        <div class="box">
+        <div class="cds--tile ptero-tile">
             <div class="ptero-tile__body">
                 <div class="cds--form-item">
                     <label class="cds--label">Nest ID</label>

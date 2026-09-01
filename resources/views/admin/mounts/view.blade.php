@@ -99,7 +99,7 @@
         </div>
 
         <div class="col-sm-6">
-            <div class="box">
+            <div class="cds--tile ptero-tile">
                 <div class="ptero-tile__header">
                     <h3 class="cds--type-productive-heading-02">Eggs</h3>
 
@@ -129,7 +129,7 @@
                 </div>
             </div>
 
-            <div class="box">
+            <div class="cds--tile ptero-tile">
                 <div class="ptero-tile__header">
                     <h3 class="cds--type-productive-heading-02">Nodes</h3>
 
@@ -169,7 +169,7 @@
                 <form action="{{ route('admin.mounts.eggs', $mount->id) }}" method="POST">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true" style="color: #FFFFFF">&times;</span>
+                            <span aria-hidden="true">&times;</span>
                         </button>
 
                         <h4 class="modal-title">Add Eggs</h4>
@@ -213,7 +213,7 @@
                 <form action="{{ route('admin.mounts.nodes', $mount->id) }}" method="POST">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true" style="color: #FFFFFF">&times;</span>
+                            <span aria-hidden="true">&times;</span>
                         </button>
 
                         <h4 class="modal-title">Add Nodes</h4>

@@ -28,7 +28,7 @@
 
                 <div class="cds--data-table-container">
                     <table class="cds--data-table cds--data-table--lg cds--data-table--zebra">
-                        <tbody>
+                        <thead>
                             <tr>
                                 <th>ID</th>
                                 <th>Name</th>
@@ -38,7 +38,8 @@
                                 <th class="text-center">Nodes</th>
                                 <th class="text-center">Servers</th>
                             </tr>
-
+                        </thead>
+                        <tbody>
                             @foreach ($mounts as $mount)
                                 <tr>
                                     <td><code>{{ $mount->id }}</code></td>
@@ -63,7 +64,7 @@
                 <form action="{{ route('admin.mounts') }}" method="POST">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true" style="color: #FFFFFF">&times;</span>
+                            <span aria-hidden="true">&times;</span>
                         </button>
 
                         <h4 class="modal-title">Create Mount</h4>

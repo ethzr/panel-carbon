@@ -38,7 +38,7 @@
             </div>
             <div class="cds--data-table-container">
                 <table class="cds--data-table cds--data-table--lg cds--data-table--zebra">
-                    <tbody>
+                    <thead>
                         <tr>
                             <th></th>
                             <th>Name</th>
@@ -49,6 +49,8 @@
                             <th class="text-center">SSL</th>
                             <th class="text-center">Public</th>
                         </tr>
+                    </thead>
+                    <tbody>
                         @foreach ($nodes as $node)
                             <tr>
                                 <td class="text-center text-muted left-icon" data-action="ping" data-secret="{{ $node->getDecryptedKey() }}" data-location="{{ $node->scheme }}://{{ $node->fqdn }}:{{ $node->daemonListen }}/api/system"><i class="fa fa-fw fa-refresh fa-spin"></i></td>
