@@ -44,13 +44,13 @@ const options: ChartOptions<'line'> = {
             type: 'linear',
             grid: {
                 display: true,
-                color: 'var(--cds-border-subtle-01)',
+                color: '#393939',
                 drawBorder: false,
             },
             ticks: {
                 display: true,
                 count: 3,
-                color: 'var(--cds-text-secondary)',
+                color: '#c6c6c6',
                 font: {
                     family: 'IBM Plex Sans, Helvetica Neue, Arial, sans-serif',
                     size: 11,
