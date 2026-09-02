@@ -9,8 +9,7 @@ import { object, string } from 'yup';
 import SpinnerOverlay from '@/components/elements/SpinnerOverlay';
 import { ApplicationStore } from '@/state';
 import { httpErrorToHuman } from '@/api/http';
-import { Button } from '@/components/elements/button/index';
-import tw from 'twin.macro';
+import { Button } from '@carbon/react';
 import Label from '@/components/elements/Label';
 import FormikFieldWrapper from '@/components/elements/FormikFieldWrapper';
 import { Textarea } from '@/components/elements/Input';
@@ -24,18 +23,20 @@ const RenameServerBox = () => {
     const { isSubmitting } = useFormikContext<Values>();
 
     return (
-        <TitledGreyBox title={'Change Server Details'} css={tw`relative`}>
+        <TitledGreyBox title={'Change Server Details'} className={'relative'}>
             <SpinnerOverlay visible={isSubmitting} />
-            <Form css={tw`mb-0`}>
+            <Form>
                 <Field id={'name'} name={'name'} label={'Server Name'} type={'text'} />
-                <div css={tw`mt-6`}>
+                <div style={{ marginTop: '1.5rem' }}>
                     <Label>Server Description</Label>
                     <FormikFieldWrapper name={'description'}>
                         <FormikField as={Textarea} name={'description'} rows={3} />
                     </FormikFieldWrapper>
                 </div>
-                <div css={tw`mt-6 text-right`}>
-                    <Button type={'submit'}>Save</Button>
+                <div className={'ptero-toolbar'}>
+                    <Button kind={'primary'} type={'submit'}>
+                        Save
+                    </Button>
                 </div>
             </Form>
         </TitledGreyBox>

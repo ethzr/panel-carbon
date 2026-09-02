@@ -5,12 +5,13 @@
 @endsection
 
 @section('content-header')
-    <h1>{{ $server->name }}<small>{{ str_limit($server->description) }}</small></h1>
-    <ol class="breadcrumb">
-        <li><a href="{{ route('admin.index') }}">Admin</a></li>
-        <li><a href="{{ route('admin.servers') }}">Servers</a></li>
-        <li class="active">{{ $server->name }}</li>
-    </ol>
+    <nav class="cds--breadcrumb cds--breadcrumb--no-trailing-slash" aria-label="breadcrumb">
+        <div class="cds--breadcrumb-item"><a href="{{ route('admin.index') }}" class="cds--link">Admin</a></div>
+        <div class="cds--breadcrumb-item"><a href="{{ route('admin.servers') }}" class="cds--link">Servers</a></div>
+        <div class="cds--breadcrumb-item"><span class="cds--link">{{ $server->name }}</span></div>
+    </nav>
+    <h1 class="cds--type-productive-heading-04">{{ $server->name }}</h1>
+    <p class="cds--type-body-compact-01">{{ str_limit($server->description) }}</p>
 @endsection
 
 @section('content')
@@ -19,12 +20,12 @@
     <div class="col-sm-8">
         <div class="row">
             <div class="col-xs-12">
-                <div class="box box-primary">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">Information</h3>
+                <div class="cds--tile ptero-tile">
+                    <div class="ptero-tile__header">
+                        <h3 class="cds--type-productive-heading-02">Information</h3>
                     </div>
-                    <div class="box-body table-responsive no-padding">
-                        <table class="table table-hover">
+                    <div class="cds--data-table-container">
+                        <table class="cds--data-table cds--data-table--lg cds--data-table--zebra">
                             <tr>
                                 <td>Internal Identifier</td>
                                 <td><code>{{ $server->id }}</code></td>
@@ -32,7 +33,7 @@
                             <tr>
                                 <td>External Identifier</td>
                                 @if(is_null($server->external_id))
-                                    <td><span class="label label-default">Not Set</span></td>
+                                    <td><span class="cds--tag cds--tag--gray">Not Set</span></td>
                                 @else
                                     <td><code>{{ $server->external_id }}</code></td>
                                 @endif
@@ -68,7 +69,7 @@
                                     @if($server->threads != null)
                                         <code>{{ $server->threads }}</code>
                                     @else
-                                        <span class="label label-default">Not Set</span>
+                                        <span class="cds--tag cds--tag--gray">Not Set</span>
                                     @endif
                                 </td>
                             </tr>
@@ -114,7 +115,7 @@
                                     @if($server->allocation->alias !== $server->allocation->ip)
                                         <code>{{ $server->allocation->alias }}:{{ $server->allocation->port }}</code>
                                     @else
-                                        <span class="label label-default">No Alias Assigned</span>
+                                        <span class="cds--tag cds--tag--gray">No Alias Assigned</span>
                                     @endif
                                 </td>
                             </tr>
@@ -125,8 +126,8 @@
         </div>
     </div>
     <div class="col-sm-4">
-        <div class="box box-primary">
-            <div class="box-body" style="padding-bottom: 0px;">
+        <div class="cds--tile ptero-tile">
+            <div class="ptero-tile__body" style="padding-bottom: 0px;">
                 <div class="row">
                     @if($server->isSuspended())
                         <div class="col-sm-12">
@@ -153,7 +154,7 @@
                                 <p>Server Owner</p>
                             </div>
                             <div class="icon"><i class="fa fa-user"></i></div>
-                            <a href="{{ route('admin.users.view', $server->user->id) }}" class="small-box-footer">
+                            <a href="{{ route('admin.users.view', $server->user->id) }}" class="small-ptero-tile__footer">
                                 More info <i class="fa fa-arrow-circle-right"></i>
                             </a>
                         </div>
@@ -165,7 +166,7 @@
                                 <p>Server Node</p>
                             </div>
                             <div class="icon"><i class="fa fa-codepen"></i></div>
-                            <a href="{{ route('admin.nodes.view', $server->node->id) }}" class="small-box-footer">
+                            <a href="{{ route('admin.nodes.view', $server->node->id) }}" class="small-ptero-tile__footer">
                                 More info <i class="fa fa-arrow-circle-right"></i>
                             </a>
                         </div>

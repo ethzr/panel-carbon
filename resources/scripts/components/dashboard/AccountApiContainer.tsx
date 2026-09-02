@@ -9,11 +9,11 @@ import deleteApiKey from '@/api/account/deleteApiKey';
 import FlashMessageRender from '@/components/FlashMessageRender';
 import { format } from 'date-fns';
 import PageContentBlock from '@/components/elements/PageContentBlock';
-import tw from 'twin.macro';
 import GreyRowBox from '@/components/elements/GreyRowBox';
 import { Dialog } from '@/components/elements/dialog';
 import { useFlashKey } from '@/plugins/useFlash';
 import Code from '@/components/elements/Code';
+import { Button } from '@carbon/react';
 
 export default () => {
     const [deleteIdentifier, setDeleteIdentifier] = useState('');
@@ -44,11 +44,11 @@ export default () => {
     return (
         <PageContentBlock title={'Account API'}>
             <FlashMessageRender byKey={'account'} />
-            <div css={tw`md:flex flex-nowrap my-10`}>
-                <ContentBox title={'Create API Key'} css={tw`flex-none w-full md:w-1/2`}>
+            <div className={'ptero-split'} style={{ marginTop: '1.5rem' }}>
+                <ContentBox title={'Create API Key'}>
                     <CreateApiKeyForm onKeyCreated={(key) => setKeys((s) => [...s!, key])} />
                 </ContentBox>
-                <ContentBox title={'API Keys'} css={tw`flex-1 overflow-hidden mt-8 md:mt-0 md:ml-8`}>
+                <ContentBox title={'API Keys'}>
                     <SpinnerOverlay visible={loading} />
                     <Dialog.Confirm
                         title={'Delete API Key'}
@@ -60,32 +60,31 @@ export default () => {
                         All requests using the <Code>{deleteIdentifier}</Code> key will be invalidated.
                     </Dialog.Confirm>
                     {keys.length === 0 ? (
-                        <p css={tw`text-center text-sm`}>
-                            {loading ? 'Loading...' : 'No API keys exist for this account.'}
-                        </p>
+                        <p className={'ptero-empty'}>{loading ? 'Loading...' : 'No API keys exist for this account.'}</p>
                     ) : (
-                        keys.map((key, index) => (
-                            <GreyRowBox
-                                key={key.identifier}
-                                css={[tw`bg-neutral-600 flex items-center`, index > 0 && tw`mt-2`]}
-                            >
-                                <FontAwesomeIcon icon={faKey} css={tw`text-neutral-300`} />
-                                <div css={tw`ml-4 flex-1 overflow-hidden`}>
-                                    <p css={tw`text-sm break-words`}>{key.description}</p>
-                                    <p css={tw`text-2xs text-neutral-300 uppercase`}>
+                        keys.map((key) => (
+                            <GreyRowBox key={key.identifier} $hoverable={false}>
+                                <div className={'ptero-resource-row__icon'}>
+                                    <FontAwesomeIcon icon={faKey} />
+                                </div>
+                                <div className={'ptero-resource-row__body'}>
+                                    <p>{key.description}</p>
+                                    <p className={'ptero-muted'}>
                                         Last used:&nbsp;
                                         {key.lastUsedAt ? format(key.lastUsedAt, 'MMM do, yyyy HH:mm') : 'Never'}
                                     </p>
                                 </div>
-                                <p css={tw`text-sm ml-4 hidden md:block`}>
-                                    <code css={tw`font-mono py-1 px-2 bg-neutral-900 rounded`}>{key.identifier}</code>
-                                </p>
-                                <button css={tw`ml-4 p-2 text-sm`} onClick={() => setDeleteIdentifier(key.identifier)}>
-                                    <FontAwesomeIcon
-                                        icon={faTrashAlt}
-                                        css={tw`text-neutral-400 hover:text-red-400 transition-colors duration-150`}
+                                <code className={'ptero-code'}>{key.identifier}</code>
+                                <div className={'ptero-resource-row__actions'}>
+                                    <Button
+                                        kind={'danger--ghost'}
+                                        size={'sm'}
+                                        hasIconOnly
+                                        iconDescription={'Delete API key'}
+                                        onClick={() => setDeleteIdentifier(key.identifier)}
+                                        renderIcon={() => <FontAwesomeIcon icon={faTrashAlt} />}
                                     />
-                                </button>
+                                </div>
                             </GreyRowBox>
                         ))
                     )}

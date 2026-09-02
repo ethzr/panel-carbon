@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Dialog, DialogWrapperContext } from '@/components/elements/dialog';
 import getTwoFactorTokenData, { TwoFactorTokenData } from '@/api/account/getTwoFactorTokenData';
 import { useFlashKey } from '@/plugins/useFlash';
-import tw from 'twin.macro';
 import QRCode from 'qrcode.react';
 import { Button } from '@/components/elements/button/index';
 import Spinner from '@/components/elements/Spinner';
@@ -61,15 +60,15 @@ const ConfigureTwoFactorForm = ({ onTokens }: Props) => {
     return (
         <form id={'enable-totp-form'} onSubmit={submit}>
             <FlashMessageRender byKey={'account:two-step'} className={'mt-4'} />
-            <div className={'flex items-center justify-center w-56 h-56 p-2 bg-gray-50 shadow mx-auto mt-6'}>
+            <div className={'ptero-qr'}>
                 {!token ? (
                     <Spinner />
                 ) : (
-                    <QRCode renderAs={'svg'} value={token.image_url_data} css={tw`w-full h-full shadow-none`} />
+                    <QRCode renderAs={'svg'} value={token.image_url_data} />
                 )}
             </div>
             <CopyOnClick text={token?.secret}>
-                <p className={'font-mono text-sm text-gray-100 text-center mt-2'}>
+                <p className={'ptero-code'} style={{ textAlign: 'center', marginTop: '0.5rem' }}>
                     {token?.secret.match(/.{1,4}/g)!.join(' ') || 'Loading...'}
                 </p>
             </CopyOnClick>

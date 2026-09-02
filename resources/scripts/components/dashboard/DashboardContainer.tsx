@@ -8,7 +8,6 @@ import useFlash from '@/plugins/useFlash';
 import { useStoreState } from 'easy-peasy';
 import { usePersistedState } from '@/plugins/usePersistedState';
 import Switch from '@/components/elements/Switch';
-import tw from 'twin.macro';
 import useSWR from 'swr';
 import { PaginatedResult } from '@/api/http';
 import Pagination from '@/components/elements/Pagination';
@@ -41,9 +40,6 @@ export default () => {
     }, [servers?.pagination.currentPage]);
 
     useEffect(() => {
-        // Don't use react-router to handle changing this part of the URL, otherwise it
-        // triggers a needless re-render. We just want to track this in the URL incase the
-        // user refreshes the page.
         window.history.replaceState(null, document.title, `/${page <= 1 ? '' : `?page=${page}`}`);
     }, [page]);
 
@@ -54,13 +50,13 @@ export default () => {
 
     return (
         <PageContentBlock title={'Dashboard'} showFlashKey={'dashboard'}>
+            <h1 className={'cds--productive-heading-04 ptero-page-title'}>Servers</h1>
+            <p className={'cds--body-compact-01 ptero-page-copy'}>Servers you can access from this account.</p>
             {rootAdmin && (
-                <div css={tw`mb-2 flex justify-end items-center`}>
-                    <p css={tw`uppercase text-xs text-neutral-400 mr-2`}>
-                        {showOnlyAdmin ? "Showing others' servers" : 'Showing your servers'}
-                    </p>
+                <div className={'ptero-toolbar'} style={{ marginTop: 0, marginBottom: '1rem' }}>
                     <Switch
                         name={'show_all_servers'}
+                        label={showOnlyAdmin ? "Showing others' servers" : 'Showing your servers'}
                         defaultChecked={showOnlyAdmin}
                         onChange={() => setShowOnlyAdmin((s) => !s)}
                     />
@@ -72,11 +68,9 @@ export default () => {
                 <Pagination data={servers} onPageSelect={setPage}>
                     {({ items }) =>
                         items.length > 0 ? (
-                            items.map((server, index) => (
-                                <ServerRow key={server.uuid} server={server} css={index > 0 ? tw`mt-2` : undefined} />
-                            ))
+                            items.map((server) => <ServerRow key={server.uuid} server={server} />)
                         ) : (
-                            <p css={tw`text-center text-sm text-neutral-400`}>
+                            <p className={'ptero-empty'}>
                                 {showOnlyAdmin
                                     ? 'There are no other servers to display.'
                                     : 'There are no servers associated with your account.'}

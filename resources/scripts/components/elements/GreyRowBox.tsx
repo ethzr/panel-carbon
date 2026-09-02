@@ -1,12 +1,49 @@
-import styled from 'styled-components/macro';
-import tw from 'twin.macro';
+import React from 'react';
+import classNames from 'classnames';
+import { Link } from 'react-router-dom';
+import { Tile } from '@carbon/react';
 
-export default styled.div<{ $hoverable?: boolean }>`
-    ${tw`flex rounded no-underline text-neutral-200 items-center bg-neutral-700 p-4 border border-transparent transition-colors duration-150 overflow-hidden`};
+type Props = {
+    as?: React.ElementType;
+    to?: string;
+    href?: string;
+    $hoverable?: boolean;
+    className?: string;
+    children?: React.ReactNode;
+} & React.HTMLAttributes<HTMLElement>;
 
-    ${(props) => props.$hoverable !== false && tw`hover:border-neutral-500`};
+const GreyRowBox = ({ as, to, href, $hoverable = true, className, children, ...props }: Props) => {
+    const classes = classNames(
+        'ptero-resource-row',
+        $hoverable !== false && 'ptero-resource-row--interactive',
+        className
+    );
 
-    & .icon {
-        ${tw`rounded-full w-16 flex items-center justify-center bg-neutral-500 p-3`};
+    if (as === Link || to) {
+        return (
+            <Link
+                to={to || href || '#'}
+                className={classNames(classes, 'cds--tile cds--tile--clickable')}
+                {...(props as React.AnchorHTMLAttributes<HTMLAnchorElement>)}
+            >
+                {children}
+            </Link>
+        );
     }
-`;
+
+    if (as === 'a' || href) {
+        return (
+            <a href={href} className={classNames(classes, 'cds--tile cds--tile--clickable')} {...props}>
+                {children}
+            </a>
+        );
+    }
+
+    return (
+        <Tile className={classes} {...(props as React.HTMLAttributes<HTMLDivElement>)}>
+            {children}
+        </Tile>
+    );
+};
+
+export default GreyRowBox;

@@ -6,54 +6,55 @@
 @endsection
 
 @section('content-header')
-    <h1>{{ $mount->name }}<small>{{ str_limit($mount->description, 75) }}</small></h1>
-    <ol class="breadcrumb">
-        <li><a href="{{ route('admin.index') }}">Admin</a></li>
-        <li><a href="{{ route('admin.mounts') }}">Mounts</a></li>
-        <li class="active">{{ $mount->name }}</li>
-    </ol>
+    <nav class="cds--breadcrumb cds--breadcrumb--no-trailing-slash" aria-label="breadcrumb">
+        <div class="cds--breadcrumb-item"><a href="{{ route('admin.index') }}" class="cds--link">Admin</a></div>
+        <div class="cds--breadcrumb-item"><a href="{{ route('admin.mounts') }}" class="cds--link">Mounts</a></div>
+        <div class="cds--breadcrumb-item"><span class="cds--link">{{ $mount->name }}</span></div>
+    </nav>
+    <h1 class="cds--type-productive-heading-04">{{ $mount->name }}</h1>
+    <p class="cds--type-body-compact-01">{{ str_limit($mount->description, 75) }}</p>
 @endsection
 
 @section('content')
     <div class="row">
         <div class="col-sm-6">
-            <div class="box box-primary">
-                <div class="box-header with-border">
-                    <h3 class="box-title">Mount Details</h3>
+            <div class="cds--tile ptero-tile">
+                <div class="ptero-tile__header">
+                    <h3 class="cds--type-productive-heading-02">Mount Details</h3>
                 </div>
 
                 <form action="{{ route('admin.mounts.view', $mount->id) }}" method="POST">
-                    <div class="box-body">
-                        <div class="form-group">
-                            <label for="PUniqueID" class="form-label">Unique ID</label>
-                            <input type="text" id="PUniqueID" class="form-control" value="{{ $mount->uuid }}" disabled />
+                    <div class="ptero-tile__body">
+                        <div class="cds--form-item">
+                            <label for="PUniqueID" class="cds--label">Unique ID</label>
+                            <input type="text" id="PUniqueID" class="cds--text-input" value="{{ $mount->uuid }}" disabled />
                         </div>
 
-                        <div class="form-group">
-                            <label for="pName" class="form-label">Name</label>
-                            <input type="text" id="pName" name="name" class="form-control" value="{{ $mount->name }}" />
+                        <div class="cds--form-item">
+                            <label for="pName" class="cds--label">Name</label>
+                            <input type="text" id="pName" name="name" class="cds--text-input" value="{{ $mount->name }}" />
                         </div>
 
-                        <div class="form-group">
-                            <label for="pDescription" class="form-label">Description</label>
-                            <textarea id="pDescription" name="description" class="form-control" rows="4">{{ $mount->description }}</textarea>
-                        </div>
-
-                        <div class="row">
-                            <div class="form-group col-md-6">
-                                <label for="pSource" class="form-label">Source</label>
-                                <input type="text" id="pSource" name="source" class="form-control" value="{{ $mount->source }}" />
-                            </div>
-
-                            <div class="form-group col-md-6">
-                                <label for="pTarget" class="form-label">Target</label>
-                                <input type="text" id="pTarget" name="target" class="form-control" value="{{ $mount->target }}" />
-                            </div>
+                        <div class="cds--form-item">
+                            <label for="pDescription" class="cds--label">Description</label>
+                            <textarea id="pDescription" name="description" class="cds--text-input" rows="4">{{ $mount->description }}</textarea>
                         </div>
 
                         <div class="row">
-                            <div class="form-group col-md-6">
-                                <label class="form-label">Read Only</label>
+                            <div class="cds--form-item col-md-6">
+                                <label for="pSource" class="cds--label">Source</label>
+                                <input type="text" id="pSource" name="source" class="cds--text-input" value="{{ $mount->source }}" />
+                            </div>
+
+                            <div class="cds--form-item col-md-6">
+                                <label for="pTarget" class="cds--label">Target</label>
+                                <input type="text" id="pTarget" name="target" class="cds--text-input" value="{{ $mount->target }}" />
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="cds--form-item col-md-6">
+                                <label class="cds--label">Read Only</label>
 
                                 <div>
                                     <div class="radio radio-success radio-inline">
@@ -68,8 +69,8 @@
                                 </div>
                             </div>
 
-                            <div class="form-group col-md-6">
-                                <label class="form-label">User Mountable</label>
+                            <div class="cds--form-item col-md-6">
+                                <label class="cds--label">User Mountable</label>
 
                                 <div>
                                     <div class="radio radio-success radio-inline">
@@ -86,29 +87,29 @@
                         </div>
                     </div>
 
-                    <div class="box-footer">
+                    <div class="ptero-tile__footer">
                         {!! csrf_field() !!}
                         {!! method_field('PATCH') !!}
 
-                        <button name="action" value="edit" class="btn btn-sm btn-primary pull-right">Save</button>
-                        <button name="action" value="delete" class="btn btn-sm btn-danger pull-left muted muted-hover"><i class="fa fa-trash-o"></i></button>
+                        <button name="action" value="edit" class="cds--btn cds--btn--sm cds--btn--primary pull-right">Save</button>
+                        <button name="action" value="delete" class="cds--btn cds--btn--sm cds--btn--danger pull-left muted muted-hover"><i class="fa fa-trash-o"></i></button>
                     </div>
                 </form>
             </div>
         </div>
 
         <div class="col-sm-6">
-            <div class="box">
-                <div class="box-header with-border">
-                    <h3 class="box-title">Eggs</h3>
+            <div class="cds--tile ptero-tile">
+                <div class="ptero-tile__header">
+                    <h3 class="cds--type-productive-heading-02">Eggs</h3>
 
-                    <div class="box-tools">
-                        <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#addEggsModal">Add Eggs</button>
+                    <div class="ptero-tile__tools">
+                        <button class="cds--btn cds--btn--sm cds--btn--primary" data-toggle="modal" data-target="#addEggsModal">Add Eggs</button>
                     </div>
                 </div>
 
-                <div class="box-body table-responsive no-padding">
-                    <table class="table table-hover">
+                <div class="cds--data-table-container">
+                    <table class="cds--data-table cds--data-table--lg cds--data-table--zebra">
                         <tr>
                             <th>ID</th>
                             <th>Name</th>
@@ -120,7 +121,7 @@
                                 <td class="col-sm-2 middle"><code>{{ $egg->id }}</code></td>
                                 <td class="middle"><a href="{{ route('admin.nests.egg.view', $egg->id) }}">{{ $egg->name }}</a></td>
                                 <td class="col-sm-1 middle">
-                                    <button data-action="detach-egg" data-id="{{ $egg->id }}" class="btn btn-sm btn-danger"><i class="fa fa-trash-o"></i></button>
+                                    <button data-action="detach-egg" data-id="{{ $egg->id }}" class="cds--btn cds--btn--sm cds--btn--danger"><i class="fa fa-trash-o"></i></button>
                                 </td>
                             </tr>
                         @endforeach
@@ -128,17 +129,17 @@
                 </div>
             </div>
 
-            <div class="box">
-                <div class="box-header with-border">
-                    <h3 class="box-title">Nodes</h3>
+            <div class="cds--tile ptero-tile">
+                <div class="ptero-tile__header">
+                    <h3 class="cds--type-productive-heading-02">Nodes</h3>
 
-                    <div class="box-tools">
-                        <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#addNodesModal">Add Nodes</button>
+                    <div class="ptero-tile__tools">
+                        <button class="cds--btn cds--btn--sm cds--btn--primary" data-toggle="modal" data-target="#addNodesModal">Add Nodes</button>
                     </div>
                 </div>
 
-                <div class="box-body table-responsive no-padding">
-                    <table class="table table-hover">
+                <div class="cds--data-table-container">
+                    <table class="cds--data-table cds--data-table--lg cds--data-table--zebra">
                         <tr>
                             <th>ID</th>
                             <th>Name</th>
@@ -152,7 +153,7 @@
                                 <td class="middle"><a href="{{ route('admin.nodes.view', $node->id) }}">{{ $node->name }}</a></td>
                                 <td class="middle"><code>{{ $node->fqdn }}</code></td>
                                 <td class="col-sm-1 middle">
-                                    <button data-action="detach-node" data-id="{{ $node->id }}" class="btn btn-sm btn-danger"><i class="fa fa-trash-o"></i></button>
+                                    <button data-action="detach-node" data-id="{{ $node->id }}" class="cds--btn cds--btn--sm cds--btn--danger"><i class="fa fa-trash-o"></i></button>
                                 </td>
                             </tr>
                         @endforeach
@@ -168,7 +169,7 @@
                 <form action="{{ route('admin.mounts.eggs', $mount->id) }}" method="POST">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true" style="color: #FFFFFF">&times;</span>
+                            <span aria-hidden="true">&times;</span>
                         </button>
 
                         <h4 class="modal-title">Add Eggs</h4>
@@ -176,9 +177,9 @@
 
                     <div class="modal-body">
                         <div class="row">
-                            <div class="form-group col-md-12">
+                            <div class="cds--form-item col-md-12">
                                 <label for="pEggs">Eggs</label>
-                                <select id="pEggs" name="eggs[]" class="form-control" multiple>
+                                <select id="pEggs" name="eggs[]" class="cds--text-input cds--select-input" multiple>
                                     @foreach ($nests as $nest)
                                         <optgroup label="{{ $nest->name }}">
                                             @foreach ($nest->eggs as $egg)
@@ -198,8 +199,8 @@
                     <div class="modal-footer">
                         {!! csrf_field() !!}
 
-                        <button type="button" class="btn btn-default btn-sm pull-left" data-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-primary btn-sm">Add</button>
+                        <button type="button" class="cds--btn cds--btn--secondary cds--btn--sm pull-left" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="cds--btn cds--btn--primary cds--btn--sm">Add</button>
                     </div>
                 </form>
             </div>
@@ -212,7 +213,7 @@
                 <form action="{{ route('admin.mounts.nodes', $mount->id) }}" method="POST">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true" style="color: #FFFFFF">&times;</span>
+                            <span aria-hidden="true">&times;</span>
                         </button>
 
                         <h4 class="modal-title">Add Nodes</h4>
@@ -220,9 +221,9 @@
 
                     <div class="modal-body">
                         <div class="row">
-                            <div class="form-group col-md-12">
+                            <div class="cds--form-item col-md-12">
                                 <label for="pNodes">Nodes</label>
-                                <select id="pNodes" name="nodes[]" class="form-control" multiple>
+                                <select id="pNodes" name="nodes[]" class="cds--text-input cds--select-input" multiple>
                                     @foreach ($locations as $location)
                                         <optgroup label="{{ $location->long }} ({{ $location->short }})">
                                             @foreach ($location->nodes as $node)
@@ -242,8 +243,8 @@
                     <div class="modal-footer">
                         {!! csrf_field() !!}
 
-                        <button type="button" class="btn btn-default btn-sm pull-left" data-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-primary btn-sm">Add</button>
+                        <button type="button" class="cds--btn cds--btn--secondary cds--btn--sm pull-left" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="cds--btn cds--btn--primary cds--btn--sm">Add</button>
                     </div>
                 </form>
             </div>

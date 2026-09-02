@@ -8,7 +8,7 @@ import deleteSubuser from '@/api/server/users/deleteSubuser';
 import { Actions, useStoreActions } from 'easy-peasy';
 import { ApplicationStore } from '@/state';
 import { httpErrorToHuman } from '@/api/http';
-import tw from 'twin.macro';
+import { Button } from '@carbon/react';
 
 export default ({ subuser }: { subuser: Subuser }) => {
     const [loading, setLoading] = useState(false);
@@ -46,14 +46,16 @@ export default ({ subuser }: { subuser: Subuser }) => {
                 Are you sure you wish to remove this subuser? They will have all access to this server revoked
                 immediately.
             </ConfirmationModal>
-            <button
+            <Button
+                kind={'ghost'}
+                size={'sm'}
+                hasIconOnly
+                iconDescription={'Delete subuser'}
                 type={'button'}
-                aria-label={'Delete subuser'}
-                css={tw`block text-sm p-2 text-neutral-500 hover:text-red-600 transition-colors duration-150`}
                 onClick={() => setShowConfirmation(true)}
             >
                 <FontAwesomeIcon icon={faTrashAlt} />
-            </button>
+            </Button>
         </>
     );
 };

@@ -8,7 +8,6 @@ import { useFormikContext, withFormik } from 'formik';
 import useFlash from '@/plugins/useFlash';
 import { FlashStore } from '@/state/flashes';
 import Field from '@/components/elements/Field';
-import tw from 'twin.macro';
 import Button from '@/components/elements/Button';
 
 interface Values {
@@ -27,12 +26,11 @@ const LoginCheckpointContainer = () => {
     const [isMissingDevice, setIsMissingDevice] = useState(false);
 
     return (
-        <LoginFormContainer title={'Device Checkpoint'} css={tw`w-full flex`}>
-            <div css={tw`mt-6`}>
+        <LoginFormContainer title={'Device Checkpoint'}>
+            <div style={{ marginTop: '1.5rem' }}>
                 <Field
-                    light
                     name={isMissingDevice ? 'recoveryCode' : 'code'}
-                    title={isMissingDevice ? 'Recovery Code' : 'Authentication Code'}
+                    label={isMissingDevice ? 'Recovery Code' : 'Authentication Code'}
                     description={
                         isMissingDevice
                             ? 'Enter one of the recovery codes generated when you setup 2-Factor authentication on this account in order to continue.'
@@ -43,28 +41,26 @@ const LoginCheckpointContainer = () => {
                     autoFocus
                 />
             </div>
-            <div css={tw`mt-6`}>
+            <div style={{ marginTop: '1.5rem' }}>
                 <Button size={'xlarge'} type={'submit'} disabled={isSubmitting} isLoading={isSubmitting}>
                     Continue
                 </Button>
             </div>
-            <div css={tw`mt-6 text-center`}>
-                <span
+            <div style={{ marginTop: '1.5rem', textAlign: 'center' }}>
+                <button
+                    type={'button'}
+                    className={'cds--link'}
                     onClick={() => {
                         setFieldValue('code', '');
                         setFieldValue('recoveryCode', '');
                         setIsMissingDevice((s) => !s);
                     }}
-                    css={tw`cursor-pointer text-xs text-neutral-500 tracking-wide uppercase no-underline hover:text-neutral-700`}
                 >
                     {!isMissingDevice ? "I've Lost My Device" : 'I Have My Device'}
-                </span>
+                </button>
             </div>
-            <div css={tw`mt-6 text-center`}>
-                <Link
-                    to={'/auth/login'}
-                    css={tw`text-xs text-neutral-500 tracking-wide uppercase no-underline hover:text-neutral-700`}
-                >
+            <div style={{ marginTop: '1.5rem', textAlign: 'center' }}>
+                <Link to={'/auth/login'} className={'cds--link'}>
                     Return to Login
                 </Link>
             </div>

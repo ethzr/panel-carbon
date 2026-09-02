@@ -5,20 +5,21 @@
 @endsection
 
 @section('content-header')
-    <h1>{{ $node->name }}<small>All servers currently assigned to this node.</small></h1>
-    <ol class="breadcrumb">
-        <li><a href="{{ route('admin.index') }}">Admin</a></li>
-        <li><a href="{{ route('admin.nodes') }}">Nodes</a></li>
-        <li><a href="{{ route('admin.nodes.view', $node->id) }}">{{ $node->name }}</a></li>
-        <li class="active">Servers</li>
-    </ol>
+    <nav class="cds--breadcrumb cds--breadcrumb--no-trailing-slash" aria-label="breadcrumb">
+        <div class="cds--breadcrumb-item"><a href="{{ route('admin.index') }}" class="cds--link">Admin</a></div>
+        <div class="cds--breadcrumb-item"><a href="{{ route('admin.nodes') }}" class="cds--link">Nodes</a></div>
+        <div class="cds--breadcrumb-item"><a href="{{ route('admin.nodes.view', $node->id) }}" class="cds--link">{{ $node->name }}</a></div>
+        <div class="cds--breadcrumb-item"><span class="cds--link">Servers</span></div>
+    </nav>
+    <h1 class="cds--type-productive-heading-04">{{ $node->name }}</h1>
+    <p class="cds--type-body-compact-01">All servers currently assigned to this node.</p>
 @endsection
 
 @section('content')
 <div class="row">
     <div class="col-xs-12">
-        <div class="nav-tabs-custom nav-tabs-floating">
-            <ul class="nav nav-tabs">
+        <div class="cds--tabs">
+            <ul class="cds--tab--list">
                 <li><a href="{{ route('admin.nodes.view', $node->id) }}">About</a></li>
                 <li><a href="{{ route('admin.nodes.view.settings', $node->id) }}">Settings</a></li>
                 <li><a href="{{ route('admin.nodes.view.configuration', $node->id) }}">Configuration</a></li>
@@ -30,12 +31,12 @@
 </div>
 <div class="row">
     <div class="col-sm-12">
-        <div class="box box-primary">
-            <div class="box-header with-border">
-                <h3 class="box-title">Server List</h3>
+        <div class="cds--tile ptero-tile">
+            <div class="ptero-tile__header">
+                <h3 class="cds--type-productive-heading-02">Server List</h3>
             </div>
-            <div class="box-body table-responsive no-padding">
-                <table class="table table-hover">
+            <div class="cds--data-table-container">
+                <table class="cds--data-table cds--data-table--lg cds--data-table--zebra">
                     <tr>
                         <th>ID</th>
                         <th>Server Name</th>
@@ -52,7 +53,7 @@
                     @endforeach
                 </table>
                 @if($servers->hasPages())
-                    <div class="box-footer with-border">
+                    <div class="ptero-tile__footer">
                         <div class="col-md-12 text-center">{!! $servers->render() !!}</div>
                     </div>
                 @endif

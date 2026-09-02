@@ -10,34 +10,35 @@
 @endsection
 
 @section('content-header')
-    <h1>Nodes<small>All nodes available on the system.</small></h1>
-    <ol class="breadcrumb">
-        <li><a href="{{ route('admin.index') }}">Admin</a></li>
-        <li class="active">Nodes</li>
-    </ol>
+    <nav class="cds--breadcrumb cds--breadcrumb--no-trailing-slash" aria-label="breadcrumb">
+        <div class="cds--breadcrumb-item"><a href="{{ route('admin.index') }}" class="cds--link">Admin</a></div>
+        <div class="cds--breadcrumb-item"><span class="cds--link">Nodes</span></div>
+    </nav>
+    <h1 class="cds--type-productive-heading-04">Nodes</h1>
+    <p class="cds--type-body-compact-01">All nodes available on the system.</p>
 @endsection
 
 @section('content')
 <div class="row">
     <div class="col-xs-12">
-        <div class="box box-primary">
-            <div class="box-header with-border">
-                <h3 class="box-title">Node List</h3>
-                <div class="box-tools search01">
+        <div class="cds--tile ptero-tile">
+            <div class="ptero-tile__header">
+                <h3 class="cds--type-productive-heading-02">Node List</h3>
+                <div class="ptero-tile__tools search01">
                     <form action="{{ route('admin.nodes') }}" method="GET">
-                        <div class="input-group input-group-sm">
-                            <input type="text" name="filter[name]" class="form-control pull-right" value="{{ request()->input('filter.name') }}" placeholder="Search Nodes">
-                            <div class="input-group-btn">
-                                <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-                                <a href="{{ route('admin.nodes.new') }}"><button type="button" class="btn btn-sm btn-primary" style="border-radius: 0 3px 3px 0;margin-left:-1px;">Create New</button></a>
+                        <div class="cds--search cds--search--lg">
+                            <input type="text" name="filter[name]" class="cds--text-input pull-right" value="{{ request()->input('filter.name') }}" placeholder="Search Nodes">
+                            <div class="cds--search-close">
+                                <button type="submit" class="cds--btn cds--btn--secondary"><i class="fa fa-search"></i></button>
+                                <a href="{{ route('admin.nodes.new') }}"><button type="button" class="cds--btn cds--btn--sm cds--btn--primary" style="border-radius: 0 3px 3px 0;margin-left:-1px;">Create New</button></a>
                             </div>
                         </div>
                     </form>
                 </div>
             </div>
-            <div class="box-body table-responsive no-padding">
-                <table class="table table-hover">
-                    <tbody>
+            <div class="cds--data-table-container">
+                <table class="cds--data-table cds--data-table--lg cds--data-table--zebra">
+                    <thead>
                         <tr>
                             <th></th>
                             <th>Name</th>
@@ -48,10 +49,12 @@
                             <th class="text-center">SSL</th>
                             <th class="text-center">Public</th>
                         </tr>
+                    </thead>
+                    <tbody>
                         @foreach ($nodes as $node)
                             <tr>
                                 <td class="text-center text-muted left-icon" data-action="ping" data-secret="{{ $node->getDecryptedKey() }}" data-location="{{ $node->scheme }}://{{ $node->fqdn }}:{{ $node->daemonListen }}/api/system"><i class="fa fa-fw fa-refresh fa-spin"></i></td>
-                                <td>{!! $node->maintenance_mode ? '<span class="label label-warning"><i class="fa fa-wrench"></i></span> ' : '' !!}<a href="{{ route('admin.nodes.view', $node->id) }}">{{ $node->name }}</a></td>
+                                <td>{!! $node->maintenance_mode ? '<span class="cds--tag cds--tag--purple"><i class="fa fa-wrench"></i></span> ' : '' !!}<a href="{{ route('admin.nodes.view', $node->id) }}">{{ $node->name }}</a></td>
                                 <td>{{ $node->location->short }}</td>
                                 <td>{{ $node->memory }} MiB</td>
                                 <td>{{ $node->disk }} MiB</td>
@@ -64,7 +67,7 @@
                 </table>
             </div>
             @if($nodes->hasPages())
-                <div class="box-footer with-border">
+                <div class="ptero-tile__footer">
                     <div class="col-md-12 text-center">{!! $nodes->appends(['query' => Request::input('query')])->render() !!}</div>
                 </div>
             @endif

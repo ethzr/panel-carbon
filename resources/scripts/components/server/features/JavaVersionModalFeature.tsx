@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { ServerContext } from '@/state/server';
 import Modal from '@/components/elements/Modal';
-import tw from 'twin.macro';
-import Button from '@/components/elements/Button';
+import { Button } from '@carbon/react';
 import setSelectedDockerImage from '@/api/server/setSelectedDockerImage';
 import FlashMessageRender from '@/components/FlashMessageRender';
 import useFlash from '@/plugins/useFlash';
@@ -75,39 +74,35 @@ const JavaVersionModalFeature = () => {
             closeOnBackground={false}
             showSpinnerOverlay={loading}
         >
-            <FlashMessageRender key={'feature:javaVersion'} css={tw`mb-4`} />
-            <h2 css={tw`text-2xl mb-4 text-neutral-100`}>Unsupported Java Version</h2>
-            <p css={tw`mt-4`}>
+            <FlashMessageRender key={'feature:javaVersion'} />
+            <h2>Unsupported Java Version</h2>
+            <p>
                 This server is currently running an unsupported version of Java and cannot be started.
                 <Can action={'startup.docker-image'}>
                     &nbsp;Please select a supported version from the list below to continue starting the server.
                 </Can>
             </p>
             <Can action={'startup.docker-image'}>
-                <div css={tw`mt-4`}>
-                    <InputSpinner visible={!data || isValidating}>
-                        <Select disabled={!data} onChange={(e) => setSelectedVersion(e.target.value)}>
-                            {!data ? (
-                                <option disabled />
-                            ) : (
-                                Object.keys(data.dockerImages).map((key) => (
-                                    <option key={key} value={data.dockerImages[key]}>
-                                        {key}
-                                    </option>
-                                ))
-                            )}
-                        </Select>
-                    </InputSpinner>
-                </div>
+                <InputSpinner visible={!data || isValidating}>
+                    <Select disabled={!data} onChange={(e) => setSelectedVersion(e.target.value)}>
+                        {!data ? (
+                            <option disabled />
+                        ) : (
+                            Object.keys(data.dockerImages).map((key) => (
+                                <option key={key} value={data.dockerImages[key]}>
+                                    {key}
+                                </option>
+                            ))
+                        )}
+                    </Select>
+                </InputSpinner>
             </Can>
-            <div css={tw`mt-8 flex flex-col sm:flex-row justify-end sm:space-x-4 space-y-4 sm:space-y-0`}>
-                <Button isSecondary onClick={() => setVisible(false)} css={tw`w-full sm:w-auto`}>
+            <div className={'ptero-modal-actions'}>
+                <Button kind={'secondary'} onClick={() => setVisible(false)}>
                     Cancel
                 </Button>
                 <Can action={'startup.docker-image'}>
-                    <Button onClick={updateJava} css={tw`w-full sm:w-auto`}>
-                        Update Docker Image
-                    </Button>
+                    <Button onClick={updateJava}>Update Docker Image</Button>
                 </Can>
             </div>
         </Modal>

@@ -1,6 +1,5 @@
 import axios, { AxiosProgressEvent } from 'axios';
 import getFileUploadUrl from '@/api/server/files/getFileUploadUrl';
-import tw from 'twin.macro';
 import { Button } from '@/components/elements/button/index';
 import React, { useEffect, useRef } from 'react';
 import { ModalMask } from '@/components/elements/Modal';
@@ -117,16 +116,10 @@ export default ({ className }: WithClassname) => {
                             onFileSubmission(e.dataTransfer.files);
                         }}
                     >
-                        <div className={'w-full flex items-center justify-center pointer-events-none'}>
-                            <div
-                                className={
-                                    'flex items-center space-x-4 bg-black w-full ring-4 ring-blue-200 ring-opacity-60 rounded p-6 mx-10 max-w-sm'
-                                }
-                            >
-                                <CloudUploadIcon className={'w-10 h-10 flex-shrink-0'} />
-                                <p className={'font-header flex-1 text-lg text-neutral-100 text-center'}>
-                                    Drag and drop files to upload.
-                                </p>
+                        <div className={'ptero-upload-mask'}>
+                            <div className={'ptero-tile ptero-stack ptero-stack--row'} style={{ padding: '1.5rem' }}>
+                                <CloudUploadIcon style={{ width: '2.5rem', height: '2.5rem' }} />
+                                <p>Drag and drop files to upload.</p>
                             </div>
                         </div>
                     </ModalMask>
@@ -135,7 +128,7 @@ export default ({ className }: WithClassname) => {
             <input
                 type={'file'}
                 ref={fileUploadInput}
-                css={tw`hidden`}
+                className={'ptero-hidden-input'}
                 onChange={(e) => {
                     if (!e.currentTarget.files) return;
 

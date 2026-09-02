@@ -1,41 +1,47 @@
 import React, { forwardRef } from 'react';
-import classNames from 'classnames';
+import { Button as CarbonButton } from '@carbon/react';
 import { ButtonProps, Options } from '@/components/elements/button/types';
-import styles from './style.module.css';
 
-const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-    ({ children, shape, size, variant, className, ...rest }, ref) => {
-        return (
-            <button
-                ref={ref}
-                className={classNames(
-                    styles.button,
-                    styles.primary,
-                    {
-                        [styles.secondary]: variant === Options.Variant.Secondary,
-                        [styles.square]: shape === Options.Shape.IconSquare,
-                        [styles.small]: size === Options.Size.Small,
-                        [styles.large]: size === Options.Size.Large,
-                    },
-                    className
-                )}
-                {...rest}
-            >
-                {children}
-            </button>
-        );
+const sizeFor = (size?: ButtonProps['size']) => {
+    if (size === Options.Size.Small) {
+        return 'sm';
     }
+    if (size === Options.Size.Large) {
+        return 'lg';
+    }
+    return 'md';
+};
+
+const mapButton = (
+    kind: 'primary' | 'secondary' | 'ghost' | 'danger',
+    { children, shape, size, variant: _variant, className, type, ...rest }: ButtonProps,
+    ref: React.Ref<HTMLButtonElement>
+) => {
+    const iconOnly = shape === Options.Shape.IconSquare;
+
+    return (
+        <CarbonButton
+            ref={ref}
+            kind={kind}
+            size={sizeFor(size)}
+            type={type}
+            hasIconOnly={iconOnly || undefined}
+            iconDescription={iconOnly ? rest['aria-label'] || 'Action' : undefined}
+            className={className}
+            {...rest}
+        >
+            {children}
+        </CarbonButton>
+    );
+};
+
+const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =>
+    mapButton(props.variant === Options.Variant.Secondary ? 'secondary' : 'primary', props, ref)
 );
 
-const TextButton = forwardRef<HTMLButtonElement, ButtonProps>(({ className, ...props }, ref) => (
-    // @ts-expect-error not sure how to get this correct
-    <Button ref={ref} className={classNames(styles.text, className)} {...props} />
-));
+const TextButton = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => mapButton('ghost', props, ref));
 
-const DangerButton = forwardRef<HTMLButtonElement, ButtonProps>(({ className, ...props }, ref) => (
-    // @ts-expect-error not sure how to get this correct
-    <Button ref={ref} className={classNames(styles.danger, className)} {...props} />
-));
+const DangerButton = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => mapButton('danger', props, ref));
 
 const _Button = Object.assign(Button, {
     Sizes: Options.Size,
@@ -44,5 +50,9 @@ const _Button = Object.assign(Button, {
     Text: TextButton,
     Danger: DangerButton,
 });
+
+Button.displayName = 'Button';
+TextButton.displayName = 'TextButton';
+DangerButton.displayName = 'DangerButton';
 
 export default _Button;

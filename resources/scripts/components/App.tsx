@@ -6,7 +6,6 @@ import { store } from '@/state';
 import { SiteSettings } from '@/state/settings';
 import ProgressBar from '@/components/elements/ProgressBar';
 import { NotFound } from '@/components/elements/ScreenBlock';
-import tw from 'twin.macro';
 import GlobalStylesheet from '@/assets/css/GlobalStylesheet';
 import { history } from '@/components/history';
 import { setupInterceptors } from '@/api/interceptors';
@@ -14,6 +13,7 @@ import AuthenticatedRoute from '@/components/elements/AuthenticatedRoute';
 import { ServerContext } from '@/state/server';
 import '@/assets/tailwind.css';
 import Spinner from '@/components/elements/Spinner';
+import { Theme } from '@carbon/react';
 
 const DashboardRouter = lazy(() => import(/* webpackChunkName: "dashboard" */ '@/routers/DashboardRouter'));
 const ServerRouter = lazy(() => import(/* webpackChunkName: "server" */ '@/routers/ServerRouter'));
@@ -57,38 +57,36 @@ const App = () => {
     }
 
     return (
-        <>
+        <Theme theme={'g100'} className={'ptero-app'}>
             <GlobalStylesheet />
             <StoreProvider store={store}>
                 <ProgressBar />
-                <div css={tw`mx-auto w-auto`}>
-                    <Router history={history}>
-                        <Switch>
-                            <Route path={'/auth'}>
-                                <Spinner.Suspense>
-                                    <AuthenticationRouter />
-                                </Spinner.Suspense>
-                            </Route>
-                            <AuthenticatedRoute path={'/server/:id'}>
-                                <Spinner.Suspense>
-                                    <ServerContext.Provider>
-                                        <ServerRouter />
-                                    </ServerContext.Provider>
-                                </Spinner.Suspense>
-                            </AuthenticatedRoute>
-                            <AuthenticatedRoute path={'/'}>
-                                <Spinner.Suspense>
-                                    <DashboardRouter />
-                                </Spinner.Suspense>
-                            </AuthenticatedRoute>
-                            <Route path={'*'}>
-                                <NotFound />
-                            </Route>
-                        </Switch>
-                    </Router>
-                </div>
+                <Router history={history}>
+                    <Switch>
+                        <Route path={'/auth'}>
+                            <Spinner.Suspense>
+                                <AuthenticationRouter />
+                            </Spinner.Suspense>
+                        </Route>
+                        <AuthenticatedRoute path={'/server/:id'}>
+                            <Spinner.Suspense>
+                                <ServerContext.Provider>
+                                    <ServerRouter />
+                                </ServerContext.Provider>
+                            </Spinner.Suspense>
+                        </AuthenticatedRoute>
+                        <AuthenticatedRoute path={'/'}>
+                            <Spinner.Suspense>
+                                <DashboardRouter />
+                            </Spinner.Suspense>
+                        </AuthenticatedRoute>
+                        <Route path={'*'}>
+                            <NotFound />
+                        </Route>
+                    </Switch>
+                </Router>
             </StoreProvider>
-        </>
+        </Theme>
     );
 };
 

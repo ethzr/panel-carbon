@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
-import tw from 'twin.macro';
-import Button from '@/components/elements/Button';
+import { Button } from '@carbon/react';
 import asModal from '@/hoc/asModal';
 import ModalContext from '@/context/ModalContext';
 import CopyOnClick from '@/components/elements/CopyOnClick';
@@ -14,17 +13,17 @@ const ApiKeyModal = ({ apiKey }: Props) => {
 
     return (
         <>
-            <h3 css={tw`mb-6 text-2xl`}>Your API Key</h3>
-            <p css={tw`text-sm mb-6`}>
+            <h3>Your API Key</h3>
+            <p className={'ptero-muted'}>
                 The API key you have requested is shown below. Please store this in a safe location, it will not be
                 shown again.
             </p>
-            <pre css={tw`overflow-x-scroll text-sm bg-neutral-900 rounded py-2 px-4 font-mono`}>
+            <pre className={'ptero-code'} style={{ overflowX: 'auto' }}>
                 <CopyOnClick text={apiKey}>
-                    <code css={tw`font-mono`}>{apiKey}</code>
+                    <code>{apiKey}</code>
                 </CopyOnClick>
             </pre>
-            <div css={tw`flex justify-end mt-6`}>
+            <div className={'ptero-modal-actions'}>
                 <Button type={'button'} onClick={() => dismiss()}>
                     Close
                 </Button>

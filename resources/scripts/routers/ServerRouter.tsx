@@ -63,7 +63,7 @@ export default () => {
     }, [match.params.id]);
 
     return (
-        <React.Fragment key={'server-router'}>
+        <div className={'ptero-shell'} key={'server-router'}>
             <NavigationBar />
             {!uuid || !id ? (
                 error ? (
@@ -75,29 +75,43 @@ export default () => {
                 <>
                     <CSSTransition timeout={150} classNames={'fade'} appear in>
                         <SubNavigation>
-                            <div>
-                                {routes.server
-                                    .filter((route) => !!route.name)
-                                    .map((route) =>
-                                        route.permission ? (
-                                            <Can key={route.path} action={route.permission} matchAny>
-                                                <NavLink to={to(route.path, true)} exact={route.exact}>
-                                                    {route.name}
-                                                </NavLink>
-                                            </Can>
-                                        ) : (
-                                            <NavLink key={route.path} to={to(route.path, true)} exact={route.exact}>
+                            {routes.server
+                                .filter((route) => !!route.name)
+                                .map((route) =>
+                                    route.permission ? (
+                                        <Can key={route.path} action={route.permission} matchAny>
+                                            <NavLink
+                                                to={to(route.path, true)}
+                                                exact={route.exact}
+                                                className={'cds--tabs__nav-link'}
+                                                activeClassName={'cds--tabs__nav-item--selected'}
+                                            >
                                                 {route.name}
                                             </NavLink>
-                                        )
-                                    )}
-                                {rootAdmin && (
-                                    // eslint-disable-next-line react/jsx-no-target-blank
-                                    <a href={`/admin/servers/view/${serverId}`} target={'_blank'}>
-                                        <FontAwesomeIcon icon={faExternalLinkAlt} />
-                                    </a>
+                                        </Can>
+                                    ) : (
+                                        <NavLink
+                                            key={route.path}
+                                            to={to(route.path, true)}
+                                            exact={route.exact}
+                                            className={'cds--tabs__nav-link'}
+                                            activeClassName={'cds--tabs__nav-item--selected'}
+                                        >
+                                            {route.name}
+                                        </NavLink>
+                                    )
                                 )}
-                            </div>
+                            {rootAdmin && (
+                                // eslint-disable-next-line react/jsx-no-target-blank
+                                <a
+                                    href={`/admin/servers/view/${serverId}`}
+                                    target={'_blank'}
+                                    className={'cds--tabs__nav-link'}
+                                    aria-label={'Open in admin'}
+                                >
+                                    <FontAwesomeIcon icon={faExternalLinkAlt} />
+                                </a>
+                            )}
                         </SubNavigation>
                     </CSSTransition>
                     <InstallListener />
@@ -123,6 +137,6 @@ export default () => {
                     )}
                 </>
             )}
-        </React.Fragment>
+        </div>
     );
 };

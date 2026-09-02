@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react';
-import ContentContainer from '@/components/elements/ContentContainer';
 import { CSSTransition } from 'react-transition-group';
-import tw from 'twin.macro';
 import FlashMessageRender from '@/components/FlashMessageRender';
+import { Grid, Column } from '@carbon/react';
 
 export interface PageContentBlockProps {
     title?: string;
@@ -20,23 +19,18 @@ const PageContentBlock: React.FC<PageContentBlockProps> = ({ title, showFlashKey
     return (
         <CSSTransition timeout={150} classNames={'fade'} appear in>
             <>
-                <ContentContainer css={tw`my-4 sm:my-10`} className={className}>
-                    {showFlashKey && <FlashMessageRender byKey={showFlashKey} css={tw`mb-4`} />}
-                    {children}
-                </ContentContainer>
-                <ContentContainer css={tw`mb-4`}>
-                    <p css={tw`text-center text-neutral-500 text-xs`}>
-                        <a
-                            rel={'noopener nofollow noreferrer'}
-                            href={'https://pterodactyl.io'}
-                            target={'_blank'}
-                            css={tw`no-underline text-neutral-500 hover:text-neutral-300`}
-                        >
-                            Pterodactyl&reg;
-                        </a>
-                        &nbsp;&copy; 2015 - {new Date().getFullYear()}
-                    </p>
-                </ContentContainer>
+                <Grid className={className} fullWidth style={{ paddingTop: '1.5rem', paddingBottom: '2rem' }}>
+                    <Column lg={16} md={8} sm={4}>
+                        {showFlashKey && <FlashMessageRender byKey={showFlashKey} className={'mb-4'} />}
+                        {children}
+                    </Column>
+                </Grid>
+                <p className={'cds--label'} style={{ textAlign: 'center', display: 'block', marginBottom: '1rem' }}>
+                    <a rel={'noopener nofollow noreferrer'} href={'https://pterodactyl.io'} target={'_blank'}>
+                        Pterodactyl&reg;
+                    </a>
+                    &nbsp;&copy; 2015 - {new Date().getFullYear()}
+                </p>
             </>
         </CSSTransition>
     );

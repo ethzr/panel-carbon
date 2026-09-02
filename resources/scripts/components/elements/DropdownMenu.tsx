@@ -1,6 +1,4 @@
 import React, { createRef } from 'react';
-import styled from 'styled-components/macro';
-import tw from 'twin.macro';
 import Fade from '@/components/elements/Fade';
 
 interface Props {
@@ -8,14 +6,22 @@ interface Props {
     renderToggle: (onClick: (e: React.MouseEvent<any, MouseEvent>) => void) => React.ReactChild;
 }
 
-export const DropdownButtonRow = styled.button<{ danger?: boolean }>`
-    ${tw`p-2 flex items-center rounded w-full text-neutral-500`};
-    transition: 150ms all ease;
-
-    &:hover {
-        ${(props) => (props.danger ? tw`text-red-700 bg-red-100` : tw`text-neutral-700 bg-neutral-100`)};
-    }
-`;
+export const DropdownButtonRow = ({
+    danger,
+    className,
+    children,
+    ...props
+}: React.ButtonHTMLAttributes<HTMLButtonElement> & { danger?: boolean }) => (
+    <button
+        type={'button'}
+        className={`${danger ? 'ptero-dropdown__item ptero-dropdown__item--danger' : 'ptero-dropdown__item'} ${
+            className || ''
+        }`}
+        {...props}
+    >
+        {children}
+    </button>
+);
 
 interface State {
     posX: number;
@@ -93,8 +99,7 @@ class DropdownMenu extends React.PureComponent<Props, State> {
                             e.stopPropagation();
                             this.setState({ visible: false });
                         }}
-                        style={{ width: '12rem' }}
-                        css={tw`absolute bg-white p-2 rounded border border-neutral-700 shadow-lg text-neutral-500 z-50`}
+                        className={'ptero-dropdown'}
                     >
                         {this.props.children}
                     </div>

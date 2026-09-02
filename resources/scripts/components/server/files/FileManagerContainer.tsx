@@ -9,7 +9,6 @@ import NewDirectoryButton from '@/components/server/files/NewDirectoryButton';
 import { NavLink, useLocation } from 'react-router-dom';
 import Can from '@/components/elements/Can';
 import { ServerError } from '@/components/elements/ScreenBlock';
-import tw from 'twin.macro';
 import { Button } from '@/components/elements/button/index';
 import { ServerContext } from '@/state/server';
 import useFileManagerSwr from '@/plugins/useFileManagerSwr';
@@ -19,8 +18,8 @@ import UploadButton from '@/components/server/files/UploadButton';
 import ServerContentBlock from '@/components/elements/ServerContentBlock';
 import { useStoreActions } from '@/state/hooks';
 import ErrorBoundary from '@/components/elements/ErrorBoundary';
-import { FileActionCheckbox } from '@/components/server/files/SelectFileCheckbox';
 import { hashToPath } from '@/helpers';
+import { Checkbox, InlineNotification, Table, TableBody, TableHead, TableHeader, TableRow } from '@carbon/react';
 import style from './style.module.css';
 
 const sortFiles = (files: FileObject[]): FileObject[] => {
@@ -51,8 +50,8 @@ export default () => {
         mutate();
     }, [directory]);
 
-    const onSelectAllClick = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setSelectedFiles(e.currentTarget.checked ? files?.map((file) => file.name) || [] : []);
+    const onSelectAllClick = (_e: unknown, data: { checked: boolean }) => {
+        setSelectedFiles(data.checked ? files?.map((file) => file.name) || [] : []);
     };
 
     if (error) {
@@ -65,9 +64,10 @@ export default () => {
                 <div className={'flex flex-wrap-reverse md:flex-nowrap mb-4'}>
                     <FileManagerBreadcrumbs
                         renderLeft={
-                            <FileActionCheckbox
-                                type={'checkbox'}
-                                css={tw`mx-4`}
+                            <Checkbox
+                                id={'select-all-files'}
+                                labelText={'Select all'}
+                                hideLabel
                                 checked={selectedFilesLength === (files?.length === 0 ? -1 : files?.length)}
                                 onChange={onSelectAllClick}
                             />
@@ -90,21 +90,39 @@ export default () => {
             ) : (
                 <>
                     {!files.length ? (
-                        <p css={tw`text-sm text-neutral-400 text-center`}>This directory seems to be empty.</p>
+                        <p className={'cds--body-compact-01'} style={{ textAlign: 'center' }}>
+                            This directory seems to be empty.
+                        </p>
                     ) : (
                         <CSSTransition classNames={'fade'} timeout={150} appear in>
                             <div>
                                 {files.length > 250 && (
-                                    <div css={tw`rounded bg-yellow-400 mb-px p-3`}>
-                                        <p css={tw`text-yellow-900 text-sm text-center`}>
-                                            This directory is too large to display in the browser, limiting the output
-                                            to the first 250 files.
-                                        </p>
-                                    </div>
+                                    <InlineNotification
+                                        kind={'warning'}
+                                        title={'Large directory'}
+                                        subtitle={'This directory is too large to display in the browser, limiting the output to the first 250 files.'}
+                                        hideCloseButton
+                                        lowContrast
+                                    />
                                 )}
-                                {sortFiles(files.slice(0, 250)).map((file) => (
-                                    <FileObjectRow key={file.key} file={file} />
-                                ))}
+                                <div className={'cds--data-table-container'}>
+                                    <Table size={'lg'} useZebraStyles>
+                                        <TableHead>
+                                            <TableRow>
+                                                <TableHeader />
+                                                <TableHeader>Name</TableHeader>
+                                                <TableHeader>Size</TableHeader>
+                                                <TableHeader>Modified</TableHeader>
+                                                <TableHeader />
+                                            </TableRow>
+                                        </TableHead>
+                                        <TableBody>
+                                            {sortFiles(files.slice(0, 250)).map((file) => (
+                                                <FileObjectRow key={file.key} file={file} />
+                                            ))}
+                                        </TableBody>
+                                    </Table>
+                                </div>
                                 <MassActionsBar />
                             </div>
                         </CSSTransition>

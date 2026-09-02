@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import TitledGreyBox from '@/components/elements/TitledGreyBox';
-import tw from 'twin.macro';
 import VariableBox from '@/components/server/startup/VariableBox';
 import ServerContentBlock from '@/components/elements/ServerContentBlock';
 import getServerStartup from '@/api/swr/getServerStartup';
@@ -43,9 +42,6 @@ const StartupContainer = () => {
             .includes(variables.dockerImage.toLowerCase());
 
     useEffect(() => {
-        // Since we're passing in initial data this will not trigger on mount automatically. We
-        // want to always fetch fresh information from the API however when we're loading the startup
-        // information.
         mutate();
     }, []);
 
@@ -84,13 +80,13 @@ const StartupContainer = () => {
         )
     ) : (
         <ServerContentBlock title={'Startup Settings'} showFlashKey={'startup:image'}>
-            <div css={tw`md:flex`}>
-                <TitledGreyBox title={'Startup Command'} css={tw`flex-1`}>
-                    <div css={tw`px-1 py-2`}>
-                        <p css={tw`font-mono bg-neutral-900 rounded py-2 px-4`}>{data.invocation}</p>
-                    </div>
+            <div className={'ptero-split'}>
+                <TitledGreyBox title={'Startup Command'}>
+                    <p className={'ptero-inset'} style={{ fontFamily: 'ibm-plex-mono, monospace' }}>
+                        {data.invocation}
+                    </p>
                 </TitledGreyBox>
-                <TitledGreyBox title={'Docker Image'} css={tw`flex-1 lg:flex-none lg:w-1/3 mt-8 md:mt-0 md:ml-10`}>
+                <TitledGreyBox title={'Docker Image'}>
                     {Object.keys(data.dockerImages).length > 1 && !isCustomImage ? (
                         <>
                             <InputSpinner visible={loading}>
@@ -106,7 +102,7 @@ const StartupContainer = () => {
                                     ))}
                                 </Select>
                             </InputSpinner>
-                            <p css={tw`text-xs text-neutral-300 mt-2`}>
+                            <p className={'cds--form__helper-text'}>
                                 This is an advanced feature allowing you to select a Docker image to use when running
                                 this server instance.
                             </p>
@@ -115,7 +111,7 @@ const StartupContainer = () => {
                         <>
                             <Input disabled readOnly value={variables.dockerImage} />
                             {isCustomImage && (
-                                <p css={tw`text-xs text-neutral-300 mt-2`}>
+                                <p className={'cds--form__helper-text'}>
                                     This {"server's"} Docker image has been manually set by an administrator and cannot
                                     be changed through this UI.
                                 </p>
@@ -124,8 +120,10 @@ const StartupContainer = () => {
                     )}
                 </TitledGreyBox>
             </div>
-            <h3 css={tw`mt-8 mb-2 text-2xl`}>Variables</h3>
-            <div css={tw`grid gap-8 md:grid-cols-2`}>
+            <h2 className={'cds--productive-heading-03'} style={{ margin: '1.5rem 0 1rem' }}>
+                Variables
+            </h2>
+            <div className={'ptero-split'}>
                 {data.variables.map((variable) => (
                     <VariableBox key={variable.envVariable} variable={variable} />
                 ))}

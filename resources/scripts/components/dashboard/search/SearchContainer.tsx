@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import useEventListener from '@/plugins/useEventListener';
 import SearchModal from '@/components/dashboard/search/SearchModal';
-import Tooltip from '@/components/elements/tooltip/Tooltip';
+import { HeaderGlobalAction } from '@carbon/react';
+import { Search } from '@carbon/react/icons';
 
 export default () => {
     const [visible, setVisible] = useState(false);
@@ -19,11 +18,9 @@ export default () => {
     return (
         <>
             {visible && <SearchModal appear visible={visible} onDismissed={() => setVisible(false)} />}
-            <Tooltip placement={'bottom'} content={'Search'}>
-                <div className={'navigation-link'} onClick={() => setVisible(true)}>
-                    <FontAwesomeIcon icon={faSearch} />
-                </div>
-            </Tooltip>
+            <HeaderGlobalAction aria-label={'Search'} onClick={() => setVisible(true)}>
+                <Search size={20} />
+            </HeaderGlobalAction>
         </>
     );
 };

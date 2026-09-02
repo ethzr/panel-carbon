@@ -5,64 +5,65 @@
 @endsection
 
 @section('content-header')
-    <h1>{{ $nest->name }}<small>{{ str_limit($nest->description, 50) }}</small></h1>
-    <ol class="breadcrumb">
-        <li><a href="{{ route('admin.index') }}">Admin</a></li>
-        <li><a href="{{ route('admin.nests') }}">Nests</a></li>
-        <li class="active">{{ $nest->name }}</li>
-    </ol>
+    <nav class="cds--breadcrumb cds--breadcrumb--no-trailing-slash" aria-label="breadcrumb">
+        <div class="cds--breadcrumb-item"><a href="{{ route('admin.index') }}" class="cds--link">Admin</a></div>
+        <div class="cds--breadcrumb-item"><a href="{{ route('admin.nests') }}" class="cds--link">Nests</a></div>
+        <div class="cds--breadcrumb-item"><span class="cds--link">{{ $nest->name }}</span></div>
+    </nav>
+    <h1 class="cds--type-productive-heading-04">{{ $nest->name }}</h1>
+    <p class="cds--type-body-compact-01">{{ str_limit($nest->description, 50) }}</p>
 @endsection
 
 @section('content')
 <div class="row">
     <form action="{{ route('admin.nests.view', $nest->id) }}" method="POST">
         <div class="col-md-6">
-            <div class="box">
-                <div class="box-body">
-                    <div class="form-group">
-                        <label class="control-label">Name <span class="field-required"></span></label>
+            <div class="cds--tile ptero-tile">
+                <div class="ptero-tile__body">
+                    <div class="cds--form-item">
+                        <label class="cds--label">Name <span class="field-required"></span></label>
                         <div>
-                            <input type="text" name="name" class="form-control" value="{{ $nest->name }}" />
+                            <input type="text" name="name" class="cds--text-input" value="{{ $nest->name }}" />
                             <p class="text-muted"><small>This should be a descriptive category name that encompasses all of the options within the service.</small></p>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="control-label">Description</label>
+                    <div class="cds--form-item">
+                        <label class="cds--label">Description</label>
                         <div>
-                            <textarea name="description" class="form-control" rows="7">{{ $nest->description }}</textarea>
+                            <textarea name="description" class="cds--text-input" rows="7">{{ $nest->description }}</textarea>
                         </div>
                     </div>
                 </div>
-                <div class="box-footer">
+                <div class="ptero-tile__footer">
                     {!! csrf_field() !!}
-                    <button type="submit" name="_method" value="PATCH" class="btn btn-primary btn-sm pull-right">Save</button>
-                    <button id="deleteButton" type="submit" name="_method" value="DELETE" class="btn btn-sm btn-danger muted muted-hover"><i class="fa fa-trash-o"></i></button>
+                    <button type="submit" name="_method" value="PATCH" class="cds--btn cds--btn--primary cds--btn--sm pull-right">Save</button>
+                    <button id="deleteButton" type="submit" name="_method" value="DELETE" class="cds--btn cds--btn--sm cds--btn--danger muted muted-hover"><i class="fa fa-trash-o"></i></button>
                 </div>
             </div>
         </div>
     </form>
     <div class="col-md-6">
-        <div class="box">
-            <div class="box-body">
-                <div class="form-group">
-                    <label class="control-label">Nest ID</label>
+        <div class="cds--tile ptero-tile">
+            <div class="ptero-tile__body">
+                <div class="cds--form-item">
+                    <label class="cds--label">Nest ID</label>
                     <div>
-                        <input type="text" readonly class="form-control" value="{{ $nest->id }}" />
-                        <p class="text-muted small">A unique ID used for identification of this nest internally and through the API.</p>
+                        <input type="text" readonly class="cds--text-input" value="{{ $nest->id }}" />
+                        <p class="cds--form__helper-text">A unique ID used for identification of this nest internally and through the API.</p>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="control-label">Author</label>
+                <div class="cds--form-item">
+                    <label class="cds--label">Author</label>
                     <div>
-                        <input type="text" readonly class="form-control" value="{{ $nest->author }}" />
-                        <p class="text-muted small">The author of this service option. Please direct questions and issues to them unless this is an official option authored by <code>support@pterodactyl.io</code>.</p>
+                        <input type="text" readonly class="cds--text-input" value="{{ $nest->author }}" />
+                        <p class="cds--form__helper-text">The author of this service option. Please direct questions and issues to them unless this is an official option authored by <code>support@pterodactyl.io</code>.</p>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="control-label">UUID</label>
+                <div class="cds--form-item">
+                    <label class="cds--label">UUID</label>
                     <div>
-                        <input type="text" readonly class="form-control" value="{{ $nest->uuid }}" />
-                        <p class="text-muted small">A UUID that all servers using this option are assigned for identification purposes.</p>
+                        <input type="text" readonly class="cds--text-input" value="{{ $nest->uuid }}" />
+                        <p class="cds--form__helper-text">A UUID that all servers using this option are assigned for identification purposes.</p>
                     </div>
                 </div>
             </div>
@@ -71,12 +72,12 @@
 </div>
 <div class="row">
     <div class="col-xs-12">
-        <div class="box box-primary">
-            <div class="box-header with-border">
-                <h3 class="box-title">Nest Eggs</h3>
+        <div class="cds--tile ptero-tile">
+            <div class="ptero-tile__header">
+                <h3 class="cds--type-productive-heading-02">Nest Eggs</h3>
             </div>
-            <div class="box-body table-responsive no-padding">
-                <table class="table table-hover">
+            <div class="cds--data-table-container">
+                <table class="cds--data-table cds--data-table--lg cds--data-table--zebra">
                     <tr>
                         <th>ID</th>
                         <th>Name</th>
@@ -97,8 +98,8 @@
                     @endforeach
                 </table>
             </div>
-            <div class="box-footer">
-                <a href="{{ route('admin.nests.egg.new') }}"><button class="btn btn-success btn-sm pull-right">New Egg</button></a>
+            <div class="ptero-tile__footer">
+                <a href="{{ route('admin.nests.egg.new') }}"><button class="cds--btn cds--btn--primary cds--btn--sm pull-right">New Egg</button></a>
             </div>
         </div>
     </div>

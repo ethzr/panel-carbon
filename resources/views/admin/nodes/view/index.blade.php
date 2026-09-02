@@ -5,19 +5,20 @@
 @endsection
 
 @section('content-header')
-    <h1>{{ $node->name }}<small>A quick overview of your node.</small></h1>
-    <ol class="breadcrumb">
-        <li><a href="{{ route('admin.index') }}">Admin</a></li>
-        <li><a href="{{ route('admin.nodes') }}">Nodes</a></li>
-        <li class="active">{{ $node->name }}</li>
-    </ol>
+    <nav class="cds--breadcrumb cds--breadcrumb--no-trailing-slash" aria-label="breadcrumb">
+        <div class="cds--breadcrumb-item"><a href="{{ route('admin.index') }}" class="cds--link">Admin</a></div>
+        <div class="cds--breadcrumb-item"><a href="{{ route('admin.nodes') }}" class="cds--link">Nodes</a></div>
+        <div class="cds--breadcrumb-item"><span class="cds--link">{{ $node->name }}</span></div>
+    </nav>
+    <h1 class="cds--type-productive-heading-04">{{ $node->name }}</h1>
+    <p class="cds--type-body-compact-01">A quick overview of your node.</p>
 @endsection
 
 @section('content')
 <div class="row">
     <div class="col-xs-12">
-        <div class="nav-tabs-custom nav-tabs-floating">
-            <ul class="nav nav-tabs">
+        <div class="cds--tabs">
+            <ul class="cds--tab--list">
                 <li class="active"><a href="{{ route('admin.nodes.view', $node->id) }}">About</a></li>
                 <li><a href="{{ route('admin.nodes.view.settings', $node->id) }}">Settings</a></li>
                 <li><a href="{{ route('admin.nodes.view.configuration', $node->id) }}">Configuration</a></li>
@@ -31,12 +32,12 @@
     <div class="col-sm-8">
         <div class="row">
             <div class="col-xs-12">
-                <div class="box box-primary">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">Information</h3>
+                <div class="cds--tile ptero-tile">
+                    <div class="ptero-tile__header">
+                        <h3 class="cds--type-productive-heading-02">Information</h3>
                     </div>
-                    <div class="box-body table-responsive no-padding">
-                        <table class="table table-hover">
+                    <div class="cds--data-table-container">
+                        <table class="cds--data-table cds--data-table--lg cds--data-table--zebra">
                             <tr>
                                 <td>Daemon Version</td>
                                 <td><code data-attr="info-version"><i class="fa fa-refresh fa-fw fa-spin"></i></code> (Latest: <code>{{ $version->getDaemon() }}</code>)</td>
@@ -55,29 +56,29 @@
             </div>
             @if ($node->description)
                 <div class="col-xs-12">
-                    <div class="box box-default">
-                        <div class="box-header with-border">
+                    <div class="cds--tile ptero-tile">
+                        <div class="ptero-tile__header">
                             Description
                         </div>
-                        <div class="box-body table-responsive">
+                        <div class="cds--data-table-container">
                             <pre>{{ $node->description }}</pre>
                         </div>
                     </div>
                 </div>
             @endif
             <div class="col-xs-12">
-                <div class="box box-danger">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">Delete Node</h3>
+                <div class="cds--tile ptero-tile ptero-tile--danger">
+                    <div class="ptero-tile__header">
+                        <h3 class="cds--type-productive-heading-02">Delete Node</h3>
                     </div>
-                    <div class="box-body">
+                    <div class="ptero-tile__body">
                         <p class="no-margin">Deleting a node is a irreversible action and will immediately remove this node from the panel. There must be no servers associated with this node in order to continue.</p>
                     </div>
-                    <div class="box-footer">
+                    <div class="ptero-tile__footer">
                         <form action="{{ route('admin.nodes.view.delete', $node->id) }}" method="POST">
                             {!! csrf_field() !!}
                             {!! method_field('DELETE') !!}
-                            <button type="submit" class="btn btn-danger btn-sm pull-right" {{ ($node->servers_count < 1) ?: 'disabled' }}>Yes, Delete This Node</button>
+                            <button type="submit" class="cds--btn cds--btn--danger cds--btn--sm pull-right" {{ ($node->servers_count < 1) ?: 'disabled' }}>Yes, Delete This Node</button>
                         </form>
                     </div>
                 </div>
@@ -85,11 +86,11 @@
         </div>
     </div>
     <div class="col-sm-4">
-        <div class="box box-primary">
-            <div class="box-header with-border">
-                <h3 class="box-title">At-a-Glance</h3>
+        <div class="cds--tile ptero-tile">
+            <div class="ptero-tile__header">
+                <h3 class="cds--type-productive-heading-02">At-a-Glance</h3>
             </div>
-            <div class="box-body">
+            <div class="ptero-tile__body">
                 <div class="row">
                     @if($node->maintenance_mode)
                     <div class="col-sm-12">

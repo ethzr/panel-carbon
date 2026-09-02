@@ -1,6 +1,5 @@
 import React, { CSSProperties } from 'react';
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-import tw from 'twin.macro';
 
 interface Props {
     icon: IconDefinition;
@@ -15,8 +14,10 @@ const Icon = ({ icon, className, style }: Props) => {
         <svg
             xmlns={'http://www.w3.org/2000/svg'}
             viewBox={`0 0 ${width} ${height}`}
-            css={tw`fill-current inline-block`}
-            className={className}
+            width={20}
+            height={20}
+            aria-hidden={'true'}
+            className={className ? `ptero-icon ${className}` : 'ptero-icon'}
             style={style}
         >
             {(Array.isArray(paths) ? paths : [paths]).map((path, index) => (

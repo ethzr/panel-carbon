@@ -4,8 +4,8 @@
 @endphp
 <div class="row">
     <div class="col-xs-12">
-        <div class="nav-tabs-custom nav-tabs-floating">
-            <ul class="nav nav-tabs">
+        <div class="cds--tabs">
+            <ul class="cds--tab--list">
                 <li class="{{ $router->currentRouteNamed('admin.servers.view') ? 'active' : '' }}">
                     <a href="{{ route('admin.servers.view', $server->id) }}">About</a></li>
                 @if($server->isInstalled())

@@ -5,31 +5,32 @@
 @endsection
 
 @section('content-header')
-    <h1>Application API<small>Create a new application API key.</small></h1>
-    <ol class="breadcrumb">
-        <li><a href="{{ route('admin.index') }}">Admin</a></li>
-        <li><a href="{{ route('admin.api.index') }}">Application API</a></li>
-        <li class="active">New Credentials</li>
-    </ol>
+    <nav class="cds--breadcrumb cds--breadcrumb--no-trailing-slash" aria-label="breadcrumb">
+        <div class="cds--breadcrumb-item"><a href="{{ route('admin.index') }}" class="cds--link">Admin</a></div>
+        <div class="cds--breadcrumb-item"><a href="{{ route('admin.api.index') }}" class="cds--link">Application API</a></div>
+        <div class="cds--breadcrumb-item"><span class="cds--link">New Credentials</span></div>
+    </nav>
+    <h1 class="cds--type-productive-heading-04">Application API</h1>
+    <p class="cds--type-body-compact-01">Create a new application API key.</p>
 @endsection
 
 @section('content')
     <div class="row">
         <form method="POST" action="{{ route('admin.api.new') }}">
             <div class="col-sm-8 col-xs-12">
-                <div class="box box-primary">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">Select Permissions</h3>
-                        <div class="box-tools">
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-sm btn-default" id="btn-bulk-read">Read All</button>
-                                <button type="button" class="btn btn-sm btn-default" id="btn-bulk-rw">Read &amp; Write All</button>
-                                <button type="button" class="btn btn-sm btn-default" id="btn-bulk-none">None All</button>
+                <div class="cds--tile ptero-tile">
+                    <div class="ptero-tile__header">
+                        <h3 class="cds--type-productive-heading-02">Select Permissions</h3>
+                        <div class="ptero-tile__tools">
+                            <div class="cds--btn-set">
+                                <button type="button" class="cds--btn cds--btn--sm cds--btn--secondary" id="btn-bulk-read">Read All</button>
+                                <button type="button" class="cds--btn cds--btn--sm cds--btn--secondary" id="btn-bulk-rw">Read &amp; Write All</button>
+                                <button type="button" class="cds--btn cds--btn--sm cds--btn--secondary" id="btn-bulk-none">None All</button>
                             </div>
                         </div>
                     </div>
-                    <div class="box-body table-responsive no-padding">
-                        <table class="table table-hover" style="min-width: 650px;">
+                    <div class="cds--data-table-container">
+                        <table class="cds--data-table cds--data-table--lg cds--data-table--zebra" style="min-width: 650px;">
                             @foreach($resources as $resource)
                                 <tr>
                                     <td class="strong" style="vertical-align: middle; padding-left: 15px;">
@@ -63,17 +64,17 @@
                 </div>
             </div>
             <div class="col-sm-4 col-xs-12">
-                <div class="box box-primary">
-                    <div class="box-body">
-                        <div class="form-group">
-                            <label class="control-label" for="memoField">Description <span class="field-required"></span></label>
-                            <input id="memoField" type="text" name="memo" class="form-control">
+                <div class="cds--tile ptero-tile">
+                    <div class="ptero-tile__body">
+                        <div class="cds--form-item">
+                            <label class="cds--label" for="memoField">Description <span class="field-required"></span></label>
+                            <input id="memoField" type="text" name="memo" class="cds--text-input">
                         </div>
                         <p class="text-muted">Once you have assigned permissions and created this set of credentials you will be unable to come back and edit it. If you need to make changes down the road you will need to create a new set of credentials.</p>
                     </div>
-                    <div class="box-footer">
+                    <div class="ptero-tile__footer">
                         {{ csrf_field() }}
-                        <button type="submit" class="btn btn-success btn-sm pull-right">Create Credentials</button>
+                        <button type="submit" class="cds--btn cds--btn--primary cds--btn--sm pull-right">Create Credentials</button>
                     </div>
                 </div>
             </div>

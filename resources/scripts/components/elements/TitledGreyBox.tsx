@@ -1,8 +1,8 @@
 import React, { memo } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import tw from 'twin.macro';
 import isEqual from 'react-fast-compare';
+import { Tile } from '@carbon/react';
 
 interface Props {
     icon?: IconProp;
@@ -12,19 +12,19 @@ interface Props {
 }
 
 const TitledGreyBox = ({ icon, title, children, className }: Props) => (
-    <div css={tw`rounded shadow-md bg-neutral-700`} className={className}>
-        <div css={tw`bg-neutral-900 rounded-t p-3 border-b border-black`}>
+    <Tile className={`ptero-tile ${className || ''}`} style={{ padding: 0 }}>
+        <div className={'ptero-tile__header'}>
             {typeof title === 'string' ? (
-                <p css={tw`text-sm uppercase`}>
-                    {icon && <FontAwesomeIcon icon={icon} css={tw`mr-2 text-neutral-300`} />}
+                <p>
+                    {icon && <FontAwesomeIcon icon={icon} style={{ marginRight: '0.5rem' }} />}
                     {title}
                 </p>
             ) : (
                 title
             )}
         </div>
-        <div css={tw`p-3`}>{children}</div>
-    </div>
+        <div className={'ptero-tile__body'}>{children}</div>
+    </Tile>
 );
 
 export default memo(TitledGreyBox, isEqual);

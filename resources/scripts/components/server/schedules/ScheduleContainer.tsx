@@ -9,9 +9,8 @@ import { httpErrorToHuman } from '@/api/http';
 import EditScheduleModal from '@/components/server/schedules/EditScheduleModal';
 import Can from '@/components/elements/Can';
 import useFlash from '@/plugins/useFlash';
-import tw from 'twin.macro';
 import GreyRowBox from '@/components/elements/GreyRowBox';
-import { Button } from '@/components/elements/button/index';
+import { Button } from '@carbon/react';
 import ServerContentBlock from '@/components/elements/ServerContentBlock';
 
 export default () => {
@@ -39,23 +38,19 @@ export default () => {
 
     return (
         <ServerContentBlock title={'Schedules'}>
-            <FlashMessageRender byKey={'schedules'} css={tw`mb-4`} />
+            <FlashMessageRender byKey={'schedules'} className={'mb-4'} />
             {!schedules.length && loading ? (
                 <Spinner size={'large'} centered />
             ) : (
                 <>
                     {schedules.length === 0 ? (
-                        <p css={tw`text-sm text-center text-neutral-300`}>
-                            There are no schedules configured for this server.
-                        </p>
+                        <p className={'ptero-empty'}>There are no schedules configured for this server.</p>
                     ) : (
                         schedules.map((schedule) => (
                             <GreyRowBox
-                                as={'a'}
                                 key={schedule.id}
-                                href={`${match.url}/${schedule.id}`}
-                                css={tw`cursor-pointer mb-2 flex-wrap`}
-                                onClick={(e: any) => {
+                                to={`${match.url}/${schedule.id}`}
+                                onClick={(e) => {
                                     e.preventDefault();
                                     history.push(`${match.url}/${schedule.id}`);
                                 }}
@@ -65,9 +60,9 @@ export default () => {
                         ))
                     )}
                     <Can action={'schedule.create'}>
-                        <div css={tw`mt-8 flex justify-end`}>
+                        <div className={'ptero-toolbar'}>
                             <EditScheduleModal visible={visible} onModalDismissed={() => setVisible(false)} />
-                            <Button type={'button'} onClick={() => setVisible(true)}>
+                            <Button kind={'primary'} type={'button'} onClick={() => setVisible(true)}>
                                 Create schedule
                             </Button>
                         </div>

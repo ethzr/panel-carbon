@@ -1,15 +1,10 @@
-import styled from 'styled-components/macro';
-import { breakpoint } from '@/theme';
-import tw from 'twin.macro';
+import React from 'react';
 
-const ContentContainer = styled.div`
-    max-width: 1200px;
-    ${tw`mx-4`};
-
-    ${breakpoint('xl')`
-        ${tw`mx-auto`};
-    `};
-`;
+const ContentContainer: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({ className, children, ...props }) => (
+    <div className={`ptero-content ${className || ''}`} {...props}>
+        {children}
+    </div>
+);
 ContentContainer.displayName = 'ContentContainer';
 
 export default ContentContainer;

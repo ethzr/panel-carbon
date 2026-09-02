@@ -1,9 +1,14 @@
-import styled from 'styled-components/macro';
-import tw from 'twin.macro';
+import React from 'react';
+import classNames from 'classnames';
 
-const Label = styled.label<{ isLight?: boolean }>`
-    ${tw`block text-xs uppercase text-neutral-200 mb-1 sm:mb-2`};
-    ${(props) => props.isLight && tw`text-neutral-700`};
-`;
+interface Props extends React.LabelHTMLAttributes<HTMLLabelElement> {
+    isLight?: boolean;
+}
+
+const Label = ({ className, children, ...props }: Props) => (
+    <label className={classNames('cds--label', className)} {...props}>
+        {children}
+    </label>
+);
 
 export default Label;

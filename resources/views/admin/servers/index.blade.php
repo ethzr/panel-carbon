@@ -5,34 +5,35 @@
 @endsection
 
 @section('content-header')
-    <h1>Servers<small>All servers available on the system.</small></h1>
-    <ol class="breadcrumb">
-        <li><a href="{{ route('admin.index') }}">Admin</a></li>
-        <li class="active">Servers</li>
-    </ol>
+    <nav class="cds--breadcrumb cds--breadcrumb--no-trailing-slash" aria-label="breadcrumb">
+        <div class="cds--breadcrumb-item"><a href="{{ route('admin.index') }}" class="cds--link">Admin</a></div>
+        <div class="cds--breadcrumb-item"><span class="cds--link">Servers</span></div>
+    </nav>
+    <h1 class="cds--type-productive-heading-04">Servers</h1>
+    <p class="cds--type-body-compact-01">All servers available on the system.</p>
 @endsection
 
 @section('content')
 <div class="row">
     <div class="col-xs-12">
-        <div class="box box-primary">
-            <div class="box-header with-border">
-                <h3 class="box-title">Server List</h3>
-                <div class="box-tools search01">
+        <div class="cds--tile ptero-tile">
+            <div class="ptero-tile__header">
+                <h3 class="cds--type-productive-heading-02">Server List</h3>
+                <div class="ptero-tile__tools search01">
                     <form action="{{ route('admin.servers') }}" method="GET">
-                        <div class="input-group input-group-sm">
-                            <input type="text" name="filter[*]" class="form-control pull-right" value="{{ request()->input()['filter']['*'] ?? '' }}" placeholder="Search Servers">
-                            <div class="input-group-btn">
-                                <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-                                <a href="{{ route('admin.servers.new') }}"><button type="button" class="btn btn-sm btn-primary" style="border-radius: 0 3px 3px 0;margin-left:-1px;">Create New</button></a>
+                        <div class="cds--search cds--search--lg">
+                            <input type="text" name="filter[*]" class="cds--text-input pull-right" value="{{ request()->input()['filter']['*'] ?? '' }}" placeholder="Search Servers">
+                            <div class="cds--search-close">
+                                <button type="submit" class="cds--btn cds--btn--secondary"><i class="fa fa-search"></i></button>
+                                <a href="{{ route('admin.servers.new') }}"><button type="button" class="cds--btn cds--btn--sm cds--btn--primary" style="border-radius: 0 3px 3px 0;margin-left:-1px;">Create New</button></a>
                             </div>
                         </div>
                     </form>
                 </div>
             </div>
-            <div class="box-body table-responsive no-padding">
-                <table class="table table-hover">
-                    <tbody>
+            <div class="cds--data-table-container">
+                <table class="cds--data-table cds--data-table--lg cds--data-table--zebra">
+                    <thead>
                         <tr>
                             <th>Server Name</th>
                             <th>UUID</th>
@@ -42,6 +43,8 @@
                             <th></th>
                             <th></th>
                         </tr>
+                    </thead>
+                    <tbody>
                         @foreach ($servers as $server)
                             <tr data-server="{{ $server->uuidShort }}">
                                 <td><a href="{{ route('admin.servers.view', $server->id) }}">{{ $server->name }}</a></td>
@@ -53,15 +56,15 @@
                                 </td>
                                 <td class="text-center">
                                     @if($server->isSuspended())
-                                        <span class="label bg-maroon">Suspended</span>
+                                        <span class="cds--tag cds--tag--red">Suspended</span>
                                     @elseif(! $server->isInstalled())
-                                        <span class="label label-warning">Installing</span>
+                                        <span class="cds--tag cds--tag--purple">Installing</span>
                                     @else
-                                        <span class="label label-success">Active</span>
+                                        <span class="cds--tag cds--tag--green">Active</span>
                                     @endif
                                 </td>
                                 <td class="text-center">
-                                    <a class="btn btn-xs btn-default" href="/server/{{ $server->uuidShort }}"><i class="fa fa-wrench"></i></a>
+                                    <a class="cds--btn cds--btn--sm cds--btn--secondary" href="/server/{{ $server->uuidShort }}"><i class="fa fa-wrench"></i></a>
                                 </td>
                             </tr>
                         @endforeach
@@ -69,7 +72,7 @@
                 </table>
             </div>
             @if($servers->hasPages())
-                <div class="box-footer with-border">
+                <div class="ptero-tile__footer">
                     <div class="col-md-12 text-center">{!! $servers->appends(['filter' => Request::input('filter')])->render() !!}</div>
                 </div>
             @endif

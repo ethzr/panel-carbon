@@ -8,7 +8,6 @@ import { useStoreState } from 'easy-peasy';
 import Field from '@/components/elements/Field';
 import { Formik, FormikHelpers } from 'formik';
 import { object, string } from 'yup';
-import tw from 'twin.macro';
 import Button from '@/components/elements/Button';
 import Reaptcha from 'reaptcha';
 import useFlash from '@/plugins/useFlash';
@@ -72,9 +71,8 @@ export default () => {
             })}
         >
             {({ isSubmitting, setSubmitting, submitForm }) => (
-                <LoginFormContainer title={'Request Password Reset'} css={tw`w-full flex`}>
+                <LoginFormContainer title={'Request Password Reset'}>
                     <Field
-                        light
                         label={'Email'}
                         description={
                             'Enter your account email address to receive instructions on resetting your password.'
@@ -82,7 +80,7 @@ export default () => {
                         name={'email'}
                         type={'email'}
                     />
-                    <div css={tw`mt-6`}>
+                    <div style={{ marginTop: '1.5rem' }}>
                         <Button type={'submit'} size={'xlarge'} disabled={isSubmitting} isLoading={isSubmitting}>
                             Send Email
                         </Button>
@@ -102,11 +100,8 @@ export default () => {
                             }}
                         />
                     )}
-                    <div css={tw`mt-6 text-center`}>
-                        <Link
-                            to={'/auth/login'}
-                            css={tw`text-xs text-neutral-500 tracking-wide uppercase no-underline hover:text-neutral-700`}
-                        >
+                    <div style={{ marginTop: '1.5rem', textAlign: 'center' }}>
+                        <Link to={'/auth/login'} className={'cds--link'}>
                             Return to Login
                         </Link>
                     </div>

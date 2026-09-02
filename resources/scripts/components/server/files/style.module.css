@@ -1,28 +1,71 @@
 .manager_actions {
-    @apply grid grid-cols-2 sm:grid-cols-3 w-full gap-4 mb-4;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100%;
+    gap: 1rem;
+    margin-bottom: 1rem;
 
     & button {
-        @apply w-full first:col-span-2 sm:first:col-span-1;
+        width: 100%;
     }
 
-    @screen md {
-        @apply flex flex-1 justify-end mb-0;
+    & button:first-child {
+        grid-column: span 2;
+    }
+}
+
+@media (min-width: 42rem) {
+    .manager_actions {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+
+        & button:first-child {
+            grid-column: span 1;
+        }
+    }
+}
+
+@media (min-width: 66rem) {
+    .manager_actions {
+        display: flex;
+        flex: 1;
+        justify-content: flex-end;
+        margin-bottom: 0;
 
         & button {
-            @apply w-auto;
+            width: auto;
         }
     }
 }
 
 .file_row {
-    @apply flex items-center cursor-pointer bg-neutral-700 rounded-sm mb-px text-sm no-underline;
-    @apply hover:text-neutral-100 hover:bg-neutral-600;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    background: var(--cds-layer);
+    margin-bottom: 1px;
+    font-size: 0.875rem;
+    text-decoration: none;
+    color: var(--cds-text-primary);
+    border-bottom: 1px solid var(--cds-border-subtle-01);
+
+    &:hover {
+        background: var(--cds-layer-hover);
+        color: var(--cds-text-primary);
+    }
 
     & > .details {
-        @apply flex flex-1 items-center text-neutral-300 no-underline px-4 py-2 overflow-hidden truncate;
+        display: flex;
+        flex: 1;
+        align-items: center;
+        color: var(--cds-text-secondary);
+        text-decoration: none;
+        padding: 0.5rem 1rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
 
         &:not(a) {
-            @apply cursor-default;
+            cursor: default;
         }
     }
 }

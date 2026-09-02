@@ -5,10 +5,8 @@ import PageContentBlock from '@/components/elements/PageContentBlock';
 import FlashMessageRender from '@/components/FlashMessageRender';
 import { Link } from 'react-router-dom';
 import PaginationFooter from '@/components/elements/table/PaginationFooter';
-import { DesktopComputerIcon, XCircleIcon } from '@heroicons/react/solid';
+import { Button } from '@carbon/react';
 import Spinner from '@/components/elements/Spinner';
-import { styles as btnStyles } from '@/components/elements/button/index';
-import classNames from 'classnames';
 import ActivityLogEntry from '@/components/elements/activity/ActivityLogEntry';
 import Tooltip from '@/components/elements/tooltip/Tooltip';
 import useLocationHash from '@/plugins/useLocationHash';
@@ -34,27 +32,26 @@ export default () => {
         <PageContentBlock title={'Account Activity Log'}>
             <FlashMessageRender byKey={'account'} />
             {(filters.filters?.event || filters.filters?.ip) && (
-                <div className={'flex justify-end mb-2'}>
+                <div className={'ptero-toolbar'} style={{ marginTop: 0 }}>
                     <Link
                         to={'#'}
-                        className={classNames(btnStyles.button, btnStyles.text, 'w-full sm:w-auto')}
                         onClick={() => setFilters((value) => ({ ...value, filters: {} }))}
                     >
-                        Clear Filters <XCircleIcon className={'w-4 h-4 ml-2'} />
+                        <Button kind={'ghost'} size={'sm'}>
+                            Clear Filters
+                        </Button>
                     </Link>
                 </div>
             )}
             {!data && isValidating ? (
                 <Spinner centered />
             ) : (
-                <div className={'bg-gray-700'}>
+                <div className={'ptero-activity'}>
                     {data?.items.map((activity) => (
                         <ActivityLogEntry key={activity.id} activity={activity}>
                             {typeof activity.properties.useragent === 'string' && (
                                 <Tooltip content={activity.properties.useragent} placement={'top'}>
-                                    <span>
-                                        <DesktopComputerIcon />
-                                    </span>
+                                    <span className={'ptero-muted'}>UA</span>
                                 </Tooltip>
                             )}
                         </ActivityLogEntry>

@@ -1,13 +1,12 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArchive, faEllipsisH, faLock } from '@fortawesome/free-solid-svg-icons';
+import { faArchive, faLock } from '@fortawesome/free-solid-svg-icons';
 import { format, formatDistanceToNow } from 'date-fns';
 import Spinner from '@/components/elements/Spinner';
 import { bytesToString } from '@/lib/formatters';
 import Can from '@/components/elements/Can';
 import useWebsocketEvent from '@/plugins/useWebsocketEvent';
 import BackupContextMenu from '@/components/server/backups/BackupContextMenu';
-import tw from 'twin.macro';
 import GreyRowBox from '@/components/elements/GreyRowBox';
 import getServerBackups from '@/api/swr/getServerBackups';
 import { ServerBackup } from '@/api/server/types';
@@ -48,53 +47,45 @@ export default ({ backup, className }: Props) => {
     });
 
     return (
-        <GreyRowBox css={tw`flex-wrap md:flex-nowrap items-center`} className={className}>
-            <div css={tw`flex items-center truncate w-full md:flex-1`}>
-                <div css={tw`mr-4`}>
-                    {backup.completedAt !== null ? (
-                        backup.isLocked ? (
-                            <FontAwesomeIcon icon={faLock} css={tw`text-yellow-500`} />
-                        ) : (
-                            <FontAwesomeIcon icon={faArchive} css={tw`text-neutral-300`} />
-                        )
+        <GreyRowBox className={className}>
+            <div className={'ptero-resource-row__icon'}>
+                {backup.completedAt !== null ? (
+                    backup.isLocked ? (
+                        <FontAwesomeIcon icon={faLock} />
                     ) : (
-                        <Spinner size={'small'} />
-                    )}
-                </div>
-                <div css={tw`flex flex-col truncate`}>
-                    <div css={tw`flex items-center text-sm mb-1`}>
-                        {backup.completedAt !== null && !backup.isSuccessful && (
-                            <span
-                                css={tw`bg-red-500 py-px px-2 rounded-full text-white text-xs uppercase border border-red-600 mr-2`}
-                            >
-                                Failed
-                            </span>
-                        )}
-                        <p css={tw`break-words truncate`}>{backup.name}</p>
-                        {backup.completedAt !== null && backup.isSuccessful && (
-                            <span css={tw`ml-3 text-neutral-300 text-xs font-extralight hidden sm:inline`}>
-                                {bytesToString(backup.bytes)}
-                            </span>
-                        )}
-                    </div>
-                    <p css={tw`mt-1 md:mt-0 text-xs text-neutral-400 font-mono truncate`}>{backup.checksum}</p>
-                </div>
+                        <FontAwesomeIcon icon={faArchive} />
+                    )
+                ) : (
+                    <Spinner size={'small'} />
+                )}
             </div>
-            <div css={tw`flex-1 md:flex-none md:w-48 mt-4 md:mt-0 md:ml-8 md:text-center`}>
-                <p title={format(backup.createdAt, 'ddd, MMMM do, yyyy HH:mm:ss')} css={tw`text-sm`}>
+            <div className={'ptero-resource-row__body'}>
+                <p>
+                    {backup.completedAt !== null && !backup.isSuccessful && (
+                        <span className={'cds--tag cds--tag--red cds--tag--sm'} style={{ marginRight: '0.5rem' }}>
+                            Failed
+                        </span>
+                    )}
+                    {backup.name}
+                    {backup.completedAt !== null && backup.isSuccessful && (
+                        <span className={'ptero-muted'} style={{ marginLeft: '0.5rem' }}>
+                            {bytesToString(backup.bytes)}
+                        </span>
+                    )}
+                </p>
+                <p className={'ptero-code'} style={{ display: 'inline-block', marginTop: '0.25rem' }}>
+                    {backup.checksum}
+                </p>
+            </div>
+            <div className={'ptero-resource-row__meta'}>
+                <p title={format(backup.createdAt, 'ddd, MMMM do, yyyy HH:mm:ss')}>
                     {formatDistanceToNow(backup.createdAt, { includeSeconds: true, addSuffix: true })}
                 </p>
-                <p css={tw`text-2xs text-neutral-500 uppercase mt-1`}>Created</p>
+                <span className={'ptero-resource-row__label'}>Created</span>
             </div>
             <Can action={['backup.download', 'backup.restore', 'backup.delete']} matchAny>
-                <div css={tw`mt-4 md:mt-0 ml-6`} style={{ marginRight: '-0.5rem' }}>
-                    {!backup.completedAt ? (
-                        <div css={tw`p-2 invisible`}>
-                            <FontAwesomeIcon icon={faEllipsisH} />
-                        </div>
-                    ) : (
-                        <BackupContextMenu backup={backup} />
-                    )}
+                <div className={'ptero-resource-row__actions'}>
+                    {backup.completedAt ? <BackupContextMenu backup={backup} /> : null}
                 </div>
             </Can>
         </GreyRowBox>

@@ -10,8 +10,6 @@ import getServers from '@/api/getServers';
 import { Server } from '@/api/server/getServer';
 import { ApplicationStore } from '@/state';
 import { Link } from 'react-router-dom';
-import styled from 'styled-components/macro';
-import tw from 'twin.macro';
 import Input from '@/components/elements/Input';
 import { ip } from '@/lib/formatters';
 
@@ -20,18 +18,6 @@ type Props = RequiredModalProps;
 interface Values {
     term: string;
 }
-
-const ServerResult = styled(Link)`
-    ${tw`flex items-center bg-neutral-900 p-4 rounded border-l-4 border-neutral-900 no-underline transition-all duration-150`};
-
-    &:hover {
-        ${tw`shadow border-cyan-500`};
-    }
-
-    &:not(:last-of-type) {
-        ${tw`mb-2`};
-    }
-`;
 
 const SearchWatcher = () => {
     const { values, submitForm } = useFormikContext<Values>();
@@ -56,7 +42,6 @@ export default ({ ...props }: Props) => {
     const search = debounce(({ term }: Values, { setSubmitting }: FormikHelpers<Values>) => {
         clearFlashes('search');
 
-        // if (ref.current) ref.current.focus();
         getServers({ query: term, type: isAdmin ? 'admin-all' : undefined })
             .then((servers) => setServers(servers.items.filter((_, index) => index < 5)))
             .catch((error) => {
@@ -73,7 +58,6 @@ export default ({ ...props }: Props) => {
         }
     }, [props.visible]);
 
-    // Formik does not support an innerRef on custom components.
     const InputWithRef = (props: any) => <Input autoFocus {...props} ref={ref} />;
 
     return (
@@ -99,16 +83,17 @@ export default ({ ...props }: Props) => {
                         </FormikFieldWrapper>
                     </Form>
                     {servers.length > 0 && (
-                        <div css={tw`mt-6`}>
+                        <div className={'ptero-stack'} style={{ marginTop: '1.5rem' }}>
                             {servers.map((server) => (
-                                <ServerResult
+                                <Link
                                     key={server.uuid}
                                     to={`/server/${server.id}`}
+                                    className={'ptero-resource-row ptero-resource-row--interactive'}
                                     onClick={() => props.onDismissed()}
                                 >
-                                    <div css={tw`flex-1 mr-4`}>
-                                        <p css={tw`text-sm`}>{server.name}</p>
-                                        <p css={tw`mt-1 text-xs text-neutral-400`}>
+                                    <div className={'ptero-resource-row__body'}>
+                                        <p>{server.name}</p>
+                                        <p className={'ptero-muted'}>
                                             {server.allocations
                                                 .filter((alloc) => alloc.isDefault)
                                                 .map((allocation) => (
@@ -118,12 +103,8 @@ export default ({ ...props }: Props) => {
                                                 ))}
                                         </p>
                                     </div>
-                                    <div css={tw`flex-none text-right`}>
-                                        <span css={tw`text-xs py-1 px-2 bg-cyan-800 text-cyan-100 rounded`}>
-                                            {server.node}
-                                        </span>
-                                    </div>
-                                </ServerResult>
+                                    <span className={'cds--tag cds--tag--blue cds--tag--sm'}>{server.node}</span>
+                                </Link>
                             ))}
                         </div>
                     )}
