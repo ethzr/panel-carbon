@@ -10,6 +10,7 @@ import StatGraphs from '@/components/server/console/StatGraphs';
 import PowerButtons from '@/components/server/console/PowerButtons';
 import ServerDetailsBlock from '@/components/server/console/ServerDetailsBlock';
 import { Alert } from '@/components/elements/alert';
+import { ButtonSet } from '@carbon/react';
 
 export type PowerAction = 'start' | 'stop' | 'restart' | 'kill';
 
@@ -32,28 +33,24 @@ const ServerConsoleContainer = () => {
                         : 'This server is currently being transferred to another node and all actions are unavailable.'}
                 </Alert>
             )}
-            <div className={'grid grid-cols-4 gap-4 mb-4'}>
-                <div className={'hidden sm:block sm:col-span-2 lg:col-span-3 pr-4'}>
-                    <h1 className={'font-header font-medium text-2xl text-gray-50 leading-relaxed line-clamp-1'}>
-                        {name}
-                    </h1>
-                    <p className={'text-sm line-clamp-2'}>{description}</p>
+            <div className={'ptero-toolbar'} style={{ marginTop: 0, justifyContent: 'space-between' }}>
+                <div>
+                    <h1 className={'cds--productive-heading-04 ptero-page-title'}>{name}</h1>
+                    {description && <p className={'ptero-page-copy'}>{description}</p>}
                 </div>
-                <div className={'col-span-4 sm:col-span-2 lg:col-span-1 self-end'}>
-                    <Can action={['control.start', 'control.stop', 'control.restart']} matchAny>
-                        <PowerButtons className={'flex sm:justify-end space-x-2'} />
-                    </Can>
-                </div>
+                <Can action={['control.start', 'control.stop', 'control.restart']} matchAny>
+                    <ButtonSet>
+                        <PowerButtons />
+                    </ButtonSet>
+                </Can>
             </div>
-            <div className={'grid grid-cols-4 gap-2 sm:gap-4 mb-4'}>
-                <div className={'flex col-span-4 lg:col-span-3'}>
-                    <Spinner.Suspense>
-                        <Console />
-                    </Spinner.Suspense>
-                </div>
-                <ServerDetailsBlock className={'col-span-4 lg:col-span-1 order-last lg:order-none'} />
+            <div className={'ptero-split ptero-split--console'}>
+                <Spinner.Suspense>
+                    <Console />
+                </Spinner.Suspense>
+                <ServerDetailsBlock />
             </div>
-            <div className={'grid grid-cols-1 md:grid-cols-3 gap-2 sm:gap-4'}>
+            <div className={'ptero-details-grid'} style={{ marginTop: '1rem' }}>
                 <Spinner.Suspense>
                     <StatGraphs />
                 </Spinner.Suspense>

@@ -104,6 +104,7 @@
             </ul>
         </nav>
         <main class="cds--content" id="main-content">
+            <div class="cds--grid">
             <div class="ptero-page-header">
                 @yield('content-header')
             </div>
@@ -135,6 +136,7 @@
                 <span>Copyright &copy; 2015 - {{ date('Y') }} <a href="https://pterodactyl.io/">Pterodactyl Software</a>.</span>
                 <span>{{ $appVersion }} · {{ round(microtime(true) - LARAVEL_START, 3) }}s</span>
             </footer>
+            </div>
         </main>
         @section('footer-scripts')
             <script src="/js/keyboard.polyfill.js" type="application/javascript"></script>

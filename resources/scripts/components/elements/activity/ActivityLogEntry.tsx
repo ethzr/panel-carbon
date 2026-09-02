@@ -5,9 +5,6 @@ import Translate from '@/components/elements/Translate';
 import { format, formatDistanceToNowStrict } from 'date-fns';
 import { ActivityLog } from '@definitions/user';
 import ActivityLogMetaButton from '@/components/elements/activity/ActivityLogMetaButton';
-import { FolderOpenIcon, TerminalIcon } from '@heroicons/react/solid';
-import classNames from 'classnames';
-import style from './style.module.css';
 import Avatar from '@/components/Avatar';
 import useLocationHash from '@/plugins/useLocationHash';
 import { getObjectKeys, isObject } from '@/lib/objects';
@@ -44,56 +41,34 @@ export default ({ activity, children }: Props) => {
     const properties = wrapProperties(activity.properties);
 
     return (
-        <div className={'grid grid-cols-10 py-4 group'} style={{ borderBottom: '1px solid var(--cds-border-subtle-01)' }}>
-            <div className={'hidden sm:flex sm:col-span-1 items-center justify-center select-none'}>
-                <div className={'flex items-center w-10 h-10 overflow-hidden'} style={{ background: 'var(--cds-layer-accent)' }}>
-                    <Avatar name={actor?.uuid || 'system'} />
-                </div>
+        <div className={'ptero-activity__row'}>
+            <div className={'ptero-activity__avatar'}>
+                <Avatar name={actor?.uuid || 'system'} />
             </div>
-            <div className={'col-span-10 sm:col-span-9 flex'}>
-                <div className={'flex-1 px-4 sm:px-0'}>
-                    <div className={'flex items-center text-gray-50'}>
-                        <Tooltip placement={'top'} content={actor?.email || 'System User'}>
-                            <span>{actor?.username || 'System'}</span>
-                        </Tooltip>
-                        <span className={'text-gray-400'}>&nbsp;&mdash;&nbsp;</span>
-                        <Link
-                            to={`#${pathTo({ event: activity.event })}`}
-                            className={'transition-colors duration-75 active:text-cyan-400 hover:text-cyan-400'}
-                        >
-                            {activity.event}
-                        </Link>
-                        <div className={classNames(style.icons, 'group-hover:text-gray-300')}>
-                            {activity.isApi && (
-                                <Tooltip placement={'top'} content={'Using API Key'}>
-                                    <TerminalIcon />
-                                </Tooltip>
-                            )}
-                            {activity.event.startsWith('server:sftp.') && (
-                                <Tooltip placement={'top'} content={'Using SFTP'}>
-                                    <FolderOpenIcon />
-                                </Tooltip>
-                            )}
-                            {children}
-                        </div>
-                    </div>
-                    <p className={style.description}>
-                        <Translate ns={'activity'} values={properties} i18nKey={activity.event.replace(':', '.')} />
-                    </p>
-                    <div className={'mt-1 flex items-center text-sm'}>
-                        {activity.ip && (
-                            <span>
-                                {activity.ip}
-                                <span className={'text-gray-400'}>&nbsp;|&nbsp;</span>
-                            </span>
-                        )}
-                        <Tooltip placement={'right'} content={format(activity.timestamp, 'MMM do, yyyy H:mm:ss')}>
-                            <span>{formatDistanceToNowStrict(activity.timestamp, { addSuffix: true })}</span>
-                        </Tooltip>
-                    </div>
-                </div>
-                {activity.hasAdditionalMetadata && <ActivityLogMetaButton meta={activity.properties} />}
+            <div>
+                <p>
+                    <Tooltip placement={'top'} content={actor?.email || 'System User'}>
+                        <span>{actor?.username || 'System'}</span>
+                    </Tooltip>
+                    <span className={'ptero-muted'}>&nbsp;—&nbsp;</span>
+                    <Link to={`#${pathTo({ event: activity.event })}`}>{activity.event}</Link>
+                    {activity.isApi && <span className={'cds--tag cds--tag--sm cds--tag--blue'}>API</span>}
+                    {activity.event.startsWith('server:sftp.') && (
+                        <span className={'cds--tag cds--tag--sm cds--tag--gray'}>SFTP</span>
+                    )}
+                    {children}
+                </p>
+                <p className={'ptero-muted'}>
+                    <Translate ns={'activity'} values={properties} i18nKey={activity.event.replace(':', '.')} />
+                </p>
+                <p className={'ptero-muted'}>
+                    {activity.ip && <span>{activity.ip} | </span>}
+                    <Tooltip placement={'right'} content={format(activity.timestamp, 'MMM do, yyyy H:mm:ss')}>
+                        <span>{formatDistanceToNowStrict(activity.timestamp, { addSuffix: true })}</span>
+                    </Tooltip>
+                </p>
             </div>
+            {activity.hasAdditionalMetadata && <ActivityLogMetaButton meta={activity.properties} />}
         </div>
     );
 };

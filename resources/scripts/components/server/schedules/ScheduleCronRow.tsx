@@ -8,26 +8,26 @@ interface Props {
 }
 
 const ScheduleCronRow = ({ cron, className }: Props) => (
-    <div className={classNames('flex', className)}>
-        <div className={'w-1/5 sm:w-auto text-center'}>
-            <p className={'font-medium'}>{cron.minute}</p>
-            <p className={'text-2xs text-neutral-500 uppercase'}>Minute</p>
+    <div className={classNames('ptero-stack--row', className)} style={{ gap: '1rem' }}>
+        <div className={'ptero-resource-row__meta'}>
+            <p>{cron.minute}</p>
+            <span className={'ptero-resource-row__label'}>Minute</span>
         </div>
-        <div className={'w-1/5 sm:w-auto text-center ml-4'}>
-            <p className={'font-medium'}>{cron.hour}</p>
-            <p className={'text-2xs text-neutral-500 uppercase'}>Hour</p>
+        <div className={'ptero-resource-row__meta'}>
+            <p>{cron.hour}</p>
+            <span className={'ptero-resource-row__label'}>Hour</span>
         </div>
-        <div className={'w-1/5 sm:w-auto text-center ml-4'}>
-            <p className={'font-medium'}>{cron.dayOfMonth}</p>
-            <p className={'text-2xs text-neutral-500 uppercase'}>Day (Month)</p>
+        <div className={'ptero-resource-row__meta'}>
+            <p>{cron.dayOfMonth}</p>
+            <span className={'ptero-resource-row__label'}>Day (Month)</span>
         </div>
-        <div className={'w-1/5 sm:w-auto text-center ml-4'}>
-            <p className={'font-medium'}>{cron.month}</p>
-            <p className={'text-2xs text-neutral-500 uppercase'}>Month</p>
+        <div className={'ptero-resource-row__meta'}>
+            <p>{cron.month}</p>
+            <span className={'ptero-resource-row__label'}>Month</span>
         </div>
-        <div className={'w-1/5 sm:w-auto text-center ml-4'}>
-            <p className={'font-medium'}>{cron.dayOfWeek}</p>
-            <p className={'text-2xs text-neutral-500 uppercase'}>Day (Week)</p>
+        <div className={'ptero-resource-row__meta'}>
+            <p>{cron.dayOfWeek}</p>
+            <span className={'ptero-resource-row__label'}>Day (Week)</span>
         </div>
     </div>
 );

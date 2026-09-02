@@ -6,8 +6,8 @@ import RemoveSubuserButton from '@/components/server/users/RemoveSubuserButton';
 import EditSubuserModal from '@/components/server/users/EditSubuserModal';
 import Can from '@/components/elements/Can';
 import { useStoreState } from 'easy-peasy';
-import tw from 'twin.macro';
 import GreyRowBox from '@/components/elements/GreyRowBox';
+import { Button } from '@carbon/react';
 
 interface Props {
     subuser: Subuser;
@@ -18,48 +18,46 @@ export default ({ subuser }: Props) => {
     const [visible, setVisible] = useState(false);
 
     return (
-        <GreyRowBox css={tw`mb-2`}>
+        <GreyRowBox $hoverable={false}>
             <EditSubuserModal subuser={subuser} visible={visible} onModalDismissed={() => setVisible(false)} />
-            <div css={tw`w-10 h-10 rounded-full bg-white border-2 border-neutral-800 overflow-hidden hidden md:block`}>
-                <img css={tw`w-full h-full`} src={`${subuser.image}?s=400`} />
+            <img
+                className={'ptero-resource-row__icon'}
+                src={`${subuser.image}?s=400`}
+                alt={''}
+                style={{ borderRadius: '50%', objectFit: 'cover' }}
+            />
+            <div className={'ptero-resource-row__body'}>
+                <p>{subuser.email}</p>
             </div>
-            <div css={tw`ml-4 flex-1 overflow-hidden`}>
-                <p css={tw`text-sm truncate`}>{subuser.email}</p>
+            <div className={'ptero-resource-row__meta'}>
+                <FontAwesomeIcon
+                    icon={subuser.twoFactorEnabled ? faUserLock : faUnlockAlt}
+                    style={!subuser.twoFactorEnabled ? { color: 'var(--cds-support-error)' } : undefined}
+                />
+                <span className={'ptero-resource-row__label'}>2FA</span>
             </div>
-            <div css={tw`ml-4`}>
-                <p css={tw`font-medium text-center`}>
-                    &nbsp;
-                    <FontAwesomeIcon
-                        icon={subuser.twoFactorEnabled ? faUserLock : faUnlockAlt}
-                        fixedWidth
-                        css={!subuser.twoFactorEnabled ? tw`text-red-400` : undefined}
-                    />
-                    &nbsp;
-                </p>
-                <p css={tw`text-2xs text-neutral-500 uppercase hidden md:block`}>2FA Enabled</p>
-            </div>
-            <div css={tw`ml-4 hidden md:block`}>
-                <p css={tw`font-medium text-center`}>
-                    {subuser.permissions.filter((permission) => permission !== 'websocket.connect').length}
-                </p>
-                <p css={tw`text-2xs text-neutral-500 uppercase`}>Permissions</p>
+            <div className={'ptero-resource-row__meta'}>
+                <p>{subuser.permissions.filter((permission) => permission !== 'websocket.connect').length}</p>
+                <span className={'ptero-resource-row__label'}>Permissions</span>
             </div>
             {subuser.uuid !== uuid && (
-                <>
+                <div className={'ptero-resource-row__actions'}>
                     <Can action={'user.update'}>
-                        <button
-                            type={'button'}
-                            aria-label={'Edit subuser'}
-                            css={tw`block text-sm p-1 md:p-2 text-neutral-500 hover:text-neutral-100 transition-colors duration-150 mx-4`}
+                        <Button
+                            kind={'ghost'}
+                            size={'sm'}
+                            hasIconOnly
+                            iconDescription={'Edit subuser'}
+                            renderIcon={undefined}
                             onClick={() => setVisible(true)}
                         >
                             <FontAwesomeIcon icon={faPencilAlt} />
-                        </button>
+                        </Button>
                     </Can>
                     <Can action={'user.delete'}>
                         <RemoveSubuserButton subuser={subuser} />
                     </Can>
-                </>
+                </div>
             )}
         </GreyRowBox>
     );

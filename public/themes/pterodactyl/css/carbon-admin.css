@@ -887,10 +887,44 @@ code, .code-block, pre {
     opacity: 1;
 }
 
-.ptero-admin .box,
-.ptero-admin .box-body,
-.ptero-admin .box-header,
-.ptero-admin .box-footer {
+.ptero-admin .info-box,
+.ptero-admin .small-box {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
     background: var(--cds-layer, #ffffff) !important;
     color: var(--cds-text-primary, #161616) !important;
+    border: 1px solid var(--cds-border-subtle-01, #c6c6c6);
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.ptero-admin .info-box-icon,
+.ptero-admin .small-box .icon {
+    display: none;
+}
+
+.ptero-admin .info-box-text,
+.ptero-admin .small-box p {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--cds-text-secondary, #525252);
+}
+
+.ptero-admin .info-box-number,
+.ptero-admin .small-box h3 {
+    display: block;
+    font-size: 1.25rem;
+    color: var(--cds-text-primary, #161616);
+}
+
+.ptero-admin .progress {
+    height: 0.5rem;
+    background: var(--cds-layer-accent, #e0e0e0);
+    margin-top: 0.5rem;
+}
+
+.ptero-admin .progress-bar {
+    height: 100%;
+    background: var(--cds-interactive, #0f62fe);
 }

@@ -40,9 +40,6 @@ export default () => {
     }, [servers?.pagination.currentPage]);
 
     useEffect(() => {
-        // Don't use react-router to handle changing this part of the URL, otherwise it
-        // triggers a needless re-render. We just want to track this in the URL incase the
-        // user refreshes the page.
         window.history.replaceState(null, document.title, `/${page <= 1 ? '' : `?page=${page}`}`);
     }, [page]);
 
@@ -53,8 +50,10 @@ export default () => {
 
     return (
         <PageContentBlock title={'Dashboard'} showFlashKey={'dashboard'}>
+            <h1 className={'cds--productive-heading-04 ptero-page-title'}>Servers</h1>
+            <p className={'cds--body-compact-01 ptero-page-copy'}>Servers you can access from this account.</p>
             {rootAdmin && (
-                <div className={'mb-4 flex justify-end items-center'}>
+                <div className={'ptero-toolbar'} style={{ marginTop: 0, marginBottom: '1rem' }}>
                     <Switch
                         name={'show_all_servers'}
                         label={showOnlyAdmin ? "Showing others' servers" : 'Showing your servers'}
@@ -69,11 +68,9 @@ export default () => {
                 <Pagination data={servers} onPageSelect={setPage}>
                     {({ items }) =>
                         items.length > 0 ? (
-                            items.map((server) => (
-                                <ServerRow key={server.uuid} server={server} className={'mb-2'} />
-                            ))
+                            items.map((server) => <ServerRow key={server.uuid} server={server} />)
                         ) : (
-                            <p className={'cds--body-compact-01'} style={{ textAlign: 'center' }}>
+                            <p className={'ptero-empty'}>
                                 {showOnlyAdmin
                                     ? 'There are no other servers to display.'
                                     : 'There are no servers associated with your account.'}

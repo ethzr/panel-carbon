@@ -1,32 +1,49 @@
-import styled from 'styled-components/macro';
+import React from 'react';
+import classNames from 'classnames';
+import { Link } from 'react-router-dom';
+import { Tile } from '@carbon/react';
 
-export default styled.div<{ $hoverable?: boolean }>`
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    overflow: hidden;
-    padding: 1rem;
-    background: var(--cds-layer);
-    color: var(--cds-text-primary);
-    border: 1px solid var(--cds-border-subtle-01);
-    transition: background 110ms cubic-bezier(0.2, 0, 0.38, 0.9), border-color 110ms cubic-bezier(0.2, 0, 0.38, 0.9);
+type Props = {
+    as?: React.ElementType;
+    to?: string;
+    href?: string;
+    $hoverable?: boolean;
+    className?: string;
+    children?: React.ReactNode;
+} & React.HTMLAttributes<HTMLElement>;
 
-    ${(props) =>
-        props.$hoverable !== false &&
-        `
-        &:hover {
-            background: var(--cds-layer-hover);
-            border-color: var(--cds-border-subtle-selected-01);
-        }
-    `};
+const GreyRowBox = ({ as, to, href, $hoverable = true, className, children, ...props }: Props) => {
+    const classes = classNames(
+        'ptero-resource-row',
+        $hoverable !== false && 'ptero-resource-row--interactive',
+        className
+    );
 
-    & .icon {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 4rem;
-        padding: 0.75rem;
-        background: var(--cds-layer-accent);
-        color: var(--cds-icon-primary);
+    if (as === Link || to) {
+        return (
+            <Link
+                to={to || href || '#'}
+                className={classNames(classes, 'cds--tile cds--tile--clickable')}
+                {...(props as React.AnchorHTMLAttributes<HTMLAnchorElement>)}
+            >
+                {children}
+            </Link>
+        );
     }
-`;
+
+    if (as === 'a' || href) {
+        return (
+            <a href={href} className={classNames(classes, 'cds--tile cds--tile--clickable')} {...props}>
+                {children}
+            </a>
+        );
+    }
+
+    return (
+        <Tile className={classes} {...(props as React.HTMLAttributes<HTMLDivElement>)}>
+            {children}
+        </Tile>
+    );
+};
+
+export default GreyRowBox;

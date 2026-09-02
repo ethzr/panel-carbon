@@ -1,30 +1,15 @@
 import React from 'react';
 import Spinner from '@/components/elements/Spinner';
-import Fade from '@/components/elements/Fade';
-import tw from 'twin.macro';
-import styled, { css } from 'styled-components/macro';
-
-const Container = styled.div<{ visible?: boolean }>`
-    ${tw`relative`};
-
-    ${(props) =>
-        props.visible &&
-        css`
-            & select {
-                background-image: none;
-            }
-        `};
-`;
 
 const InputSpinner = ({ visible, children }: { visible: boolean; children: React.ReactNode }) => (
-    <Container visible={visible}>
-        <Fade appear unmountOnExit in={visible} timeout={150}>
-            <div css={tw`absolute right-0 h-full flex items-center justify-end pr-3`}>
+    <div className={'ptero-input-spinner'}>
+        {visible && (
+            <div className={'ptero-input-spinner__indicator'}>
                 <Spinner size={'small'} />
             </div>
-        </Fade>
+        )}
         {children}
-    </Container>
+    </div>
 );
 
 export default InputSpinner;

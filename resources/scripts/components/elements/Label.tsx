@@ -1,13 +1,14 @@
-import styled from 'styled-components/macro';
+import React from 'react';
+import classNames from 'classnames';
 
-const Label = styled.label<{ isLight?: boolean }>`
-    display: inline-block;
-    margin-bottom: 0.5rem;
-    color: ${(props) => (props.isLight ? 'var(--cds-text-secondary)' : 'var(--cds-text-secondary)')};
-    font-size: 0.75rem;
-    font-weight: 400;
-    line-height: 1rem;
-    letter-spacing: 0.32px;
-`;
+interface Props extends React.LabelHTMLAttributes<HTMLLabelElement> {
+    isLight?: boolean;
+}
+
+const Label = ({ className, children, ...props }: Props) => (
+    <label className={classNames('cds--label', className)} {...props}>
+        {children}
+    </label>
+);
 
 export default Label;
