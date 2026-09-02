@@ -14,6 +14,9 @@ const Icon = ({ icon, className, style }: Props) => {
         <svg
             xmlns={'http://www.w3.org/2000/svg'}
             viewBox={`0 0 ${width} ${height}`}
+            width={20}
+            height={20}
+            aria-hidden={'true'}
             className={className ? `ptero-icon ${className}` : 'ptero-icon'}
             style={style}
         >

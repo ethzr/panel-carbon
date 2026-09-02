@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { Modal } from '@carbon/react';
+import { ComposedModal, ModalBody, ModalFooter, ModalHeader } from '@carbon/react';
 import { DialogContext, IconPosition, RenderDialogProps } from './';
 
 export default ({
@@ -18,31 +18,32 @@ export default ({
 
     ignoreClose.current = preventExternalClose;
 
+    const handleClose = () => {
+        if (!ignoreClose.current) {
+            onClose();
+        }
+    };
+
     return (
         <DialogContext.Provider value={{ setIcon, setFooter, setIconPosition }}>
-            <Modal
+            <ComposedModal
                 open={open}
-                modalHeading={
-                    <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
-                        {iconPosition !== 'container' && icon}
-                        {title}
-                    </span>
-                }
-                modalLabel={description}
-                onRequestClose={() => {
-                    if (!ignoreClose.current) {
-                        onClose();
-                    }
-                }}
-                preventCloseOnClickOutside={preventExternalClose}
-                passiveModal
                 size={'md'}
+                className={hideCloseIcon ? 'ptero-modal--no-close' : undefined}
+                preventCloseOnClickOutside={preventExternalClose}
+                onClose={() => {
+                    handleClose();
+                    return true;
+                }}
             >
-                {hideCloseIcon ? null : null}
-                {iconPosition === 'container' && icon}
-                {children}
-                {footer}
-            </Modal>
+                <ModalHeader title={title} label={description} iconDescription={'Close'} />
+                <ModalBody>
+                    {iconPosition === 'container' && icon}
+                    {iconPosition !== 'container' && icon}
+                    {children}
+                </ModalBody>
+                {footer ? <ModalFooter>{footer}</ModalFooter> : null}
+            </ComposedModal>
         </DialogContext.Provider>
     );
 };

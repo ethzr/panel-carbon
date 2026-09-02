@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, ButtonSet } from '@carbon/react';
+import { Button } from '@carbon/react';
 import Can from '@/components/elements/Can';
 import { ServerContext } from '@/state/server';
 import { PowerAction } from '@/components/server/console/ServerConsoleContainer';
@@ -37,7 +37,7 @@ export default ({ className }: PowerButtonProps) => {
     }, [status]);
 
     return (
-        <ButtonSet className={className}>
+        <div className={className ? `ptero-btn-row ${className}` : 'ptero-btn-row'}>
             <Dialog.Confirm
                 open={open}
                 hideCloseIcon
@@ -68,6 +68,6 @@ export default ({ className }: PowerButtonProps) => {
                     {killable ? 'Kill' : 'Stop'}
                 </Button>
             </Can>
-        </ButtonSet>
+        </div>
     );
 };

@@ -175,7 +175,11 @@ body,
     font-family: ibm-plex-mono, Menlo, Monaco, monospace;
     background: var(--cds-layer-accent);
     color: var(--cds-text-primary);
-    padding: 0.25rem 0.5rem;
+    padding: 0.125rem 0.5rem;
+    border-radius: 0;
+    font-size: 0.75rem;
+    display: inline;
+    word-break: break-all;
 }
 
 .ptero-stack {
@@ -256,8 +260,8 @@ a.ptero-resource-row {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 3rem;
-    height: 3rem;
+    width: 2rem;
+    height: 2rem;
     background: var(--cds-layer-accent);
     color: var(--cds-icon-primary);
     flex-shrink: 0;
@@ -392,6 +396,12 @@ a.ptero-resource-row {
     min-height: 4rem;
 }
 
+.ptero-stat svg {
+    width: 1.25rem;
+    height: 1.25rem;
+    flex-shrink: 0;
+}
+
 .ptero-stat__bar {
     width: 4px;
     align-self: stretch;
@@ -459,8 +469,39 @@ a.ptero-resource-row {
 }
 
 .ptero-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    flex-shrink: 0;
     fill: currentColor;
     display: inline-block;
+    vertical-align: middle;
+}
+
+.ptero-app .svg-inline--fa,
+.ptero-stat .ptero-icon,
+.ptero-resource-row__icon svg,
+.ptero-resource-row__icon .svg-inline--fa,
+.ptero-server-row .svg-inline--fa {
+    width: 1.25rem !important;
+    height: 1.25rem !important;
+    max-width: 1.25rem;
+    max-height: 1.25rem;
+}
+
+.ptero-btn-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.ptero-modal--no-close .cds--modal-close {
+    display: none;
+}
+
+.ptero-stat__copy {
+    min-width: 0;
+    flex: 1;
 }
 
 .ptero-callout {

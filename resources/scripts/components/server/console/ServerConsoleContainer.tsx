@@ -10,7 +10,6 @@ import StatGraphs from '@/components/server/console/StatGraphs';
 import PowerButtons from '@/components/server/console/PowerButtons';
 import ServerDetailsBlock from '@/components/server/console/ServerDetailsBlock';
 import { Alert } from '@/components/elements/alert';
-import { ButtonSet } from '@carbon/react';
 
 export type PowerAction = 'start' | 'stop' | 'restart' | 'kill';
 
@@ -39,9 +38,7 @@ const ServerConsoleContainer = () => {
                     {description && <p className={'ptero-page-copy'}>{description}</p>}
                 </div>
                 <Can action={['control.start', 'control.stop', 'control.restart']} matchAny>
-                    <ButtonSet>
-                        <PowerButtons />
-                    </ButtonSet>
+                    <PowerButtons />
                 </Can>
             </div>
             <div className={'ptero-split ptero-split--console'}>

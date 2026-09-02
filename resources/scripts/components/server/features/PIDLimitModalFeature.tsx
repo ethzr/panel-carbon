@@ -58,7 +58,7 @@ const PIDLimitModalFeature = () => {
             {isAdmin ? (
                 <>
                     <div className={'ptero-stack ptero-stack--row'}>
-                        <FontAwesomeIcon icon={faExclamationTriangle} color={'orange'} size={'4x'} />
+                        <FontAwesomeIcon icon={faExclamationTriangle} color={'orange'} />
                         <h2>Memory or process limit reached...</h2>
                     </div>
                     <p>This server has reached the maximum process or memory limit.</p>
@@ -76,7 +76,7 @@ const PIDLimitModalFeature = () => {
             ) : (
                 <>
                     <div className={'ptero-stack ptero-stack--row'}>
-                        <FontAwesomeIcon icon={faExclamationTriangle} color={'orange'} size={'4x'} />
+                        <FontAwesomeIcon icon={faExclamationTriangle} color={'orange'} />
                         <h2>Possible resource limit reached...</h2>
                     </div>
                     <p>

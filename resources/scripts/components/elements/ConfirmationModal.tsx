@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 import Button from '@/components/elements/Button';
 import asModal from '@/hoc/asModal';
 import ModalContext from '@/context/ModalContext';
-import { ButtonSet } from '@carbon/react';
 
 type Props = {
     title: string;
@@ -20,14 +19,14 @@ const ConfirmationModal: React.FC<Props> = ({ title, children, buttonText, onCon
                 {title}
             </h2>
             <div className={'cds--body-compact-01'}>{children}</div>
-            <ButtonSet style={{ marginTop: '2rem', justifyContent: 'flex-end' }}>
+            <div className={'ptero-modal-actions'}>
                 <Button isSecondary onClick={() => dismiss()}>
                     Cancel
                 </Button>
                 <Button color={'red'} onClick={() => onConfirmed()}>
                     {buttonText}
                 </Button>
-            </ButtonSet>
+            </div>
         </>
     );
 };
