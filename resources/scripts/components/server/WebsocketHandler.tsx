@@ -3,9 +3,8 @@ import { Websocket } from '@/plugins/Websocket';
 import { ServerContext } from '@/state/server';
 import getWebsocketToken from '@/api/server/getWebsocketToken';
 import ContentContainer from '@/components/elements/ContentContainer';
-import { CSSTransition } from 'react-transition-group';
+import Fade from '@/components/elements/Fade';
 import Spinner from '@/components/elements/Spinner';
-import tw from 'twin.macro';
 
 const reconnectErrors = ['jwt: exp claim is invalid', 'jwt: created too far in past (denylist)'];
 
@@ -67,8 +66,6 @@ export default () => {
                 return;
             }
 
-            // This code forces a reconnection to the websocket which will connect us to the target node instead of the source node
-            // in order to be able to receive transfer logs from the target node.
             socket.close();
             setError('connecting');
             setConnectionState(false);
@@ -78,10 +75,8 @@ export default () => {
 
         getWebsocketToken(uuid)
             .then((data) => {
-                // Connect and then set the authentication token.
                 socket.setToken(data.token).connect(data.socket);
 
-                // Once that is done, set the instance.
                 setInstance(socket);
             })
             .catch((error) => console.error(error));
@@ -98,8 +93,6 @@ export default () => {
     }, [instance]);
 
     useEffect(() => {
-        // If there is already an instance or there is no server, just exit out of this process
-        // since we don't need to make a new connection.
         if (instance || !uuid) {
             return;
         }
@@ -108,21 +101,21 @@ export default () => {
     }, [uuid]);
 
     return error ? (
-        <CSSTransition timeout={150} in appear classNames={'fade'}>
-            <div css={tw`bg-red-500 py-2`}>
-                <ContentContainer css={tw`flex items-center justify-center`}>
+        <Fade timeout={150} in appear>
+            <div className={'ptero-ws-banner'}>
+                <ContentContainer className={'ptero-ws-banner__inner'}>
                     {error === 'connecting' ? (
                         <>
                             <Spinner size={'small'} />
-                            <p css={tw`ml-2 text-sm text-red-100`}>
+                            <p>
                                 We&apos;re having some trouble connecting to your server, please wait...
                             </p>
                         </>
                     ) : (
-                        <p css={tw`ml-2 text-sm text-white`}>{error}</p>
+                        <p>{error}</p>
                     )}
                 </ContentContainer>
             </div>
-        </CSSTransition>
+        </Fade>
     ) : null;
 };

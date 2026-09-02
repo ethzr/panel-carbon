@@ -1,7 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import CodeMirror from 'codemirror';
-import styled from 'styled-components/macro';
-import tw from 'twin.macro';
 import modes from '@/modes';
 
 require('codemirror/lib/codemirror.css');
@@ -79,31 +77,11 @@ require('codemirror/mode/vue/vue');
 require('codemirror/mode/xml/xml');
 require('codemirror/mode/yaml/yaml');
 
-const EditorContainer = styled.div`
-    min-height: 16rem;
-    height: calc(100vh - 20rem);
-    ${tw`relative`};
-
-    > div {
-        ${tw`rounded h-full`};
-    }
-
-    .CodeMirror {
-        font-size: 12px;
-        line-height: 1.375rem;
-    }
-
-    .CodeMirror-linenumber {
-        padding: 1px 12px 0 12px !important;
-    }
-
-    .CodeMirror-foldmarker {
-        color: #cbccc6;
-        text-shadow: none;
-        margin-left: 0.25rem;
-        margin-right: 0.25rem;
-    }
-`;
+const EditorContainer = ({ style, children }: { style?: React.CSSProperties; children: React.ReactNode }) => (
+    <div className={'ptero-editor'} style={style}>
+        {children}
+    </div>
+);
 
 export interface Props {
     style?: React.CSSProperties;

@@ -6,8 +6,7 @@ import { Form, Formik, FormikHelpers } from 'formik';
 import Field from '@/components/elements/Field';
 import chmodFiles from '@/api/server/files/chmodFiles';
 import { ServerContext } from '@/state/server';
-import tw from 'twin.macro';
-import Button from '@/components/elements/Button';
+import { Button } from '@carbon/react';
 import useFlash from '@/plugins/useFlash';
 
 interface FormikValues {
@@ -56,14 +55,12 @@ const ChmodFileModal = ({ files, ...props }: OwnProps) => {
         <Formik onSubmit={submit} initialValues={{ mode: files.length > 1 ? '' : files[0].mode || '' }}>
             {({ isSubmitting }) => (
                 <Modal {...props} dismissable={!isSubmitting} showSpinnerOverlay={isSubmitting}>
-                    <Form css={tw`m-0`}>
-                        <div css={tw`flex flex-wrap items-end`}>
-                            <div css={tw`w-full sm:flex-1 sm:mr-4`}>
+                    <Form>
+                        <div className={'ptero-file-form'}>
+                            <div className={'ptero-file-form__field'}>
                                 <Field type={'string'} id={'file_mode'} name={'mode'} label={'File Mode'} autoFocus />
                             </div>
-                            <div css={tw`w-full sm:w-auto mt-4 sm:mt-0`}>
-                                <Button css={tw`w-full`}>Update</Button>
-                            </div>
+                            <Button type={'submit'}>Update</Button>
                         </div>
                     </Form>
                 </Modal>

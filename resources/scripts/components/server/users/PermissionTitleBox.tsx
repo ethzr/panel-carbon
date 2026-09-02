@@ -1,8 +1,7 @@
 import React, { memo, useCallback } from 'react';
 import { useField } from 'formik';
 import TitledGreyBox from '@/components/elements/TitledGreyBox';
-import tw from 'twin.macro';
-import Input from '@/components/elements/Input';
+import { Checkbox } from '@carbon/react';
 import isEqual from 'react-fast-compare';
 
 interface Props {
@@ -16,8 +15,8 @@ const PermissionTitleBox: React.FC<Props> = memo(({ isEditable, title, permissio
     const [{ value }, , { setValue }] = useField<string[]>('permissions');
 
     const onCheckboxClicked = useCallback(
-        (e: React.ChangeEvent<HTMLInputElement>) => {
-            if (e.currentTarget.checked) {
+        (_event: React.ChangeEvent<HTMLInputElement>, data: { checked: boolean }) => {
+            if (data.checked) {
                 setValue([...value, ...permissions.filter((p) => !value.includes(p))]);
             } else {
                 setValue(value.filter((p) => !permissions.includes(p)));
@@ -29,11 +28,13 @@ const PermissionTitleBox: React.FC<Props> = memo(({ isEditable, title, permissio
     return (
         <TitledGreyBox
             title={
-                <div css={tw`flex items-center`}>
-                    <p css={tw`text-sm uppercase flex-1`}>{title}</p>
+                <div className={'ptero-stack ptero-stack--row'} style={{ justifyContent: 'space-between', width: '100%' }}>
+                    <p>{title}</p>
                     {isEditable && (
-                        <Input
-                            type={'checkbox'}
+                        <Checkbox
+                            id={`permission_group_${title}`}
+                            hideLabel
+                            labelText={`Toggle all ${title} permissions`}
                             checked={permissions.every((p) => value.includes(p))}
                             onChange={onCheckboxClicked}
                         />

@@ -1,27 +1,16 @@
 import React, { useState } from 'react';
-import {
-    faBoxOpen,
-    faCloudDownloadAlt,
-    faEllipsisH,
-    faLock,
-    faTrashAlt,
-    faUnlock,
-} from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import DropdownMenu, { DropdownButtonRow } from '@/components/elements/DropdownMenu';
-import getBackupDownloadUrl from '@/api/server/backups/getBackupDownloadUrl';
 import useFlash from '@/plugins/useFlash';
 import SpinnerOverlay from '@/components/elements/SpinnerOverlay';
 import deleteBackup from '@/api/server/backups/deleteBackup';
-import Can from '@/components/elements/Can';
-import tw from 'twin.macro';
+import getBackupDownloadUrl from '@/api/server/backups/getBackupDownloadUrl';
 import getServerBackups from '@/api/swr/getServerBackups';
 import { ServerBackup } from '@/api/server/types';
 import { ServerContext } from '@/state/server';
-import Input from '@/components/elements/Input';
 import { restoreServerBackup } from '@/api/server/backups';
 import http, { httpErrorToHuman } from '@/api/http';
 import { Dialog } from '@/components/elements/dialog';
+import { Checkbox, OverflowMenu, OverflowMenuItem, Button } from '@carbon/react';
+import { usePermissions } from '@/plugins/usePermissions';
 
 interface Props {
     backup: ServerBackup;
@@ -35,6 +24,11 @@ export default ({ backup }: Props) => {
     const [truncate, setTruncate] = useState(false);
     const { clearFlashes, clearAndAddHttpError } = useFlash();
     const { mutate } = getServerBackups();
+    const [canDownload, canRestore, canDelete] = usePermissions([
+        'backup.download',
+        'backup.restore',
+        'backup.delete',
+    ]);
 
     const doDownload = () => {
         setLoading(true);
@@ -138,19 +132,17 @@ export default ({ backup }: Props) => {
                     Your server will be stopped. You will not be able to control the power state, access the file
                     manager, or create additional backups until completed.
                 </p>
-                <p css={tw`mt-4 -mb-2 bg-gray-700 p-3 rounded`}>
-                    <label htmlFor={'restore_truncate'} css={tw`text-base flex items-center cursor-pointer`}>
-                        <Input
-                            type={'checkbox'}
-                            css={tw`text-red-500! w-5! h-5! mr-2`}
-                            id={'restore_truncate'}
-                            value={'true'}
-                            checked={truncate}
-                            onChange={() => setTruncate((s) => !s)}
-                        />
-                        Delete all files before restoring backup.
-                    </label>
-                </p>
+                <div className={'ptero-inset'} style={{ marginTop: '1rem' }}>
+                    <Checkbox
+                        id={'restore_truncate'}
+                        labelText={'Delete all files before restoring backup.'}
+                        checked={truncate}
+                        onChange={(_event, data) => {
+                            const next = typeof data === 'object' && data !== null ? data.checked : !truncate;
+                            setTruncate(Boolean(next));
+                        }}
+                    />
+                </div>
             </Dialog.Confirm>
             <Dialog.Confirm
                 title={`Delete "${backup.name}"`}
@@ -163,56 +155,20 @@ export default ({ backup }: Props) => {
             </Dialog.Confirm>
             <SpinnerOverlay visible={loading} fixed />
             {backup.isSuccessful ? (
-                <DropdownMenu
-                    renderToggle={(onClick) => (
-                        <button
-                            onClick={onClick}
-                            css={tw`text-gray-200 transition-colors duration-150 hover:text-gray-100 p-2`}
-                        >
-                            <FontAwesomeIcon icon={faEllipsisH} />
-                        </button>
+                <OverflowMenu flipped size={'sm'} iconDescription={'Backup actions'} aria-label={'Backup actions'}>
+                    {canDownload && <OverflowMenuItem itemText={'Download'} onClick={doDownload} />}
+                    {canRestore && <OverflowMenuItem itemText={'Restore'} onClick={() => setModal('restore')} />}
+                    {canDelete && (
+                        <OverflowMenuItem itemText={backup.isLocked ? 'Unlock' : 'Lock'} onClick={onLockToggle} />
                     )}
-                >
-                    <div css={tw`text-sm`}>
-                        <Can action={'backup.download'}>
-                            <DropdownButtonRow onClick={doDownload}>
-                                <FontAwesomeIcon fixedWidth icon={faCloudDownloadAlt} css={tw`text-xs`} />
-                                <span css={tw`ml-2`}>Download</span>
-                            </DropdownButtonRow>
-                        </Can>
-                        <Can action={'backup.restore'}>
-                            <DropdownButtonRow onClick={() => setModal('restore')}>
-                                <FontAwesomeIcon fixedWidth icon={faBoxOpen} css={tw`text-xs`} />
-                                <span css={tw`ml-2`}>Restore</span>
-                            </DropdownButtonRow>
-                        </Can>
-                        <Can action={'backup.delete'}>
-                            <>
-                                <DropdownButtonRow onClick={onLockToggle}>
-                                    <FontAwesomeIcon
-                                        fixedWidth
-                                        icon={backup.isLocked ? faUnlock : faLock}
-                                        css={tw`text-xs mr-2`}
-                                    />
-                                    {backup.isLocked ? 'Unlock' : 'Lock'}
-                                </DropdownButtonRow>
-                                {!backup.isLocked && (
-                                    <DropdownButtonRow danger onClick={() => setModal('delete')}>
-                                        <FontAwesomeIcon fixedWidth icon={faTrashAlt} css={tw`text-xs`} />
-                                        <span css={tw`ml-2`}>Delete</span>
-                                    </DropdownButtonRow>
-                                )}
-                            </>
-                        </Can>
-                    </div>
-                </DropdownMenu>
+                    {canDelete && !backup.isLocked && (
+                        <OverflowMenuItem hasDivider isDelete itemText={'Delete'} onClick={() => setModal('delete')} />
+                    )}
+                </OverflowMenu>
             ) : (
-                <button
-                    onClick={() => setModal('delete')}
-                    css={tw`text-gray-200 transition-colors duration-150 hover:text-gray-100 p-2`}
-                >
-                    <FontAwesomeIcon icon={faTrashAlt} />
-                </button>
+                <Button kind={'ghost'} size={'sm'} onClick={() => setModal('delete')}>
+                    Delete
+                </Button>
             )}
         </>
     );

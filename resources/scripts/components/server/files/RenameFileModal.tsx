@@ -5,8 +5,7 @@ import Field from '@/components/elements/Field';
 import { join } from 'pathe';
 import renameFiles from '@/api/server/files/renameFiles';
 import { ServerContext } from '@/state/server';
-import tw from 'twin.macro';
-import Button from '@/components/elements/Button';
+import { Button } from '@carbon/react';
 import useFileManagerSwr from '@/plugins/useFileManagerSwr';
 import useFlash from '@/plugins/useFlash';
 
@@ -29,10 +28,8 @@ const RenameFileModal = ({ files, useMoveTerminology, ...props }: OwnProps) => {
         const len = name.split('/').length;
         if (files.length === 1) {
             if (!useMoveTerminology && len === 1) {
-                // Rename the file within this directory.
                 mutate((data) => data.map((f) => (f.name === files[0] ? { ...f, name } : f)), false);
             } else if (useMoveTerminology || len > 1) {
-                // Remove the file from this directory since they moved it elsewhere.
                 mutate((data) => data.filter((f) => f.name !== files[0]), false);
             }
         }
@@ -59,9 +56,9 @@ const RenameFileModal = ({ files, useMoveTerminology, ...props }: OwnProps) => {
         <Formik onSubmit={submit} initialValues={{ name: files.length > 1 ? '' : files[0] || '' }}>
             {({ isSubmitting, values }) => (
                 <Modal {...props} dismissable={!isSubmitting} showSpinnerOverlay={isSubmitting}>
-                    <Form css={tw`m-0`}>
-                        <div css={[tw`flex flex-wrap`, useMoveTerminology ? tw`items-center` : tw`items-end`]}>
-                            <div css={tw`w-full sm:flex-1 sm:mr-4`}>
+                    <Form>
+                        <div className={'ptero-file-form'}>
+                            <div className={'ptero-file-form__field'}>
                                 <Field
                                     type={'string'}
                                     id={'file_name'}
@@ -75,13 +72,11 @@ const RenameFileModal = ({ files, useMoveTerminology, ...props }: OwnProps) => {
                                     autoFocus
                                 />
                             </div>
-                            <div css={tw`w-full sm:w-auto mt-4 sm:mt-0`}>
-                                <Button css={tw`w-full`}>{useMoveTerminology ? 'Move' : 'Rename'}</Button>
-                            </div>
+                            <Button type={'submit'}>{useMoveTerminology ? 'Move' : 'Rename'}</Button>
                         </div>
                         {useMoveTerminology && (
-                            <p css={tw`text-xs mt-2 text-neutral-400`}>
-                                <strong css={tw`text-neutral-200`}>New location:</strong>
+                            <p className={'cds--form__helper-text'}>
+                                <strong>New location:</strong>
                                 &nbsp;/home/container/{join(directory, values.name).replace(/^(\.\.\/|\/)+/, '')}
                             </p>
                         )}

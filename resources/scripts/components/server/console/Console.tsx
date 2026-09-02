@@ -9,7 +9,6 @@ import { ScrollDownHelperAddon } from '@/plugins/XtermScrollDownHelperAddon';
 import SpinnerOverlay from '@/components/elements/SpinnerOverlay';
 import { ServerContext } from '@/state/server';
 import { usePermissions } from '@/plugins/usePermissions';
-import { theme as th } from 'twin.macro';
 import useEventListener from '@/plugins/useEventListener';
 import { debounce } from 'debounce';
 import { usePersistedState } from '@/plugins/usePersistedState';
@@ -21,9 +20,9 @@ import 'xterm/css/xterm.css';
 import styles from './style.module.css';
 
 const theme = {
-    background: th`colors.black`.toString(),
+    background: '#000000',
     cursor: 'transparent',
-    black: th`colors.black`.toString(),
+    black: '#000000',
     red: '#E54B4B',
     green: '#9ECE58',
     yellow: '#FAED70',
@@ -47,7 +46,7 @@ const terminalProps: ITerminalOptions = {
     cursorStyle: 'underline',
     allowTransparency: true,
     fontSize: 12,
-    fontFamily: th('fontFamily.mono'),
+    fontFamily: 'ibm-plex-mono, Menlo, Monaco, monospace',
     rows: 30,
     theme: theme,
 };
@@ -199,19 +198,17 @@ export default () => {
     }, [connected, instance]);
 
     return (
-        <div className={classNames(styles.terminal, 'relative')}>
+        <div className={classNames(styles.terminal, 'ptero-console-frame')}>
             <SpinnerOverlay visible={!connected} size={'large'} />
-            <div
-                className={classNames(styles.container, styles.overflows_container, { 'rounded-b': !canSendCommands })}
-            >
-                <div className={'h-full'}>
+            <div className={classNames(styles.container, styles.overflows_container)}>
+                <div style={{ height: '100%' }}>
                     <div id={styles.terminal} ref={ref} />
                 </div>
             </div>
             {canSendCommands && (
-                <div className={classNames('relative', styles.overflows_container)}>
+                <div className={styles.overflows_container} style={{ position: 'relative' }}>
                     <input
-                        className={classNames('peer', styles.command_input)}
+                        className={styles.command_input}
                         type={'text'}
                         placeholder={'Type a command...'}
                         aria-label={'Console command input.'}
@@ -220,13 +217,8 @@ export default () => {
                         autoCorrect={'off'}
                         autoCapitalize={'none'}
                     />
-                    <div
-                        className={classNames(
-                            'text-gray-100 peer-focus:text-gray-50 peer-focus:animate-pulse',
-                            styles.command_icon
-                        )}
-                    >
-                        <ChevronDoubleRightIcon className={'w-4 h-4'} />
+                    <div className={styles.command_icon}>
+                        <ChevronDoubleRightIcon style={{ width: '1rem', height: '1rem' }} />
                     </div>
                 </div>
             )}

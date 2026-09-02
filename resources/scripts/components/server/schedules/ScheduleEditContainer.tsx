@@ -10,7 +10,6 @@ import Can from '@/components/elements/Can';
 import useFlash from '@/plugins/useFlash';
 import { ServerContext } from '@/state/server';
 import PageContentBlock from '@/components/elements/PageContentBlock';
-import tw from 'twin.macro';
 import { Button } from '@/components/elements/button/index';
 import ScheduleTaskRow from '@/components/server/schedules/ScheduleTaskRow';
 import isEqual from 'react-fast-compare';
@@ -24,18 +23,13 @@ interface Params {
 
 const CronBox = ({ title, value }: { title: string; value: string }) => (
     <div className={'ptero-inset'}>
-        <p css={tw`text-neutral-300 text-sm`}>{title}</p>
-        <p css={tw`text-xl font-medium text-neutral-100`}>{value}</p>
+        <p className={'ptero-resource-row__label'}>{title}</p>
+        <p className={'ptero-stat__value'}>{value}</p>
     </div>
 );
 
 const ActivePill = ({ active }: { active: boolean }) => (
-    <span
-        css={[
-            tw`rounded-full px-2 py-px text-xs ml-4 uppercase`,
-            active ? tw`bg-green-600 text-green-100` : tw`bg-red-600 text-red-100`,
-        ]}
-    >
+    <span className={active ? 'cds--tag cds--tag--green cds--tag--sm' : 'cds--tag cds--tag--red cds--tag--sm'}>
         {active ? 'Active' : 'Inactive'}
     </span>
 );
@@ -79,56 +73,45 @@ export default () => {
 
     return (
         <PageContentBlock title={'Schedules'}>
-            <FlashMessageRender byKey={'schedules'} css={tw`mb-4`} />
+            <FlashMessageRender byKey={'schedules'} />
             {!schedule || isLoading ? (
                 <Spinner size={'large'} centered />
             ) : (
                 <>
-                    <ScheduleCronRow cron={schedule.cron} className={'ptero-inset sm:hidden mb-4'} />
+                    <ScheduleCronRow cron={schedule.cron} className={'ptero-inset'} />
                     <div className={'ptero-tile'}>
-                        <div className={'ptero-tile__header sm:flex items-center'}>
-                            <div css={tw`flex-1`}>
-                                <h3 css={tw`flex items-center text-neutral-100 text-2xl`}>
-                                    {schedule.name}
-                                    {schedule.isProcessing ? (
-                                        <span
-                                            className={'cds--tag cds--tag--gray cds--tag--sm'}
-                                            style={{ marginLeft: '1rem' }}
-                                        >
-                                            <Spinner css={tw`w-3! h-3! mr-2`} />
-                                            Processing
-                                        </span>
-                                    ) : (
-                                        <ActivePill active={schedule.isActive} />
-                                    )}
-                                </h3>
-                                <p css={tw`mt-1 text-sm text-neutral-200`}>
-                                    Last run at:&nbsp;
-                                    {schedule.lastRunAt ? (
-                                        format(schedule.lastRunAt, "MMM do 'at' h:mma")
-                                    ) : (
-                                        <span css={tw`text-neutral-300`}>n/a</span>
-                                    )}
-                                    <span css={tw`ml-4 pl-4 border-l-4 border-neutral-600 py-px`}>
-                                        Next run at:&nbsp;
-                                        {schedule.nextRunAt ? (
-                                            format(schedule.nextRunAt, "MMM do 'at' h:mma")
+                        <div className={'ptero-tile__header'}>
+                            <div className={'ptero-toolbar'} style={{ marginTop: 0, justifyContent: 'space-between' }}>
+                                <div>
+                                    <h3 className={'ptero-page-title ptero-stack ptero-stack--row'}>
+                                        {schedule.name}
+                                        {schedule.isProcessing ? (
+                                            <span className={'cds--tag cds--tag--gray cds--tag--sm'}>
+                                                <Spinner size={'small'} />
+                                                Processing
+                                            </span>
                                         ) : (
-                                            <span css={tw`text-neutral-300`}>n/a</span>
+                                            <ActivePill active={schedule.isActive} />
                                         )}
-                                    </span>
-                                </p>
-                            </div>
-                            <div css={tw`flex sm:block mt-3 sm:mt-0`}>
+                                    </h3>
+                                    <p className={'ptero-muted'}>
+                                        Last run at:&nbsp;
+                                        {schedule.lastRunAt ? format(schedule.lastRunAt, "MMM do 'at' h:mma") : 'n/a'}
+                                        <span style={{ marginInlineStart: '1rem' }}>
+                                            Next run at:&nbsp;
+                                            {schedule.nextRunAt ? format(schedule.nextRunAt, "MMM do 'at' h:mma") : 'n/a'}
+                                        </span>
+                                    </p>
+                                </div>
                                 <Can action={'schedule.update'}>
-                                    <Button.Text className={'flex-1 mr-4'} onClick={toggleEditModal}>
-                                        Edit
-                                    </Button.Text>
-                                    <NewTaskButton schedule={schedule} />
+                                    <div className={'ptero-stack ptero-stack--row'}>
+                                        <Button.Text onClick={toggleEditModal}>Edit</Button.Text>
+                                        <NewTaskButton schedule={schedule} />
+                                    </div>
                                 </Can>
                             </div>
                         </div>
-                        <div css={tw`hidden sm:grid grid-cols-5 md:grid-cols-5 gap-4 mb-4 mt-4`}>
+                        <div className={'ptero-cron-grid'}>
                             <CronBox title={'Minute'} value={schedule.cron.minute} />
                             <CronBox title={'Hour'} value={schedule.cron.hour} />
                             <CronBox title={'Day (Month)'} value={schedule.cron.dayOfMonth} />
@@ -152,7 +135,7 @@ export default () => {
                         </div>
                     </div>
                     <EditScheduleModal visible={showEditModal} schedule={schedule} onModalDismissed={toggleEditModal} />
-                    <div css={tw`mt-6 flex sm:justify-end`}>
+                    <div className={'ptero-toolbar'}>
                         <Can action={'schedule.delete'}>
                             <DeleteScheduleButton
                                 scheduleId={schedule.id}

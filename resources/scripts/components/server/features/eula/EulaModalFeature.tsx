@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { ServerContext } from '@/state/server';
 import Modal from '@/components/elements/Modal';
-import tw from 'twin.macro';
-import Button from '@/components/elements/Button';
+import { Button } from '@carbon/react';
 import saveFileContents from '@/api/server/files/saveFileContents';
 import FlashMessageRender from '@/components/FlashMessageRender';
 import useFlash from '@/plugins/useFlash';
@@ -64,27 +63,20 @@ const EulaModalFeature = () => {
             closeOnBackground={false}
             showSpinnerOverlay={loading}
         >
-            <FlashMessageRender key={'feature:eula'} css={tw`mb-4`} />
-            <h2 css={tw`text-2xl mb-4 text-neutral-100`}>Accept Minecraft&reg; EULA</h2>
-            <p css={tw`text-neutral-200`}>
+            <FlashMessageRender key={'feature:eula'} />
+            <h2>Accept Minecraft&reg; EULA</h2>
+            <p className={'ptero-muted'}>
                 By pressing {'"I Accept"'} below you are indicating your agreement to the&nbsp;
-                <a
-                    target={'_blank'}
-                    css={tw`text-primary-300 underline transition-colors duration-150 hover:text-primary-400`}
-                    rel={'noreferrer noopener'}
-                    href='https://www.minecraft.net/eula'
-                >
+                <a target={'_blank'} rel={'noreferrer noopener'} href='https://www.minecraft.net/eula'>
                     Minecraft&reg; EULA
                 </a>
                 .
             </p>
-            <div css={tw`mt-8 sm:flex items-center justify-end`}>
-                <Button isSecondary onClick={() => setVisible(false)} css={tw`w-full sm:w-auto border-transparent`}>
+            <div className={'ptero-modal-actions'}>
+                <Button kind={'secondary'} onClick={() => setVisible(false)}>
                     Cancel
                 </Button>
-                <Button onClick={onAcceptEULA} css={tw`mt-4 sm:mt-0 sm:ml-4 w-full sm:w-auto`}>
-                    I Accept
-                </Button>
+                <Button onClick={onAcceptEULA}>I Accept</Button>
             </div>
         </Modal>
     );

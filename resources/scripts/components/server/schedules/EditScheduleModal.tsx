@@ -8,8 +8,7 @@ import { ServerContext } from '@/state/server';
 import { httpErrorToHuman } from '@/api/http';
 import FlashMessageRender from '@/components/FlashMessageRender';
 import useFlash from '@/plugins/useFlash';
-import tw from 'twin.macro';
-import { Button } from '@/components/elements/button/index';
+import { Button } from '@carbon/react';
 import ModalContext from '@/context/ModalContext';
 import asModal from '@/hoc/asModal';
 import Switch from '@/components/elements/Switch';
@@ -90,21 +89,23 @@ const EditScheduleModal = ({ schedule }: Props) => {
         >
             {({ isSubmitting }) => (
                 <Form>
-                    <h3 css={tw`text-2xl mb-6`}>{schedule ? 'Edit schedule' : 'Create new schedule'}</h3>
-                    <FlashMessageRender byKey={'schedule:edit'} css={tw`mb-6`} />
-                    <Field
-                        name={'name'}
-                        label={'Schedule name'}
-                        description={'A human readable identifier for this schedule.'}
-                    />
-                    <div css={tw`grid grid-cols-2 sm:grid-cols-5 gap-4 mt-6`}>
+                    <h3>{schedule ? 'Edit schedule' : 'Create new schedule'}</h3>
+                    <FlashMessageRender byKey={'schedule:edit'} />
+                    <div className={'ptero-stack'}>
+                        <Field
+                            name={'name'}
+                            label={'Schedule name'}
+                            description={'A human readable identifier for this schedule.'}
+                        />
+                    </div>
+                    <div className={'ptero-cron-grid'} style={{ display: 'grid' }}>
                         <Field name={'minute'} label={'Minute'} />
                         <Field name={'hour'} label={'Hour'} />
                         <Field name={'dayOfMonth'} label={'Day of month'} />
                         <Field name={'month'} label={'Month'} />
                         <Field name={'dayOfWeek'} label={'Day of week'} />
                     </div>
-                    <p css={tw`text-neutral-400 text-xs mt-2`}>
+                    <p className={'cds--form__helper-text'}>
                         The schedule system supports the use of Cronjob syntax when defining when tasks should begin
                         running. Use the fields above to specify when these tasks should begin running.
                     </p>
@@ -116,11 +117,7 @@ const EditScheduleModal = ({ schedule }: Props) => {
                             defaultChecked={showCheatsheet}
                             onChange={() => setShowCheetsheet((s) => !s)}
                         />
-                        {showCheatsheet && (
-                            <div css={tw`block md:flex w-full`}>
-                                <ScheduleCheatsheetCards />
-                            </div>
-                        )}
+                        {showCheatsheet && <ScheduleCheatsheetCards />}
                     </div>
                     <div className={'ptero-inset'} style={{ marginTop: '1.5rem' }}>
                         <FormikSwitch
@@ -136,8 +133,8 @@ const EditScheduleModal = ({ schedule }: Props) => {
                             label={'Schedule Enabled'}
                         />
                     </div>
-                    <div css={tw`mt-6 text-right`}>
-                        <Button className={'w-full sm:w-auto'} type={'submit'} disabled={isSubmitting}>
+                    <div className={'ptero-modal-actions'}>
+                        <Button type={'submit'} disabled={isSubmitting}>
                             {schedule ? 'Save changes' : 'Create schedule'}
                         </Button>
                     </div>

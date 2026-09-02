@@ -1,55 +1,46 @@
 import React from 'react';
-import tw from 'twin.macro';
+
+const rows: [string, string][][] = [
+    [
+        ['*/5 * * * *', 'every 5 minutes'],
+        ['0 */1 * * *', 'every hour'],
+        ['0 8-12 * * *', 'hour range'],
+        ['0 0 * * *', 'once a day'],
+        ['0 0 * * MON', 'every Monday'],
+    ],
+    [
+        ['*', 'any value'],
+        [',', 'value list separator'],
+        ['-', 'range values'],
+        ['/', 'step values'],
+    ],
+];
 
 export default () => {
     return (
-        <>
-            <div css={tw`md:w-1/2 h-full bg-neutral-600`}>
-                <div css={tw`flex flex-col`}>
-                    <h2 css={tw`py-4 px-6 font-bold`}>Examples</h2>
-                    <div css={tw`flex py-4 px-6 bg-neutral-500`}>
-                        <div css={tw`w-1/2`}>*/5 * * * *</div>
-                        <div css={tw`w-1/2`}>every 5 minutes</div>
-                    </div>
-                    <div css={tw`flex py-4 px-6`}>
-                        <div css={tw`w-1/2`}>0 */1 * * *</div>
-                        <div css={tw`w-1/2`}>every hour</div>
-                    </div>
-                    <div css={tw`flex py-4 px-6 bg-neutral-500`}>
-                        <div css={tw`w-1/2`}>0 8-12 * * *</div>
-                        <div css={tw`w-1/2`}>hour range</div>
-                    </div>
-                    <div css={tw`flex py-4 px-6`}>
-                        <div css={tw`w-1/2`}>0 0 * * *</div>
-                        <div css={tw`w-1/2`}>once a day</div>
-                    </div>
-                    <div css={tw`flex py-4 px-6 bg-neutral-500`}>
-                        <div css={tw`w-1/2`}>0 0 * * MON</div>
-                        <div css={tw`w-1/2`}>every Monday</div>
-                    </div>
+        <div className={'ptero-split'}>
+            <div className={'ptero-tile'}>
+                <div className={'ptero-tile__header'}>Examples</div>
+                <div className={'ptero-tile__body ptero-stack'}>
+                    {rows[0].map(([expr, label]) => (
+                        <div key={expr} className={'ptero-stack ptero-stack--row'}>
+                            <code className={'ptero-code'}>{expr}</code>
+                            <span className={'ptero-muted'}>{label}</span>
+                        </div>
+                    ))}
                 </div>
             </div>
-            <div css={tw`md:w-1/2 h-full bg-neutral-600`}>
-                <h2 css={tw`py-4 px-6 font-bold`}>Special Characters</h2>
-                <div css={tw`flex flex-col`}>
-                    <div css={tw`flex py-4 px-6 bg-neutral-500`}>
-                        <div css={tw`w-1/2`}>*</div>
-                        <div css={tw`w-1/2`}>any value</div>
-                    </div>
-                    <div css={tw`flex py-4 px-6`}>
-                        <div css={tw`w-1/2`}>,</div>
-                        <div css={tw`w-1/2`}>value list separator</div>
-                    </div>
-                    <div css={tw`flex py-4 px-6 bg-neutral-500`}>
-                        <div css={tw`w-1/2`}>-</div>
-                        <div css={tw`w-1/2`}>range values</div>
-                    </div>
-                    <div css={tw`flex py-4 px-6`}>
-                        <div css={tw`w-1/2`}>/</div>
-                        <div css={tw`w-1/2`}>step values</div>
-                    </div>
+            <div className={'ptero-tile'}>
+                <div className={'ptero-tile__header'}>Special Characters</div>
+                <div className={'ptero-tile__body ptero-stack'}>
+                    {rows[1].map(([expr, label]) => (
+                        <div key={expr} className={'ptero-stack ptero-stack--row'}>
+                            <code className={'ptero-code'}>{expr}</code>
+                            <span className={'ptero-muted'}>{label}</span>
+                        </div>
+                    ))}
                 </div>
             </div>
-        </>
+        </div>
     );
 };
